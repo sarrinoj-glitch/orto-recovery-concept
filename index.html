@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Орто-Рекавери — концепция первого экрана</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Концепция: подача Hinge Health (живое фото во весь экран, карточки «от шеи до пяток», тёмная секция)
+     + медицинская серьёзность Biruev (оффер «без операции», направления, позвоночник) — в палитре брендбука Орто-Рекавери */
+  :root {
+    --deep:#0B3D4A; --teal:#177E96; --neon:#48F6FF; --lime:#F2FF59; --graphite:#212121;
+    --ward:#F3FAFB; --pain:#E2553A; --muted:#55646a;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:Onest, system-ui, sans-serif; color:var(--graphite); background:var(--ward); -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  button { font:inherit; cursor:pointer; }
+  .wrap { max-width:1320px; margin:0 auto; padding:0 24px; }
+  .kicker { font-family:Unbounded, Onest, sans-serif; font-weight:500; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+
+  /* ===== Первый экран ===== */
+  .hero { position:relative; min-height:max(720px, 100svh); border-radius:0 0 48px 48px; overflow:hidden; color:#fff; isolation:isolate; }
+  .hero-photo { position:absolute; inset:0; z-index:-2; overflow:hidden; }
+  .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 40%; transform:scaleX(-1) scale(1.06); animation:kb 18s ease-out forwards; }
+  @keyframes kb { to { transform:scaleX(-1) scale(1); } }
+  .hero::before { content:""; position:absolute; inset:0; z-index:-1;
+    background:
+      linear-gradient(90deg, rgba(7,40,49,.92) 0%, rgba(7,40,49,.78) 28%, rgba(7,40,49,.25) 52%, rgba(7,40,49,0) 70%),
+      linear-gradient(180deg, rgba(7,40,49,.55) 0%, rgba(7,40,49,0) 22%, rgba(7,40,49,0) 70%, rgba(7,40,49,.55) 100%); }
+
+  .nav { display:flex; align-items:center; gap:28px; padding:22px 0; }
+  .logo { display:flex; align-items:center; background:#fff; border-radius:16px; padding:8px 14px; }
+  .logo img { height:34px; display:block; }
+  .nav-links { display:flex; gap:26px; font-weight:500; font-size:15px; }
+  .nav-links a { opacity:.9; transition:opacity .2s; }
+  .nav-links a:hover { opacity:1; text-decoration:underline; text-underline-offset:6px; }
+  .nav-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+  .phone { font-weight:600; font-size:15px; text-align:right; line-height:1.25; }
+  .phone small { display:block; font-weight:400; font-size:12px; opacity:.75; }
+  .btn-white { height:46px; padding:0 22px; border-radius:999px; border:0; background:#fff; color:var(--deep); font-weight:700; font-size:15px; transition:transform .2s; }
+  .btn-white:hover { transform:translateY(-2px); }
+
+  .hero-body { padding-top:clamp(40px, 9vh, 110px); max-width:640px; }
+  .badge { display:inline-flex; align-items:center; gap:10px; background:var(--lime); color:var(--graphite); border-radius:999px; padding:8px 16px 8px 10px; font-weight:600; font-size:14px; }
+  .badge b { display:inline-flex; align-items:center; justify-content:center; height:26px; padding:0 9px; border-radius:999px; background:var(--graphite); color:var(--lime); font-size:13px; }
+  .hero .kicker { margin:26px 0 0; color:var(--neon); }
+  h1 { margin:14px 0 0; font-weight:800; font-size:clamp(40px, 4.8vw, 70px); line-height:1.0; letter-spacing:-.035em; }
+  h1 em { font-style:normal; background:linear-gradient(90deg, var(--neon), var(--lime)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { margin:22px 0 0; font-size:19px; line-height:1.55; color:rgba(255,255,255,.86); max-width:520px; }
+  .ctas { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+  .btn-main { height:58px; padding:0 30px; border:0; border-radius:999px; font-weight:700; font-size:16px; color:var(--graphite);
+    background:radial-gradient(120% 180% at 50% 50%, #FDFFC7 0%, var(--lime) 45%, #DCEB2E 100%); box-shadow:0 18px 40px -16px rgba(242,255,89,.7); display:inline-flex; align-items:center; gap:10px; transition:transform .2s, box-shadow .2s; }
+  .btn-main:hover { transform:translateY(-2px); box-shadow:0 24px 50px -16px rgba(242,255,89,.85); }
+  .btn-glass { height:58px; padding:0 28px; border-radius:999px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); backdrop-filter:blur(10px); color:#fff; font-weight:600; font-size:16px; display:inline-flex; align-items:center; }
+
+  /* точка на колене прямо на фото — приём Hinge «точки на теле» */
+  .hot { position:absolute; left:var(--x); top:var(--y); width:20px; height:20px; margin:-10px 0 0 -10px; border-radius:50%; background:var(--pain); border:3px solid #fff; box-shadow:0 0 0 0 rgba(226,85,58,.6); animation:ping 2.2s ease-out infinite; }
+  .hot::after { content:""; position:absolute; inset:-34px; border-radius:50%; background:radial-gradient(circle, rgba(255,106,61,.55), rgba(255,140,100,0) 70%); z-index:-1; }
+  @keyframes ping { 0% { box-shadow:0 0 0 0 rgba(226,85,58,.65); } 80%,100% { box-shadow:0 0 0 22px rgba(226,85,58,0); } }
+  .hot-tag { position:absolute; left:calc(var(--x) + 22px); top:calc(var(--y) + 14px); background:rgba(255,255,255,.95); color:var(--graphite); border-radius:16px; padding:10px 14px; font-size:13px; line-height:1.35; box-shadow:0 16px 30px -14px rgba(0,0,0,.5); white-space:nowrap; }
+  .hot-tag b { display:block; font-size:14px; }
+  .hot-tag span { color:var(--muted); }
+
+  /* панель поиска на стыке с фото — «табы и направления» Biruev, переосмысленные */
+  .finder { position:relative; z-index:3; margin-top:-64px; }
+  .finder-card { background:#fff; border-radius:28px; padding:22px; box-shadow:0 30px 60px -30px rgba(11,61,74,.45); display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:center; }
+  .search { display:flex; align-items:center; gap:12px; background:var(--ward); border-radius:18px; padding:0 8px 0 18px; height:60px; }
+  .search svg { flex:none; }
+  .search input { flex:1; min-width:0; border:0; background:transparent; font:inherit; font-size:17px; outline:none; color:var(--graphite); }
+  .search button { height:46px; padding:0 20px; border:0; border-radius:14px; background:var(--deep); color:#fff; font-weight:600; }
+  .chips { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { border:1px solid #D9ECEF; background:#fff; border-radius:999px; padding:9px 15px; font-size:14px; color:var(--deep); transition:background .2s, border-color .2s, transform .2s; }
+  .chip:hover { background:#E7FAFC; border-color:var(--neon); transform:translateY(-1px); }
+  .rating { display:flex; align-items:center; gap:12px; padding-left:18px; border-left:1px solid #E3EEF0; }
+  .rating strong { font-size:34px; font-weight:800; letter-spacing:-.03em; color:var(--deep); }
+  .rating small { display:block; font-size:13px; color:var(--muted); line-height:1.35; }
+  .stars { color:#F5B301; letter-spacing:1px; font-size:15px; }
+
+  /* ===== От шеи до пяток ===== */
+  .sec { padding:96px 0 40px; }
+  .sec-head { display:flex; align-items:end; justify-content:space-between; gap:24px; }
+  .sec-head .kicker { color:var(--teal); }
+  h2 { margin:10px 0 0; font-weight:800; font-size:clamp(32px, 3.6vw, 52px); line-height:1.04; letter-spacing:-.03em; color:var(--deep); }
+  .arrows { display:flex; gap:10px; }
+  .arrows button { width:48px; height:48px; border-radius:50%; border:0; background:#fff; color:var(--deep); box-shadow:0 8px 20px -10px rgba(11,61,74,.4); font-size:20px; }
+  .arrows button:last-child { background:var(--lime); }
+  .cards { margin-top:36px; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(280px, 1fr); gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:12px; scrollbar-width:none; }
+  .cards::-webkit-scrollbar { display:none; }
+  .card { position:relative; scroll-snap-align:start; aspect-ratio:4/5; border-radius:28px; overflow:hidden; color:#fff; isolation:isolate; transition:transform .35s ease; }
+  .card:hover { transform:translateY(-6px); }
+  .card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition:transform .6s ease; }
+  .card:hover img { transform:scale(1.05); }
+  .card::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(7,40,49,0) 40%, rgba(7,40,49,.88) 100%); }
+  .card .tag { position:absolute; left:18px; top:18px; background:var(--lime); color:var(--graphite); border-radius:999px; padding:6px 13px; font-size:13px; font-weight:600; }
+  .card .spot { position:absolute; left:var(--x); top:var(--y); width:120px; height:120px; margin:-60px 0 0 -60px; border-radius:50%; background:radial-gradient(circle, rgba(255,106,61,.7), rgba(255,143,99,.32) 45%, rgba(255,179,143,0) 70%); animation:pulse 2.4s ease-in-out infinite; z-index:-1; mix-blend-mode:screen; }
+  .card .dot { position:absolute; left:var(--x); top:var(--y); width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:var(--pain); border:3px solid #fff; }
+  @keyframes pulse { 50% { transform:scale(1.15); opacity:.75; } }
+  .card-body { position:absolute; left:22px; right:22px; bottom:22px; display:flex; align-items:end; justify-content:space-between; gap:12px; }
+  .card h3 { margin:0; font-size:23px; font-weight:700; letter-spacing:-.02em; line-height:1.1; }
+  .card p { margin:8px 0 0; font-size:14px; line-height:1.45; color:rgba(255,255,255,.82); }
+  .card .price { display:inline-block; margin-top:10px; font-weight:600; font-size:14px; color:var(--neon); }
+  .plus { flex:none; width:44px; height:44px; border-radius:50%; border:0; background:#fff; color:var(--deep); font-size:24px; line-height:1; transition:transform .25s, background .25s; }
+  .card:hover .plus { transform:rotate(90deg); background:var(--lime); }
+
+  /* ===== Тёмная секция: сначала причина ===== */
+  .dark { margin:56px 0 0; background:var(--deep); color:#fff; border-radius:48px; padding:88px 0; overflow:hidden; position:relative; }
+  .dark::before { content:""; position:absolute; right:-140px; top:-140px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(72,246,255,.18), rgba(72,246,255,0) 70%); }
+  .dark-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:64px; align-items:center; }
+  .dark .kicker { color:var(--neon); }
+  .dark h2 { color:#fff; }
+  .steps { list-style:none; margin:36px 0 0; padding:0; position:relative; }
+  .steps::before { content:""; position:absolute; left:11px; top:10px; bottom:10px; width:2px; background:rgba(255,255,255,.14); }
+  .steps li { position:relative; padding:0 0 26px 46px; }
+  .steps li::before { content:""; position:absolute; left:4px; top:6px; width:16px; height:16px; border-radius:50%; background:var(--deep); border:2px solid var(--neon); }
+  .steps li.on::before { background:var(--lime); border-color:var(--lime); box-shadow:0 0 0 6px rgba(242,255,89,.18); }
+  .steps b { display:block; font-size:19px; font-weight:600; }
+  .steps span { display:block; margin-top:4px; color:rgba(255,255,255,.72); font-size:15px; line-height:1.5; }
+  .scan { position:relative; border-radius:32px; overflow:hidden; aspect-ratio:5/4; background:#0E4D5D; }
+  .scan img { width:100%; height:100%; object-fit:cover; filter:saturate(.75) contrast(1.05); }
+  .scan::after { content:""; position:absolute; left:0; right:0; height:90px; top:-90px; background:linear-gradient(180deg, rgba(72,246,255,0), rgba(72,246,255,.35)); border-bottom:2px solid var(--neon); animation:scanline 4.5s ease-in-out infinite; }
+  @keyframes scanline { 0% { top:-90px; } 60%,100% { top:100%; } }
+  .scan .dot { position:absolute; left:var(--x); top:var(--y); width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:var(--lime); border:3px solid var(--deep); box-shadow:0 0 0 8px rgba(242,255,89,.25); }
+  .scan .label { position:absolute; left:20px; bottom:20px; background:rgba(11,61,74,.82); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.15); border-radius:18px; padding:14px 16px; font-size:14px; line-height:1.45; max-width:300px; }
+  .scan .label b { color:var(--lime); }
+
+  .note { text-align:center; font-size:13px; color:var(--muted); padding:28px 24px 40px; }
+
+  /* появление при прокрутке */
+  .rv { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; transition-delay:var(--d, 0s); }
+  .rv.in { opacity:1; transform:none; }
+  .hero-body > * { animation:up .8s ease both; }
+  .hero-body > *:nth-child(2) { animation-delay:.1s; } .hero-body > *:nth-child(3) { animation-delay:.18s; }
+  .hero-body > *:nth-child(4) { animation-delay:.3s; } .hero-body > *:nth-child(5) { animation-delay:.42s; }
+  @keyframes up { from { opacity:0; transform:translateY(20px); } }
+
+  @media (max-width: 1080px) {
+    .nav-links { display:none; }
+    .dark-grid { grid-template-columns:1fr; gap:40px; }
+  }
+  @media (max-width: 720px) {
+    .wrap { padding:0 16px; }
+    .phone { display:none; }
+    .hero { border-radius:0 0 32px 32px; min-height:760px; }
+    .hero-photo img { object-position:40% 0%; height:62%; }
+    .hero-photo { background:#072831; }
+    .hero::before { background:linear-gradient(180deg, rgba(7,40,49,.45) 0%, rgba(7,40,49,0) 18%, rgba(7,40,49,0) 34%, rgba(7,40,49,.9) 54%, #072831 64%); }
+    .hero-body { padding-top:290px; padding-bottom:76px; }
+    .lead { font-size:17px; }
+    .btn-main, .btn-glass { width:100%; justify-content:center; }
+    .hot, .hot-tag { display:none; }
+    .finder { margin-top:-36px; }
+    .finder-card { grid-template-columns:1fr; padding:16px; border-radius:24px; }
+    .rating { border-left:0; padding-left:4px; }
+    .search button { display:none; }
+    .sec { padding-top:64px; }
+    .arrows { display:none; }
+    .cards { grid-auto-columns:82%; }
+    .dark { border-radius:32px; padding:64px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation:none !important; transition:none !important; }
+    .rv { opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-photo"><img src="assets/hero.jpg" alt="Дедушка присел в саду и держит внука на руках"></div>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Основное меню">
+      <a class="logo" href="#"><img src="assets/logo-dark.png" alt="Орто-Рекавери"></a>
+      <div class="nav-links">
+        <a href="#where">Направления</a><a href="#how">Как лечим</a><a href="#">Врачи</a><a href="#">Цены</a><a href="#">Контакты</a>
+      </div>
+      <div class="nav-right">
+        <a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
+        <button class="btn-white" type="button">Записаться</button>
+      </div>
+    </nav>
+
+    <div class="hero-body">
+      <span class="badge"><b>5,0</b>2ГИС · 121 оценка</span>
+      <p class="kicker">Центр восстановительной медицины · Махачкала</p>
+      <h1>Лечим боль в спине и суставах <em>без операции</em></h1>
+      <p class="lead">Ортопеды, невролог и реабилитологи. Сначала находим причину, потом составляем план лечения — цену вы знаете до начала.</p>
+      <div class="ctas">
+        <button class="btn-main" type="button">Записаться на приём
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <a class="btn-glass" href="#where">Что мы лечим</a>
+      </div>
+    </div>
+  </div>
+
+  <span class="hot" style="--x:69.5%; --y:53%" aria-hidden="true"></span>
+  <div class="hot-tag" style="--x:69.5%; --y:53%"><b>Плечо</b><span>ортопед · приём 3 000 ₽</span></div>
+</header>
+
+<section class="finder">
+  <div class="wrap">
+    <div class="finder-card">
+      <label class="search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#177E96" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="text" placeholder="Что беспокоит? Например: болит поясница" aria-label="Что беспокоит">
+        <button type="button">Подобрать врача</button>
+      </label>
+      <div class="rating">
+        <strong>5,0</strong>
+        <div><span class="stars" aria-label="5 из 5">★★★★★</span><small>2ГИС, 121 оценка<br>Яндекс — 4,9</small></div>
+      </div>
+      <div class="chips">
+        <button class="chip" type="button">Болит спина</button>
+        <button class="chip" type="button">Грыжа диска</button>
+        <button class="chip" type="button">Колено</button>
+        <button class="chip" type="button">Плечо после травмы</button>
+        <button class="chip" type="button">Пятка по утрам</button>
+        <button class="chip" type="button">Сколиоз у ребёнка</button>
+        <button class="chip" type="button">Реабилитолог на дом</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="where">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="kicker">Направления</p><h2>От шеи до пяток</h2></div>
+      <div class="arrows"><button type="button" aria-label="Назад" data-dir="-1">←</button><button type="button" aria-label="Вперёд" data-dir="1">→</button></div>
+    </div>
+    <div class="cards" id="cards">
+      <article class="card rv" style="--d:.0s">
+        <img src="assets/back.jpg" alt="Женщина держится за поясницу" style="object-position:50% 50%">
+        <span class="tag">Спина и шея</span>
+        <span class="spot" style="--x:40%; --y:44%"></span><span class="dot" style="--x:40%; --y:44%"></span>
+        <div class="card-body"><div><h3>Боль в спине и шее</h3><p>Грыжи, протрузии, остеохондроз. Невролог и мануальный терапевт.</p><span class="price">полный приём 8 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
+      </article>
+      <article class="card rv" style="--d:.08s">
+        <img src="assets/knee.jpg" alt="Человек держится за колено" style="object-position:35% 50%">
+        <span class="tag">Суставы</span>
+        <span class="spot" style="--x:32%; --y:50%"></span><span class="dot" style="--x:32%; --y:50%"></span>
+        <div class="card-body"><div><h3>Лечим суставы</h3><p>Колено, тазобедренный сустав. PRP, ударно-волновая терапия, ЛФК.</p><span class="price">приём ортопеда 3 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
+      </article>
+      <article class="card rv" style="--d:.16s">
+        <img src="assets/shoulder.jpg" alt="Ударно-волновая терапия плеча" style="object-position:50% 50%">
+        <span class="tag">Плечо и кисть</span>
+        <span class="spot" style="--x:40%; --y:40%"></span><span class="dot" style="--x:40%; --y:40%"></span>
+        <div class="card-body"><div><h3>Плечо и кисть</h3><p>После переломов и травм: разработка кисти, тейпирование, УВТ.</p><span class="price">приём ортопеда 3 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
+      </article>
+      <article class="card rv" style="--d:.24s">
+        <img src="assets/foot.jpg" alt="Женщина растягивает стопы на коврике" style="object-position:95% 50%">
+        <span class="tag">Стопа</span>
+        <span class="spot" style="--x:74%; --y:50%"></span><span class="dot" style="--x:74%; --y:50%"></span>
+        <div class="card-body"><div><h3>Стопа и пятка</h3><p>Пяточная шпора, плоскостопие. Индивидуальные стельки Formthotics.</p><span class="price">УВТ 3 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
+      </article>
+      <article class="card rv" style="--d:.32s">
+        <img src="assets/lfk.jpg" alt="Реабилитолог занимается с пациенткой" style="object-position:50% 50%">
+        <span class="tag">Реабилитация</span>
+        <div class="card-body"><div><h3>После травм и операций</h3><p>ЛФК со взрослыми и детьми, гимнастика при сколиозе по методике СИАС.</p><span class="price">ЛФК 2 500 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="how">
+  <div class="wrap dark-grid">
+    <div class="rv">
+      <p class="kicker">Как лечим</p>
+      <h2>Сначала причина — потом лечение</h2>
+      <ol class="steps">
+        <li class="on"><b>Осмотр и тесты</b><span>Врач смотрит снимки, проверяет подвижность и находит, откуда идёт боль.</span></li>
+        <li><b>План с ценой</b><span>Объясняем, какие процедуры нужны и сколько это стоит — до начала лечения.</span></li>
+        <li><b>Процедуры и ЛФК</b><span>УВТ, PRP, массаж, лечебная физкультура — в одном центре.</span></li>
+        <li><b>Контроль результата</b><span>Повторный осмотр и упражнения, чтобы боль не вернулась.</span></li>
+      </ol>
+    </div>
+    <div class="scan rv" style="--d:.1s">
+      <img src="assets/spine.jpg" alt="Модель позвоночника на столе врача">
+      <span class="dot" style="--x:58%; --y:38%"></span>
+      <div class="label"><b>Принесите снимки МРТ</b> — врач разберёт их на приёме и объяснит простыми словами.</div>
+    </div>
+  </div>
+</section>
+
+<p class="note">Пример концепции первого экрана. Фото — Unsplash, после съёмки заменим на реальных пациентов и врачей центра. Цены — прайс клиники.</p>
+
+<script>
+  // Подсказки заполняют поиск
+  const q = document.getElementById('q')
+  document.querySelectorAll('.chip').forEach((c) => c.addEventListener('click', () => { q.value = c.textContent; q.focus() }))
+  // Стрелки карусели
+  const cards = document.getElementById('cards')
+  document.querySelectorAll('.arrows button').forEach((b) => b.addEventListener('click', () => {
+    cards.scrollBy({ left: Number(b.dataset.dir) * (cards.firstElementChild.offsetWidth + 20), behavior: 'smooth' })
+  }))
+  // Появление при прокрутке
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { threshold: .15 })
+  document.querySelectorAll('.rv').forEach((el) => location.hash === '#all' ? el.classList.add('in') : io.observe(el))
+  // Шаги «Как лечим» подсвечиваются по очереди
+  const steps = [...document.querySelectorAll('.steps li')]
+  let s = 0
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { steps[s].classList.remove('on'); s = (s + 1) % steps.length; steps[s].classList.add('on') }, 2600)
+</script>
+</body>
+</html>
