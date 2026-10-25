@@ -288,6 +288,11 @@
     .sport-in { padding:200px 22px 28px; }
   }
 
+  .ava-photo { object-fit:cover; object-position:50% 20%; padding:0; }
+  .endo-photo { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:26px; margin-bottom:14px; box-shadow:0 20px 44px -30px rgba(11,61,74,.5); position:relative; }
+  .seminar { margin-top:18px; display:flex; gap:16px; align-items:center; background:var(--lime); border-radius:24px; padding:20px 24px; }
+  .seminar .ic { flex:none; width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,.6); display:flex; align-items:center; justify-content:center; }
+  .seminar p { margin:0; font-size:16px; line-height:1.5; color:var(--graphite); }
   .note { text-align:center; font-size:13px; color:var(--muted); padding:28px 24px 40px; }
 
   /* появление при прокрутке */
@@ -396,21 +401,21 @@
     </div>
     <div class="cards" id="cards">
       <article class="card rv" style="--d:.0s">
-        <img src="assets/back.jpg" alt="Женщина держится за поясницу" style="object-position:50% 50%">
+        <img src="assets/c-back.jpg" alt="Врач центра осматривает спину пациента" style="object-position:100% 50%">
         <span class="tag">Спина и шея</span>
-        <span class="spot" style="--x:40%; --y:44%"></span><span class="dot" style="--x:40%; --y:44%"></span>
+        
         <div class="card-body"><div><h3>Боль в спине и шее</h3><p>Грыжи, протрузии, остеохондроз. Невролог и мануальный терапевт.</p><span class="price">полный приём 8 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
       </article>
       <article class="card rv" style="--d:.08s">
-        <img src="assets/knee.jpg" alt="Человек держится за колено" style="object-position:35% 50%">
+        <img src="assets/c-knee.jpg" alt="Ортопед и реабилитолог работают с коленом пациента" style="object-position:50% 50%">
         <span class="tag">Суставы</span>
-        <span class="spot" style="--x:32%; --y:50%"></span><span class="dot" style="--x:32%; --y:50%"></span>
+        <span class="spot" style="--x:52%; --y:52%"></span><span class="dot" style="--x:52%; --y:52%"></span>
         <div class="card-body"><div><h3>Лечим суставы</h3><p>Колено, тазобедренный сустав. PRP, ударно-волновая терапия, ЛФК.</p><span class="price">приём ортопеда 3 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
       </article>
       <article class="card rv" style="--d:.16s">
-        <img src="assets/shoulder.jpg" alt="Ударно-волновая терапия плеча" style="object-position:50% 50%">
+        <img src="assets/c-shoulder.jpg" alt="Ударно-волновая терапия плеча в центре" style="object-position:0% 50%">
         <span class="tag">Плечо и кисть</span>
-        <span class="spot" style="--x:40%; --y:40%"></span><span class="dot" style="--x:40%; --y:40%"></span>
+        <span class="spot" style="--x:57%; --y:38%"></span><span class="dot" style="--x:57%; --y:38%"></span>
         <div class="card-body"><div><h3>Плечо и кисть</h3><p>После переломов и травм: разработка кисти, тейпирование, УВТ.</p><span class="price">приём ортопеда 3 000 ₽</span></div><button class="plus" type="button" aria-label="Подробнее">+</button></div>
       </article>
       <article class="card rv" style="--d:.24s">
@@ -463,9 +468,8 @@
       </ol>
     </div>
     <div class="scan rv" style="--d:.1s">
-      <img src="assets/spine.jpg" alt="Модель позвоночника на столе врача">
-      <span class="dot" style="--x:58%; --y:38%"></span>
-      <div class="label"><b>Принесите снимки МРТ</b> — врач разберёт их на приёме и объяснит простыми словами.</div>
+      <img src="assets/c-xray.jpg" alt="Врачи центра разбирают рентгеновский снимок" style="object-position:30% 50%">
+      <div class="label"><b>Снимки разбираем на приёме</b> — врач объяснит простыми словами, что на них видно.</div>
     </div>
   </div>
 </section>
@@ -550,11 +554,12 @@
     <div class="docs">
       <article class="doc rv"><div class="doc-top"><span class="ava" style="background:var(--teal);color:#fff">ХА</span><div><b>Хаджалов Абузар Магомедович</b><div class="role">Травматолог-ортопед, кистевой реабилитолог</div></div></div><p>Суставы, травмы, восстановление после операций, PRP.</p><div class="doc-bot"><strong>3 000 ₽</strong><button type="button">Записаться</button></div></article>
       <article class="doc rv" style="--d:.06s"><div class="doc-top"><span class="ava" style="background:var(--lime);color:var(--graphite)">КП</span><div><b>Куделя Павел Александрович</b><div class="role">Невролог, мануальный терапевт</div></div></div><p>Боль в спине и шее, грыжи, спортивные травмы.</p><div class="doc-bot"><strong>8 000 ₽ <small style="font-weight:500;color:var(--muted)">полный приём</small></strong><button type="button">Записаться</button></div></article>
-      <article class="doc rv" style="--d:.12s"><div class="doc-top"><span class="ava" style="background:var(--deep);color:var(--neon)">КА</span><div><b>Куделя Александр Павлович</b><div class="role">Эндоскопист высшей категории</div></div></div><p>Стаж более 30 лет. Гастроскопия и колоноскопия, в том числе во сне.</p><div class="doc-bot"><strong>от 3 600 ₽</strong><button type="button">Записаться</button></div></article>
-      <article class="doc rv"><div class="doc-top"><span class="ava" style="background:#FFE3D9;color:#8a3a24">МЭ</span><div><b>Мусаева Эльмира Ашурбеговна</b><div class="role">Инструктор ЛФК, методика СИАС</div></div></div><p>Сколиоз и осанка у детей и взрослых, детская ЛФК.</p><div class="doc-bot"><strong>2 500 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.12s"><div class="doc-top"><img class="ava ava-photo" src="assets/d-kudelya-a.jpg" alt="Куделя Александр Павлович"><div><b>Куделя Александр Павлович</b><div class="role">Эндоскопист высшей категории</div></div></div><p>Стаж 30 лет. Окончил ДГМИ, переподготовка по эндоскопии в ГНЦ колопроктологии (Москва). Гастроскопия и колоноскопия, в том числе во сне.</p><div class="doc-bot"><strong>от 3 600 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv"><div class="doc-top"><img class="ava ava-photo" src="assets/d-musaeva.jpg" alt="Мусаева Эльмира Ашурбеговна"><div><b>Мусаева Эльмира Ашурбеговна</b><div class="role">Инструктор ЛФК, методика СИАС</div></div></div><p>Лечебная гимнастика по методике СИАС: сколиоз и осанка у детей и взрослых, детская ЛФК.</p><div class="doc-bot"><strong>2 500 ₽</strong><button type="button">Записаться</button></div></article>
       <article class="doc rv" style="--d:.06s"><div class="doc-top"><span class="ava" style="background:#C9FBFF;color:var(--deep)">КЮ</span><div><b>Коваленко Юлия Анатольевна</b><div class="role">Специалист по ЛФК и массажу</div></div></div><p>Занятия с детьми с ДЦП, СИАС, массаж.</p><div class="doc-bot"><strong>от 2 000 ₽</strong><button type="button">Записаться</button></div></article>
-      <article class="doc rv" style="--d:.12s"><div class="doc-top"><span class="ava" style="background:#E9FFC2;color:#3d4a00">НА</span><div><b>Нажмудинова Айшат Абдурахмановна</b><div class="role">Терапевт-гастроэнтеролог</div></div></div><p>Желудок, кишечник, печень.</p><div class="doc-bot"><strong>3 000 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.12s"><div class="doc-top"><img class="ava ava-photo" src="assets/d-nazhmudinova.jpg" alt="Нажмудинова Айшат Абдурахмановна"><div><b>Нажмудинова Айшат Абдурахмановна</b><div class="role">Терапевт-гастроэнтеролог, гепатолог</div></div></div><p>Стаж 9 лет. Сеченовский университет, повышение квалификации по гастроэнтерологии и гепатологии. Желудок, кишечник, печень.</p><div class="doc-bot"><strong>3 000 ₽</strong><button type="button">Записаться</button></div></article>
     </div>
+    <div class="seminar rv"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg></span><p><b>Центр учит других врачей.</b> Павел Куделя проводит здесь авторские семинары по сухим иглам для специалистов, в центре проходил семинар KinesioCourse по кинезиотейпированию.</p></div>
   </div>
 </section>
 
@@ -586,12 +591,13 @@
         <p>Многие годами откладывают обследование, потому что страшно. Под седацией вы просто спите и ничего не чувствуете. Проводит эндоскопист высшей категории со стажем более 30 лет.</p>
         <button class="btn-deep" type="button">Записаться на обследование</button>
       </div>
+      <div><img class="endo-photo" src="assets/c-endo.jpg" alt="Эндоскопист центра проводит обследование">
       <div class="plist">
         <div><span>Гастроскопия под седацией</span><strong>6 000 ₽</strong></div>
         <div><span>Колоноскопия под седацией</span><strong>10 000 ₽</strong></div>
         <div><span>Оба обследования за один визит</span><strong>14 000 ₽</strong></div>
         <div><span>Гастроскопия без седации</span><strong>3 600 ₽</strong></div>
-      </div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -615,10 +621,10 @@
     <div class="orbit rv" aria-hidden="true">
       <span class="ava" style="left:4%;top:18%;background:var(--teal);color:#fff">ХА</span>
       <span class="ava" style="left:20%;top:66%;background:var(--lime);color:#212121;animation-delay:-1s">КП</span>
-      <span class="ava" style="left:30%;top:0;background:#C9FBFF;color:var(--deep);animation-delay:-2s">КА</span>
-      <span class="ava" style="right:30%;top:2%;background:#FFE3D9;color:#8a3a24;animation-delay:-3s">МЭ</span>
+      <img class="ava ava-photo" src="assets/d-kudelya-a.jpg" alt="" style="left:30%;top:0;animation-delay:-2s">
+      <img class="ava ava-photo" src="assets/d-musaeva.jpg" alt="" style="right:30%;top:2%;animation-delay:-3s">
       <span class="ava" style="right:18%;top:68%;background:#fff;color:var(--deep);animation-delay:-1.5s">КЮ</span>
-      <span class="ava" style="right:4%;top:22%;background:#E9FFC2;color:#3d4a00;animation-delay:-2.5s">НА</span>
+      <img class="ava ava-photo" src="assets/d-nazhmudinova.jpg" alt="" style="right:4%;top:22%;animation-delay:-2.5s">
       <button class="btn-main center" type="button" style="pointer-events:auto">Записаться на приём</button>
     </div>
     <div class="contacts">
@@ -636,7 +642,7 @@
   </div>
 </footer>
 
-<p class="note" style="background:var(--deep);color:rgba(255,255,255,.5);margin:0">Пример концепции. Фото людей — Unsplash, после съёмки заменим на реальных пациентов и врачей; фото кабинетов — центра. Цены — прайс клиники.</p>
+<p class="note" style="background:var(--deep);color:rgba(255,255,255,.5);margin:0">Пример концепции. Фото врачей, процедур и кабинетов — центра (фотосессия 2024 со старого сайта); фото на первом экране, «Стопа», «Реабилитация» и борьба — Unsplash. Цены — прайс клиники.</p>
 
 <script>
   // Подсказки заполняют поиск
