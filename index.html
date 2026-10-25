@@ -233,6 +233,61 @@
     .orbit .ava { width:48px; height:48px; font-size:15px; }
   }
 
+  /* ===== С чем работаем — список заболеваний со старого сайта, по зонам ===== */
+  .conds { margin-top:32px; background:#fff; border-radius:32px; padding:28px; box-shadow:0 20px 50px -34px rgba(11,61,74,.5); }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; }
+  .tab { height:44px; padding:0 18px; border-radius:999px; border:0; background:var(--ward); color:var(--deep); font-weight:600; font-size:15px; transition:background .2s, color .2s; }
+  .tab[aria-selected="true"] { background:var(--deep); color:#fff; }
+  .cond-list { margin:24px 0 0; padding:0; list-style:none; columns:3; column-gap:32px; }
+  .cond-list li { break-inside:avoid; padding:10px 0 10px 26px; position:relative; font-size:16px; border-bottom:1px solid #EEF4F5; }
+  .cond-list li::before { content:""; position:absolute; left:4px; top:17px; width:10px; height:10px; border-radius:50%; background:var(--pain); box-shadow:0 0 0 4px rgba(226,85,58,.15); }
+  .cond-foot { margin-top:20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; font-size:15px; color:var(--muted); }
+
+  /* ===== После курса вы сможете ===== */
+  .after { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+  .after div { border-radius:24px; padding:26px; display:flex; gap:16px; align-items:flex-start; font-size:19px; font-weight:600; color:var(--deep); line-height:1.3; }
+  .after div:nth-child(6n+1) { background:#C9FBFF; } .after div:nth-child(6n+2) { background:var(--lime); } .after div:nth-child(6n+3) { background:#FFE3D9; }
+  .after div:nth-child(6n+4) { background:#E9FFC2; } .after div:nth-child(6n+5) { background:#fff; } .after div:nth-child(6n+6) { background:#D7F1F5; }
+  .after svg { flex:none; margin-top:2px; }
+
+  /* все методики облаком */
+  .all-methods { margin-top:28px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .all-methods b { margin-right:6px; font-size:15px; color:var(--deep); }
+  .all-methods span { border-radius:999px; padding:8px 14px; font-size:14px; background:#fff; color:var(--deep); border:1px solid #D9ECEF; }
+
+  /* ===== Спортивная реабилитация ===== */
+  .sport { margin-top:96px; position:relative; border-radius:40px; overflow:hidden; color:#fff; min-height:520px; display:flex; align-items:flex-end; isolation:isolate; }
+  .sport img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; z-index:-2; }
+  .sport::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg, rgba(7,40,49,.94) 0%, rgba(7,40,49,.75) 40%, rgba(7,40,49,.15) 75%); }
+  .sport-in { padding:56px; max-width:640px; }
+  .sport .kicker { color:var(--lime); }
+  .sport h2 { color:#fff; }
+  .sport p { font-size:17px; line-height:1.55; color:rgba(255,255,255,.82); margin:16px 0 0; }
+  .sport ul { list-style:none; padding:0; margin:26px 0 0; display:grid; gap:10px; }
+  .sport li { display:flex; gap:12px; align-items:center; font-weight:600; font-size:17px; }
+  .sport li::before { content:""; flex:none; width:26px; height:26px; border-radius:50%; background:var(--lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23212121' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center/14px no-repeat; }
+
+  /* ===== Гарантия профессионализма ===== */
+  .guar { margin-top:18px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }
+  .guar div { background:#fff; border-radius:22px; padding:22px; box-shadow:0 14px 34px -26px rgba(11,61,74,.5); }
+  .guar b { display:block; font-size:17px; color:var(--deep); }
+  .guar p { margin:6px 0 0; font-size:14px; line-height:1.5; color:var(--muted); }
+
+  @media (max-width: 1080px) {
+    .cond-list { columns:2; } .after, .guar { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 720px) {
+    .conds { padding:18px; border-radius:24px; }
+    .tabs { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin:0 -4px; padding:0 4px; }
+    .tab { flex:none; }
+    .cond-list { columns:1; }
+    .after, .guar { grid-template-columns:1fr; }
+    .after div { font-size:17px; padding:20px; }
+    .sport { margin-top:64px; border-radius:28px; min-height:auto; }
+    .sport::after { background:linear-gradient(180deg, rgba(7,40,49,.2) 0%, rgba(7,40,49,.85) 45%, rgba(7,40,49,.96) 100%); }
+    .sport-in { padding:200px 22px 28px; }
+  }
+
   .note { text-align:center; font-size:13px; color:var(--muted); padding:28px 24px 40px; }
 
   /* появление при прокрутке */
@@ -282,7 +337,7 @@
     <nav class="nav" aria-label="Основное меню">
       <a class="logo" href="#"><img src="assets/logo-dark.png" alt="Орто-Рекавери"></a>
       <div class="nav-links">
-        <a href="#where">Направления</a><a href="#how">Как лечим</a><a href="#doctors">Врачи</a><a href="#methods">Цены</a><a href="#contacts">Контакты</a>
+        <a href="#where">Направления</a><a href="#conditions">Что лечим</a><a href="#how">Как лечим</a><a href="#doctors">Врачи</a><a href="#methods">Цены</a><a href="#contacts">Контакты</a>
       </div>
       <div class="nav-right">
         <a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
@@ -373,16 +428,38 @@
   </div>
 </section>
 
+
+<section class="sec" id="conditions" style="padding-top:56px">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">С чем работаем</p><h2>Травмы и заболевания, которые мы лечим</h2></div></div>
+    <div class="conds rv">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-tab="spine">Позвоночник</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="knee">Колено и таз</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="shoulder">Плечо и рука</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="foot">Стопа и голеностоп</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="lfk">Осанка и ЛФК</button>
+      </div>
+      <ul class="cond-list" data-panel="spine"><li>Грыжи и протрузии межпозвоночных дисков</li><li>Разрыв межпозвоночного диска</li><li>Остеохондроз позвоночника</li><li>Корешковый синдром</li><li>Спондилолистез</li><li>Компрессионный перелом позвоночника</li><li>Переломы тел, отростков и дуг позвонков</li><li>Переломо-вывихи позвонков</li><li>Ушиб и сотрясение спинного мозга</li></ul>
+      <ul class="cond-list" data-panel="knee" hidden><li>Повреждение передней крестообразной связки (ПКС)</li><li>Повреждение задней крестообразной связки</li><li>Резекция и шов мениска</li><li>Переломы и вывихи надколенника</li><li>Вывихи коленного сустава</li><li>Артроз тазобедренного сустава</li><li>Вывих тазобедренного сустава</li><li>Перелом шейки бедра</li><li>Повреждение вертлужной губы</li></ul>
+      <ul class="cond-list" data-panel="shoulder" hidden><li>Вывих плеча</li><li>Травмы вращательной (ротаторной) манжеты</li><li>Перелом лопатки, ключицы, плечевой кости</li><li>Артроз плечевого сустава</li><li>Синдром верхней апертуры</li><li>Травмы бицепса, трицепса и дельты</li><li>Растяжения связок и надрывы мышц</li><li>Восстановление кисти после переломов и операций</li></ul>
+      <ul class="cond-list" data-panel="foot" hidden><li>Повреждение связок голеностопа</li><li>Перелом пяточной кости</li><li>Перелом таранной кости</li><li>Переломы плюсневых костей и пальцев стопы</li><li>Подошвенный фасциит, пяточная шпора</li><li>Плоскостопие и косолапость</li></ul>
+      <ul class="cond-list" data-panel="lfk" hidden><li>Сколиоз и нарушения осанки</li><li>Боли в спине неясного происхождения</li><li>Сложные переломы костей</li><li>Артрозы с ограничением движений</li><li>Травмы спинного мозга</li><li>Занятия с детьми с ДЦП</li></ul>
+      <div class="cond-foot"><span>Не нашли свой диагноз? Напишите — администратор подскажет, к какому врачу идти.</span><button class="btn-deep" type="button" style="margin:0">Спросить администратора</button></div>
+    </div>
+  </div>
+</section>
+
 <section class="dark" id="how">
   <div class="wrap dark-grid">
     <div class="rv">
       <p class="kicker">Как лечим</p>
       <h2>Сначала причина — потом лечение</h2>
       <ol class="steps">
-        <li class="on"><b>Осмотр и тесты</b><span>Врач смотрит снимки, проверяет подвижность и находит, откуда идёт боль.</span></li>
+        <li class="on"><b>Консультация и осмотр</b><span>Врач смотрит снимки, проверяет подвижность и объясняет, откуда идёт боль. В сложных случаях — консилиум специалистов.</span></li>
         <li><b>План с ценой</b><span>Объясняем, какие процедуры нужны и сколько это стоит — до начала лечения.</span></li>
         <li><b>Процедуры и ЛФК</b><span>УВТ, PRP, массаж, лечебная физкультура — в одном центре.</span></li>
-        <li><b>Контроль результата</b><span>Повторный осмотр и упражнения, чтобы боль не вернулась.</span></li>
+        <li><b>Контроль и домашний план</b><span>Повторный осмотр и план домашних занятий, чтобы боль не вернулась.</span></li>
       </ol>
     </div>
     <div class="scan rv" style="--d:.1s">
@@ -393,6 +470,21 @@
   </div>
 </section>
 
+
+
+<section class="sec" id="after">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Ради чего всё это</p><h2>После курса лечения вы сможете</h2></div></div>
+    <div class="after">
+      <div class="rv"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Жить и работать, не отвлекаясь на боль</div>
+      <div class="rv" style="--d:.06s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Вернуться к тренировкам и спорту</div>
+      <div class="rv" style="--d:.12s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Водить машину без боли в стопе</div>
+      <div class="rv"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Носить любимую обувь</div>
+      <div class="rv" style="--d:.06s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Ходить и бегать без боли</div>
+      <div class="rv" style="--d:.12s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Перестать жить мыслями о болезни</div>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="methods">
   <div class="wrap">
@@ -432,6 +524,23 @@
         <div><h3>Стельки Formthotics</h3><p>Взрослые и детские</p><span class="pr" style="color:var(--deep)">от 9 500 ₽</span></div>
       </article>
     </div>
+    <div class="all-methods rv"><b>Все 23 методики:</b><span>Ударно-волновая терапия</span><span>Магнитотерапия</span><span>Магнит высокой интенсивности</span><span>Ультразвуковая терапия</span><span>Электромиостимуляция</span><span>Холодный лазер</span><span>Комбинированная терапия</span><span>Электротерапия</span><span>Транскраниальная электростимуляция</span><span>Лечебная физкультура</span><span>Спортивная медицина</span><span>Мануальная терапия</span><span>Массаж</span><span>FDM-терапия</span><span>Вибро-перкуссионная терапия</span><span>Иглорефлексотерапия</span><span>Кинезиотейпирование</span><span>Лечение сколиоза по методике СИАС</span><span>Вакуумный массаж</span><span>Электроакупунктура</span><span>Сухие иглы</span><span>PRP-терапия</span><span>Плазмотерапия</span></div>
+  </div>
+</section>
+
+
+<section id="sport">
+  <div class="wrap">
+    <div class="sport rv">
+      <img src="assets/sport.jpg" alt="Борцы на ковре во время схватки">
+      <div class="sport-in">
+        <p class="kicker">Спортивная реабилитация</p>
+        <h2>Вернуться на ковёр после травмы</h2>
+        <p>Выстроенная программа восстановления для спортсменов: без осложнений и с быстрым возвратом к привычным тренировкам.</p>
+        <ul><li>Полная подвижность в суставе</li><li>Сила травмированного участка</li><li>Психологическая готовность к нагрузкам</li></ul>
+        <button class="btn-main" type="button" style="margin-top:28px">Записаться на реабилитацию</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -456,6 +565,13 @@
       <article class="stat rv"><div><div class="num">5,0<small>2ГИС</small></div><div class="cap">121 оценка пациентов</div><div class="grid121" id="g121" aria-hidden="true"></div></div><a href="https://2gis.ru/makhachkala/firm/70000001060465369/tab/reviews" target="_blank" rel="noreferrer">Читать отзывы в 2ГИС →</a></article>
       <article class="stat rv" style="--d:.08s"><div><div class="num">4,9<small>Яндекс</small></div><div class="cap">рейтинг на Яндекс Картах</div><div class="stars-big" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div></div><a href="https://yandex.ru/maps/org/orto_rekaveri/20949908898/reviews/" target="_blank" rel="noreferrer">Читать отзывы на Яндексе →</a></article>
       <article class="stat rv" style="--d:.16s"><div><div class="num">6<small>специалистов</small></div><div class="cap">ортопед, невролог, эндоскопист, гастроэнтеролог, реабилитологи</div><div class="team" aria-hidden="true"><span style="background:var(--teal);color:#fff">ХА</span><span style="background:var(--lime);color:#212121">КП</span><span style="background:#C9FBFF;color:var(--deep)">КА</span><span style="background:#FFE3D9;color:#8a3a24">МЭ</span><span style="background:#fff;color:var(--deep)">КЮ</span><span style="background:#E9FFC2;color:#3d4a00">НА</span></div></div><a href="#doctors">Познакомиться →</a></article>
+    </div>
+
+    <div class="guar">
+      <div class="rv"><b>Доказательная медицина</b><p>Применяем методы, доказавшие свою эффективность и безопасность.</p></div>
+      <div class="rv" style="--d:.06s"><b>Лицензия Минздрава</b><p>Зарегистрированное медицинское учреждение с необходимыми лицензиями.</p></div>
+      <div class="rv" style="--d:.12s"><b>Без операций</b><p>Осторожный подход: только безоперационные методы восстановления.</p></div>
+      <div class="rv" style="--d:.18s"><b>Консилиум врачей</b><p>В сложных случаях вас посмотрят несколько специалистов центра, чтобы поставить точный диагноз.</p></div>
     </div>
   </div>
 </section>
@@ -541,6 +657,11 @@
   const fill = () => dots.forEach((d, i) => setTimeout(() => d.classList.add('on'), i * 12))
   if (location.hash === '#all') dots.forEach((d) => d.classList.add('on'))
   else new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { fill(); o.disconnect() } })).observe(g)
+  // Вкладки «С чем работаем»
+  document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach((x) => x.setAttribute('aria-selected', String(x === t)))
+    document.querySelectorAll('.cond-list').forEach((l) => { l.hidden = l.dataset.panel !== t.dataset.tab })
+  }))
   // Шаги «Как лечим» подсвечиваются по очереди
   const steps = [...document.querySelectorAll('.steps li')]
   let s = 0
