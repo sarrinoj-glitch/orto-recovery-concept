@@ -128,6 +128,111 @@
   .scan .label { position:absolute; left:20px; bottom:20px; background:rgba(11,61,74,.82); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.15); border-radius:18px; padding:14px 16px; font-size:14px; line-height:1.45; max-width:300px; }
   .scan .label b { color:var(--lime); }
 
+
+  /* ===== Методы: бенто с реальными фото кабинетов (идея Biruev «современные методы») ===== */
+  .bento { margin-top:36px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); grid-auto-rows:220px; gap:16px; }
+  .tile { position:relative; border-radius:26px; overflow:hidden; padding:22px; display:flex; flex-direction:column; justify-content:space-between; isolation:isolate; transition:transform .3s ease; }
+  .tile:hover { transform:translateY(-4px); }
+  .tile h3 { margin:0; font-size:21px; font-weight:700; letter-spacing:-.02em; line-height:1.15; }
+  .tile p { margin:6px 0 0; font-size:14px; line-height:1.45; }
+  .tile .pr { font-weight:700; font-size:22px; letter-spacing:-.02em; }
+  .tile.photo { color:#fff; }
+  .tile.photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition:transform .6s ease; }
+  .tile.photo:hover img { transform:scale(1.05); }
+  .tile.photo::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(7,40,49,.05) 30%, rgba(7,40,49,.85) 100%); }
+  .tile.photo p { color:rgba(255,255,255,.82); }
+  .tile.photo .pr { color:var(--neon); }
+  .tile.big { grid-column:span 2; grid-row:span 2; }
+  .tile.wide { grid-column:span 2; }
+  .t-lime { background:var(--lime); } .t-neon { background:#C9FBFF; } .t-deep { background:var(--deep); color:#fff; } .t-deep p { color:rgba(255,255,255,.72); } .t-deep .pr { color:var(--lime); }
+  .t-coral { background:#FFE3D9; } .t-white { background:#fff; box-shadow:0 14px 34px -24px rgba(11,61,74,.5); }
+  .tile .ic { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.6); }
+  .t-deep .ic { background:rgba(255,255,255,.1); }
+
+  /* ===== Врачи (Biruev «Специалисты — главная ценность», карточки в духе Hinge) ===== */
+  .docs { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; }
+  .doc { background:#fff; border-radius:26px; padding:22px; display:flex; flex-direction:column; gap:14px; box-shadow:0 18px 40px -30px rgba(11,61,74,.55); transition:transform .3s ease, box-shadow .3s ease; }
+  .doc:hover { transform:translateY(-4px); box-shadow:0 26px 50px -30px rgba(11,61,74,.65); }
+  .doc-top { display:flex; gap:14px; align-items:center; }
+  .ava { flex:none; width:64px; height:64px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; }
+  .doc b { display:block; font-size:17px; line-height:1.25; color:var(--deep); }
+  .doc .role { font-size:13px; color:var(--teal); font-weight:500; margin-top:3px; }
+  .doc p { margin:0; font-size:14px; line-height:1.5; color:var(--muted); flex:1; }
+  .doc-bot { display:flex; align-items:center; justify-content:space-between; border-top:1px solid #E6F0F2; padding-top:14px; }
+  .doc-bot strong { font-size:16px; color:var(--deep); }
+  .doc-bot button { height:40px; padding:0 16px; border-radius:12px; border:0; background:var(--ward); color:var(--deep); font-weight:600; transition:background .2s; }
+  .doc:hover .doc-bot button { background:var(--lime); }
+
+  /* ===== Цифры (Hinge «Clinically proven»: тёмные карточки с визуализацией) ===== */
+  .stats { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; }
+  .stat { background:var(--deep); color:#fff; border-radius:26px; padding:26px; min-height:250px; gap:22px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; }
+  .stat .num { font-size:58px; font-weight:800; letter-spacing:-.04em; line-height:1; }
+  .stat .num small { font-size:20px; font-weight:600; letter-spacing:0; color:var(--neon); margin-left:6px; }
+  .stat .cap { margin-top:8px; font-size:15px; color:rgba(255,255,255,.75); }
+  .grid121 { display:grid; grid-template-columns:repeat(22, 1fr); gap:4px; margin-top:18px; }
+  .grid121 i { aspect-ratio:1; border-radius:50%; background:rgba(72,246,255,.22); }
+  .grid121 i.on { background:var(--neon); }
+  .stars-big { display:flex; gap:6px; margin-top:18px; font-size:30px; color:var(--lime); }
+  .stars-big span:last-child { background:linear-gradient(90deg, var(--lime) 90%, rgba(242,255,89,.25) 90%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .team { display:flex; margin-top:18px; }
+  .team span { width:46px; height:46px; border-radius:50%; margin-left:-10px; border:3px solid var(--deep); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; }
+  .team span:first-child { margin-left:0; }
+  .stat a { color:var(--neon); font-size:14px; font-weight:600; }
+
+  /* ===== Обследование во сне ===== */
+  .sleep { margin-top:96px; border-radius:40px; background:linear-gradient(120deg, #C9FBFF 0%, #E9FFC2 100%); padding:56px; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:48px; align-items:center; position:relative; overflow:hidden; }
+  .sleep .moon { position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%; background:rgba(255,255,255,.5); }
+  .sleep h2 { margin-top:12px; }
+  .sleep p { font-size:17px; line-height:1.55; color:#36464b; margin:16px 0 0; }
+  .plist { background:#fff; border-radius:26px; padding:8px 22px; position:relative; box-shadow:0 20px 44px -30px rgba(11,61,74,.5); }
+  .plist div { display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid #E6F0F2; font-size:16px; }
+  .plist div:last-child { border-bottom:0; }
+  .plist strong { color:var(--deep); white-space:nowrap; }
+  .btn-deep { margin-top:24px; height:54px; padding:0 26px; border-radius:999px; border:0; background:var(--deep); color:#fff; font-weight:700; font-size:16px; }
+
+  /* ===== Удобства ===== */
+  .perks { margin-top:36px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }
+  .perk { border-radius:24px; padding:24px; background:#fff; box-shadow:0 14px 34px -26px rgba(11,61,74,.5); }
+  .perk .ic { width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .perk b { display:block; font-size:18px; color:var(--deep); line-height:1.25; }
+  .perk p { margin:8px 0 0; font-size:14px; line-height:1.5; color:var(--muted); }
+
+  /* ===== Финал (Hinge «A life with less pain starts here») ===== */
+  .final { margin-top:96px; background:var(--deep); color:#fff; border-radius:48px 48px 0 0; padding:96px 0 40px; position:relative; overflow:hidden; text-align:center; }
+  .final h2 { color:#fff; max-width:820px; margin:0 auto; }
+  .final h2 em { font-style:normal; color:var(--lime); }
+  .orbit { position:relative; width:min(520px, 100%); height:250px; margin:36px auto 0; }
+  .orbit .ava { position:absolute; width:58px; height:58px; border-radius:50%; border:3px solid var(--deep); animation:float 5s ease-in-out infinite; }
+  @keyframes float { 50% { transform:translateY(-8px); } }
+  .orbit .center { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); }
+  .contacts { margin-top:56px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:20px; text-align:left; }
+  .cbox { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:28px; }
+  .cbox dl { margin:0; display:grid; gap:16px; }
+  .cbox dt { font-size:13px; color:rgba(255,255,255,.6); }
+  .cbox dd { margin:3px 0 0; font-size:17px; line-height:1.45; }
+  .cbox dd a { color:var(--neon); }
+  .map { border-radius:28px; overflow:hidden; min-height:340px; background:#0E4D5D; }
+  .map iframe { width:100%; height:100%; min-height:340px; border:0; display:block; filter:saturate(.85); }
+  .legal { margin-top:40px; font-size:12px; color:rgba(255,255,255,.5); }
+
+  @media (max-width: 1080px) {
+    .bento { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .docs, .stats { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .perks { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .sleep { grid-template-columns:1fr; padding:40px; }
+  }
+  @media (max-width: 720px) {
+    .bento { grid-template-columns:1fr; grid-auto-rows:180px; }
+    .tile.big { grid-column:auto; grid-row:span 2; }
+    .tile.wide { grid-column:auto; }
+    .docs, .stats, .perks, .contacts { grid-template-columns:1fr; }
+    .all-docs { display:none !important; }
+    .sleep { margin-top:64px; padding:28px 20px; border-radius:28px; }
+    .final { margin-top:64px; border-radius:32px 32px 0 0; padding:64px 0 32px; }
+    .orbit { height:210px; }
+    .orbit .ava { width:48px; height:48px; font-size:15px; }
+  }
+
   .note { text-align:center; font-size:13px; color:var(--muted); padding:28px 24px 40px; }
 
   /* появление при прокрутке */
@@ -177,7 +282,7 @@
     <nav class="nav" aria-label="Основное меню">
       <a class="logo" href="#"><img src="assets/logo-dark.png" alt="Орто-Рекавери"></a>
       <div class="nav-links">
-        <a href="#where">Направления</a><a href="#how">Как лечим</a><a href="#">Врачи</a><a href="#">Цены</a><a href="#">Контакты</a>
+        <a href="#where">Направления</a><a href="#how">Как лечим</a><a href="#doctors">Врачи</a><a href="#methods">Цены</a><a href="#contacts">Контакты</a>
       </div>
       <div class="nav-right">
         <a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
@@ -288,7 +393,134 @@
   </div>
 </section>
 
-<p class="note">Пример концепции первого экрана. Фото — Unsplash, после съёмки заменим на реальных пациентов и врачей центра. Цены — прайс клиники.</p>
+
+<section class="sec" id="methods">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Методы лечения</p><h2>Всё лечение — в одном центре</h2></div></div>
+    <div class="bento">
+      <article class="tile photo big rv">
+        <img src="assets/room.jpg" alt="Кабинет лечебной физкультуры центра">
+        <span class="tag" style="position:static;align-self:flex-start;background:var(--lime);color:var(--graphite);border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600">наш кабинет ЛФК</span>
+        <div><h3>Лечебная физкультура</h3><p>Индивидуально 60 минут, со взрослыми и детьми. Гимнастика при сколиозе по методике СИАС.</p><span class="pr">2 500 ₽</span></div>
+      </article>
+      <article class="tile t-lime rv" style="--d:.05s">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg></span>
+        <div><h3>Ударно-волновая терапия</h3><p>Пяточная шпора, плечо, локоть, спина</p><span class="pr">3 000 ₽</span></div>
+      </article>
+      <article class="tile t-deep rv" style="--d:.1s">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F2FF59" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10z"/></svg></span>
+        <div><h3>PRP-терапия</h3><p>Для суставов и связок</p><span class="pr">10 500 ₽</span></div>
+      </article>
+      <article class="tile photo rv" style="--d:.15s">
+        <img src="assets/physio.jpg" alt="Аппарат электромиостимуляции">
+        <span></span><div><h3>Электромиостимуляция</h3><span class="pr">1 500 ₽</span></div>
+      </article>
+      <article class="tile photo rv" style="--d:.2s">
+        <img src="assets/press.jpg" alt="Аппарат прессотерапии">
+        <span></span><div><h3>Прессотерапия</h3><span class="pr">1 500 ₽</span></div>
+      </article>
+      <article class="tile t-coral wide rv" style="--d:.1s">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C2563A" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg></span>
+        <div><h3>Гиалуроновая кислота и блокады</h3><p>Введение в сустав или блокада позвоночника — по назначению врача</p><span class="pr">3 000 ₽</span></div>
+      </article>
+      <article class="tile t-neon rv" style="--d:.15s">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#177E96" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20 20 4M7 4h13v13"/></svg></span>
+        <div><h3>Магнит с лазером</h3><p>Высокоинтенсивная магнитотерапия</p><span class="pr">2 000 ₽</span></div>
+      </article>
+      <article class="tile t-white rv" style="--d:.2s">
+        <span class="ic" style="background:var(--ward)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#177E96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3c-2 4-2 9 0 13 1 2 3 3 5 3h4a2 2 0 0 0 0-4h-3"/></svg></span>
+        <div><h3>Стельки Formthotics</h3><p>Взрослые и детские</p><span class="pr" style="color:var(--deep)">от 9 500 ₽</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="doctors">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Специалисты</p><h2>Врачи, которые ведут лечение</h2></div><a class="btn-white all-docs" style="display:inline-flex;align-items:center;background:#fff;color:var(--deep);box-shadow:0 8px 20px -10px rgba(11,61,74,.4)" href="#">Все врачи</a></div>
+    <div class="docs">
+      <article class="doc rv"><div class="doc-top"><span class="ava" style="background:var(--teal);color:#fff">ХА</span><div><b>Хаджалов Абузар Магомедович</b><div class="role">Травматолог-ортопед, кистевой реабилитолог</div></div></div><p>Суставы, травмы, восстановление после операций, PRP.</p><div class="doc-bot"><strong>3 000 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.06s"><div class="doc-top"><span class="ava" style="background:var(--lime);color:var(--graphite)">КП</span><div><b>Куделя Павел Александрович</b><div class="role">Невролог, мануальный терапевт</div></div></div><p>Боль в спине и шее, грыжи, спортивные травмы.</p><div class="doc-bot"><strong>8 000 ₽ <small style="font-weight:500;color:var(--muted)">полный приём</small></strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.12s"><div class="doc-top"><span class="ava" style="background:var(--deep);color:var(--neon)">КА</span><div><b>Куделя Александр Павлович</b><div class="role">Эндоскопист высшей категории</div></div></div><p>Стаж более 30 лет. Гастроскопия и колоноскопия, в том числе во сне.</p><div class="doc-bot"><strong>от 3 600 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv"><div class="doc-top"><span class="ava" style="background:#FFE3D9;color:#8a3a24">МЭ</span><div><b>Мусаева Эльмира Ашурбеговна</b><div class="role">Инструктор ЛФК, методика СИАС</div></div></div><p>Сколиоз и осанка у детей и взрослых, детская ЛФК.</p><div class="doc-bot"><strong>2 500 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.06s"><div class="doc-top"><span class="ava" style="background:#C9FBFF;color:var(--deep)">КЮ</span><div><b>Коваленко Юлия Анатольевна</b><div class="role">Специалист по ЛФК и массажу</div></div></div><p>Занятия с детьми с ДЦП, СИАС, массаж.</p><div class="doc-bot"><strong>от 2 000 ₽</strong><button type="button">Записаться</button></div></article>
+      <article class="doc rv" style="--d:.12s"><div class="doc-top"><span class="ava" style="background:#E9FFC2;color:#3d4a00">НА</span><div><b>Нажмудинова Айшат Абдурахмановна</b><div class="role">Терапевт-гастроэнтеролог</div></div></div><p>Желудок, кишечник, печень.</p><div class="doc-bot"><strong>3 000 ₽</strong><button type="button">Записаться</button></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="trust">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Нам доверяют</p><h2>Отзывы живут на независимых площадках</h2></div></div>
+    <div class="stats">
+      <article class="stat rv"><div><div class="num">5,0<small>2ГИС</small></div><div class="cap">121 оценка пациентов</div><div class="grid121" id="g121" aria-hidden="true"></div></div><a href="https://2gis.ru/makhachkala/firm/70000001060465369/tab/reviews" target="_blank" rel="noreferrer">Читать отзывы в 2ГИС →</a></article>
+      <article class="stat rv" style="--d:.08s"><div><div class="num">4,9<small>Яндекс</small></div><div class="cap">рейтинг на Яндекс Картах</div><div class="stars-big" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div></div><a href="https://yandex.ru/maps/org/orto_rekaveri/20949908898/reviews/" target="_blank" rel="noreferrer">Читать отзывы на Яндексе →</a></article>
+      <article class="stat rv" style="--d:.16s"><div><div class="num">6<small>специалистов</small></div><div class="cap">ортопед, невролог, эндоскопист, гастроэнтеролог, реабилитологи</div><div class="team" aria-hidden="true"><span style="background:var(--teal);color:#fff">ХА</span><span style="background:var(--lime);color:#212121">КП</span><span style="background:#C9FBFF;color:var(--deep)">КА</span><span style="background:#FFE3D9;color:#8a3a24">МЭ</span><span style="background:#fff;color:var(--deep)">КЮ</span><span style="background:#E9FFC2;color:#3d4a00">НА</span></div></div><a href="#doctors">Познакомиться →</a></article>
+    </div>
+  </div>
+</section>
+
+<section id="sleep">
+  <div class="wrap">
+    <div class="sleep rv">
+      <span class="moon" aria-hidden="true"></span>
+      <div style="position:relative">
+        <p class="kicker" style="color:var(--teal)">Эндоскопия</p>
+        <h2>Гастроскопия и колоноскопия во сне</h2>
+        <p>Многие годами откладывают обследование, потому что страшно. Под седацией вы просто спите и ничего не чувствуете. Проводит эндоскопист высшей категории со стажем более 30 лет.</p>
+        <button class="btn-deep" type="button">Записаться на обследование</button>
+      </div>
+      <div class="plist">
+        <div><span>Гастроскопия под седацией</span><strong>6 000 ₽</strong></div>
+        <div><span>Колоноскопия под седацией</span><strong>10 000 ₽</strong></div>
+        <div><span>Оба обследования за один визит</span><strong>14 000 ₽</strong></div>
+        <div><span>Гастроскопия без седации</span><strong>3 600 ₽</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="perks">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Удобно</p><h2>Чтобы лечение было по силам</h2></div></div>
+    <div class="perks">
+      <article class="perk rv"><span class="ic" style="background:#C9FBFF"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#177E96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></span><b>Реабилитолог на дом</b><p>Если после операции или травмы тяжело выходить из дома. Приём —&nbsp;4&nbsp;000&nbsp;₽.</p></article>
+      <article class="perk rv" style="--d:.06s"><span class="ic" style="background:var(--lime)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M3 10h18"/></svg></span><b>Рассрочка без переплат</b><p>Курс лечения можно оплатить частями. Условия подскажет администратор.</p></article>
+      <article class="perk rv" style="--d:.12s"><span class="ic" style="background:#FFE3D9"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C2563A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h4"/></svg></span><b>Налоговый вычет 13%</b><p>Выдадим справку для налоговой — часть расходов на лечение вернётся.</p></article>
+      <article class="perk rv" style="--d:.18s"><span class="ic" style="background:#E9FFC2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d4a00" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M15 20c0-2 1-4 4-4"/></svg></span><b>Взрослые и дети</b><p>Детская ЛФК, СИАС при сколиозе, занятия при ДЦП, Войта-терапия.</p></article>
+    </div>
+  </div>
+</section>
+
+<footer class="final" id="contacts">
+  <div class="wrap">
+    <p class="kicker rv" style="color:var(--neon)">Запись</p>
+    <h2 class="rv">Жизнь без боли начинается <em>с&nbsp;одного приёма</em></h2>
+    <div class="orbit rv" aria-hidden="true">
+      <span class="ava" style="left:4%;top:18%;background:var(--teal);color:#fff">ХА</span>
+      <span class="ava" style="left:20%;top:66%;background:var(--lime);color:#212121;animation-delay:-1s">КП</span>
+      <span class="ava" style="left:30%;top:0;background:#C9FBFF;color:var(--deep);animation-delay:-2s">КА</span>
+      <span class="ava" style="right:30%;top:2%;background:#FFE3D9;color:#8a3a24;animation-delay:-3s">МЭ</span>
+      <span class="ava" style="right:18%;top:68%;background:#fff;color:var(--deep);animation-delay:-1.5s">КЮ</span>
+      <span class="ava" style="right:4%;top:22%;background:#E9FFC2;color:#3d4a00;animation-delay:-2.5s">НА</span>
+      <button class="btn-main center" type="button" style="pointer-events:auto">Записаться на приём</button>
+    </div>
+    <div class="contacts">
+      <div class="cbox rv">
+        <dl>
+          <div><dt>Адрес</dt><dd>Махачкала, проспект Имама Шамиля, 35А, 1 этаж</dd></div>
+          <div><dt>Как найти</dt><dd>Вход за шлагбаумом, рядом санаторий «Тарнаир». Остановка «Источник Тарнаир». Есть пандус и парковка.</dd></div>
+          <div><dt>Часы работы</dt><dd>Пн–Пт 9:00–18:00, Сб 9:00–16:00</dd></div>
+          <div><dt>Телефон и WhatsApp</dt><dd><a href="tel:+78722522333">+7 (8722) 52-23-33</a> · <a href="https://wa.me/79883011805" target="_blank" rel="noreferrer">+7 (988) 301-18-05</a></dd></div>
+        </dl>
+      </div>
+      <div class="map rv" style="--d:.08s"><iframe title="Орто-Рекавери на карте" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=47.498081%2C42.965856&z=17&pt=47.498081%2C42.965856%2Cpm2rdm"></iframe></div>
+    </div>
+    <p class="legal">ООО ЦВМ «ОРТО-РЕКАВЕРИ» · ИНН 0572029293 · ОГРН 1210500012392 · Имеются противопоказания, необходима консультация специалиста.</p>
+  </div>
+</footer>
+
+<p class="note" style="background:var(--deep);color:rgba(255,255,255,.5);margin:0">Пример концепции. Фото людей — Unsplash, после съёмки заменим на реальных пациентов и врачей; фото кабинетов — центра. Цены — прайс клиники.</p>
 
 <script>
   // Подсказки заполняют поиск
@@ -302,6 +534,13 @@
   // Появление при прокрутке
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { threshold: .15 })
   document.querySelectorAll('.rv').forEach((el) => location.hash === '#all' ? el.classList.add('in') : io.observe(el))
+  // 121 точка = 121 оценка в 2ГИС, загораются по очереди
+  const g = document.getElementById('g121')
+  for (let i = 0; i < 121; i++) { const d = document.createElement('i'); g.appendChild(d) }
+  const dots = [...g.children]
+  const fill = () => dots.forEach((d, i) => setTimeout(() => d.classList.add('on'), i * 12))
+  if (location.hash === '#all') dots.forEach((d) => d.classList.add('on'))
+  else new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { fill(); o.disconnect() } })).observe(g)
   // Шаги «Как лечим» подсвечиваются по очереди
   const steps = [...document.querySelectorAll('.steps li')]
   let s = 0
