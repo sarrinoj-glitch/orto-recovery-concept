@@ -268,7 +268,7 @@
   .sport li::before { content:""; flex:none; width:26px; height:26px; border-radius:50%; background:var(--lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23212121' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center/14px no-repeat; }
 
   /* ===== Гарантия профессионализма ===== */
-  .guar { margin-top:18px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }
+  .guar { margin-top:18px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
   .guar div { background:#fff; border-radius:22px; padding:22px; box-shadow:0 14px 34px -26px rgba(11,61,74,.5); }
   .guar b { display:block; font-size:17px; color:var(--deep); }
   .guar p { margin:6px 0 0; font-size:14px; line-height:1.5; color:var(--muted); }
@@ -293,6 +293,215 @@
   .seminar { margin-top:18px; display:flex; gap:16px; align-items:center; background:var(--lime); border-radius:24px; padding:20px 24px; }
   .seminar .ic { flex:none; width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,.6); display:flex; align-items:center; justify-content:center; }
   .seminar p { margin:0; font-size:16px; line-height:1.5; color:var(--graphite); }
+  /* ===== Мега-меню ===== */
+  .nav-links { align-items:center; }
+  .mm { position:relative; }
+  .mm > button { background:none; border:0; color:inherit; font-weight:500; font-size:15px; opacity:.9; padding:0; display:inline-flex; align-items:center; gap:6px; }
+  .mm-panel { position:absolute; left:-24px; top:calc(100% + 14px); width:720px; background:#fff; color:var(--graphite); border-radius:24px; padding:24px; box-shadow:0 30px 60px -20px rgba(7,40,49,.45); display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .2s, transform .2s, visibility .2s; z-index:20; }
+  .mm:hover .mm-panel, .mm:focus-within .mm-panel { opacity:1; visibility:visible; transform:none; }
+  .mm-panel b { display:block; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); font-family:Unbounded, Onest, sans-serif; font-weight:500; margin-bottom:10px; }
+  .mm-panel a { display:flex; justify-content:space-between; gap:10px; padding:7px 0; font-size:14px; border-bottom:1px solid #EEF4F5; opacity:1 !important; text-decoration:none !important; }
+  .mm-panel a span { color:var(--muted); white-space:nowrap; }
+  .mm-panel a:hover { color:var(--teal); }
+
+  /* место под материалы клиники */
+  .need { border:2px dashed rgba(23,126,150,.45); background:repeating-linear-gradient(135deg, rgba(23,126,150,.04) 0 12px, transparent 12px 24px); border-radius:26px; padding:24px; color:var(--deep); display:flex; flex-direction:column; gap:10px; }
+  .need .need-tag { align-self:flex-start; background:var(--graphite); color:var(--lime); font-size:12px; font-weight:700; border-radius:999px; padding:5px 11px; letter-spacing:.02em; }
+  .need b { font-size:19px; line-height:1.25; }
+  .need p { margin:0; font-size:14px; line-height:1.5; color:var(--muted); }
+  .hero-video { position:absolute; right:24px; bottom:96px; z-index:2; display:flex; align-items:center; gap:12px; background:rgba(7,40,49,.55); backdrop-filter:blur(10px); border:1.5px dashed rgba(255,255,255,.5); border-radius:18px; padding:10px 16px 10px 10px; font-size:13px; line-height:1.35; max-width:290px; }
+  .hero-video i { flex:none; width:40px; height:40px; border-radius:50%; background:var(--lime); display:flex; align-items:center; justify-content:center; }
+
+  /* ===== С чего начать: три двери + опрос ===== */
+  .doors { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+  .door { text-align:left; border:0; border-radius:28px; padding:26px; min-height:230px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; transition:transform .3s, box-shadow .3s; color:var(--deep); }
+  .door:hover { transform:translateY(-5px); box-shadow:0 24px 44px -28px rgba(11,61,74,.6); }
+  .door .num { font-family:Unbounded, Onest, sans-serif; font-size:13px; font-weight:700; opacity:.6; }
+  .door b { display:block; font-size:23px; line-height:1.15; letter-spacing:-.02em; }
+  .door p { margin:8px 0 0; font-size:15px; line-height:1.45; opacity:.8; }
+  .door .go { display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:15px; }
+  .door .go span { width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,.7); display:flex; align-items:center; justify-content:center; font-size:20px; transition:transform .3s; }
+  .door:hover .go span { transform:translateX(4px); }
+  .quiz { margin-top:16px; background:var(--deep); color:#fff; border-radius:32px; padding:32px; display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:40px; align-items:center; }
+  .quiz h3 { margin:10px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.02em; }
+  .quiz .kicker { color:var(--neon); }
+  .quiz-steps { display:flex; gap:6px; margin-bottom:16px; }
+  .quiz-steps i { flex:1; height:5px; border-radius:5px; background:rgba(255,255,255,.15); transition:background .3s; }
+  .quiz-steps i.on { background:var(--lime); }
+  .q-title { font-size:19px; font-weight:600; margin:0 0 14px; }
+  .q-opts { display:flex; flex-wrap:wrap; gap:8px; }
+  .q-opts button { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06); color:#fff; border-radius:14px; padding:12px 16px; font-size:15px; transition:background .2s, border-color .2s; }
+  .q-opts button:hover { background:rgba(72,246,255,.15); border-color:var(--neon); }
+  .q-result { background:#fff; color:var(--graphite); border-radius:22px; padding:22px; }
+  .q-result .who { display:flex; gap:12px; align-items:center; }
+  .q-result .who b { display:block; font-size:17px; color:var(--deep); }
+  .q-result .who small { color:var(--teal); font-size:13px; }
+  .q-result p { margin:12px 0 0; font-size:14px; line-height:1.5; color:var(--muted); }
+  .q-result .row { display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap:12px; flex-wrap:wrap; }
+  .q-result .row strong { font-size:22px; color:var(--deep); }
+  .q-again { background:none; border:0; color:var(--neon); font-weight:600; margin-top:12px; padding:0; }
+
+  /* ===== Второе мнение ===== */
+  .second { margin-top:96px; border-radius:40px; overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); background:#FFE3D9; }
+  .second img { width:100%; height:100%; object-fit:cover; min-height:420px; }
+  .second-in { padding:52px; display:flex; flex-direction:column; justify-content:center; }
+  .second .kicker { color:#C2563A; }
+  .second h2 { color:#4a1f12; }
+  .second p { margin:16px 0 0; font-size:17px; line-height:1.55; color:#5b3a30; }
+  .second ul { margin:20px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+  .second li { padding-left:28px; position:relative; font-size:16px; color:#4a1f12; }
+  .second li::before { content:"→"; position:absolute; left:0; color:#C2563A; font-weight:700; }
+  .btn-coral { margin-top:26px; align-self:flex-start; height:56px; padding:0 28px; border:0; border-radius:999px; background:#C2563A; color:#fff; font-weight:700; font-size:16px; }
+
+  /* ===== Одинаковый диагноз — разные программы ===== */
+  .twin { margin-top:36px; background:#fff; border-radius:32px; padding:28px; box-shadow:0 20px 50px -34px rgba(11,61,74,.5); }
+  .twin-sw { display:inline-flex; background:var(--ward); border-radius:999px; padding:5px; gap:4px; }
+  .twin-sw button { border:0; background:none; border-radius:999px; height:46px; padding:0 20px; font-weight:600; color:var(--deep); font-size:15px; }
+  .twin-sw button[aria-pressed="true"] { background:var(--deep); color:#fff; }
+  .twin-grid { margin-top:22px; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:28px; align-items:start; }
+  .twin-who { background:var(--ward); border-radius:22px; padding:22px; }
+  .twin-who .dx { display:inline-block; background:var(--pain); color:#fff; border-radius:999px; padding:5px 12px; font-size:13px; font-weight:600; }
+  .twin-who b { display:block; margin-top:12px; font-size:22px; color:var(--deep); }
+  .twin-who p { margin:8px 0 0; font-size:15px; line-height:1.5; color:var(--muted); }
+  .load { margin-top:16px; }
+  .load small { font-size:13px; color:var(--muted); }
+  .load-bar { height:10px; border-radius:10px; background:#DCEBEE; margin-top:6px; overflow:hidden; }
+  .load-bar i { display:block; height:100%; border-radius:10px; background:linear-gradient(90deg, var(--neon), var(--lime)); transition:width .6s ease; }
+  .twin-plan { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .twin-plan li { display:grid; grid-template-columns:92px 1fr; gap:14px; align-items:start; padding:14px 16px; border-radius:18px; background:var(--ward); animation:fadeIn .4s ease both; }
+  .twin-plan li:nth-child(2) { animation-delay:.05s; } .twin-plan li:nth-child(3) { animation-delay:.1s; } .twin-plan li:nth-child(4) { animation-delay:.15s; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } }
+  .twin-plan em { font-style:normal; font-size:13px; font-weight:700; color:var(--teal); }
+  .twin-plan span { font-size:15px; line-height:1.45; color:var(--graphite); }
+  .twin-note { margin-top:14px; font-size:13px; color:var(--muted); }
+
+  /* ===== Словарь методик ===== */
+  .all-methods button { border-radius:999px; padding:8px 14px; font-size:14px; background:#fff; color:var(--deep); border:1px solid #D9ECEF; transition:background .2s, border-color .2s; }
+  .all-methods button:hover, .all-methods button[aria-pressed="true"] { background:var(--deep); color:#fff; border-color:var(--deep); }
+  .dict { margin-top:14px; background:var(--deep); color:#fff; border-radius:22px; padding:20px 24px; display:flex; gap:16px; align-items:flex-start; min-height:86px; }
+  .dict b { color:var(--lime); font-size:17px; }
+  .dict p { margin:4px 0 0; font-size:15px; line-height:1.5; color:rgba(255,255,255,.85); }
+  .dict .ic { flex:none; width:42px; height:42px; border-radius:14px; background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; }
+
+  /* ===== PRP за три шага ===== */
+  .prp { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; counter-reset:prp; }
+  .prp article { position:relative; border-radius:28px; overflow:hidden; background:#fff; box-shadow:0 18px 40px -30px rgba(11,61,74,.55); }
+  .prp .ph { height:210px; position:relative; }
+  .prp .ph img { width:100%; height:100%; object-fit:cover; }
+  .prp .ph.ic3 { background:linear-gradient(135deg, #C9FBFF, #E9FFC2); display:flex; align-items:center; justify-content:center; }
+  .prp .n { position:absolute; left:16px; top:16px; width:44px; height:44px; border-radius:50%; background:var(--lime); color:var(--graphite); font-weight:800; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .prp .tx { padding:20px 22px 24px; }
+  .prp b { display:block; font-size:19px; color:var(--deep); }
+  .prp p { margin:6px 0 0; font-size:14px; line-height:1.5; color:var(--muted); }
+  .prp-meta { margin-top:16px; display:flex; flex-wrap:wrap; gap:10px; }
+  .prp-meta span { background:#fff; border-radius:999px; padding:9px 16px; font-size:14px; color:var(--deep); box-shadow:0 8px 20px -14px rgba(11,61,74,.5); }
+  .prp-meta span b { color:var(--teal); }
+
+  /* ===== Не только сустав ===== */
+  .whole { margin-top:36px; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+  .whole article { border-radius:28px; padding:28px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between; gap:18px; }
+  .whole b { display:block; font-size:22px; line-height:1.2; color:var(--deep); }
+  .whole p { margin:8px 0 0; font-size:15px; line-height:1.5; color:#3d4a4f; }
+  .whole .pr { font-weight:800; font-size:22px; color:var(--deep); }
+
+  /* ===== План в WhatsApp ===== */
+  .wa { margin-top:96px; background:var(--deep); color:#fff; border-radius:40px; padding:56px; display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:56px; align-items:center; overflow:hidden; position:relative; }
+  .wa .kicker { color:var(--neon); }
+  .wa h2 { color:#fff; }
+  .wa > div > p { margin:16px 0 0; font-size:17px; line-height:1.55; color:rgba(255,255,255,.8); }
+  .wa-feats { margin:24px 0 0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .wa-feats li { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:14px 16px; font-size:15px; line-height:1.4; }
+  .wa-feats b { display:block; color:var(--lime); font-size:15px; margin-bottom:2px; }
+  .phone-m { width:330px; justify-self:center; background:#0a0a0a; border-radius:46px; padding:12px; box-shadow:0 40px 80px -30px rgba(0,0,0,.7); }
+  .phone-scr { background:#ECE5DD; border-radius:36px; overflow:hidden; height:600px; display:flex; flex-direction:column; }
+  .wa-top { background:#075E54; color:#fff; padding:28px 16px 12px; display:flex; align-items:center; gap:10px; }
+  .wa-top img { width:34px; height:34px; border-radius:50%; background:#fff; padding:3px; object-fit:contain; }
+  .wa-top b { font-size:15px; display:block; } .wa-top small { font-size:12px; opacity:.8; }
+  .wa-chat { flex:1; padding:12px 10px; display:flex; flex-direction:column; gap:8px; overflow:hidden; }
+  .bub { max-width:85%; background:#fff; color:#111; border-radius:12px 12px 12px 4px; padding:8px 10px; font-size:13px; line-height:1.4; box-shadow:0 1px 1px rgba(0,0,0,.08); opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s; }
+  .bub.me { align-self:flex-end; background:#DCF8C6; border-radius:12px 12px 4px 12px; }
+  .bub.show { opacity:1; transform:none; }
+  .bub small { display:block; text-align:right; font-size:10px; color:#8a8a8a; margin-top:2px; }
+  .bub .card-in { margin-top:6px; background:#F3F7F7; border-radius:8px; padding:8px; font-size:12px; }
+  .bub .card-in b { color:#075E54; }
+  .wa-label { position:absolute; right:56px; top:28px; font-size:12px; color:rgba(255,255,255,.55); }
+
+  /* ===== Кто за этим стоит ===== */
+  .founders { margin-top:36px; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+  .founder { background:#fff; border-radius:28px; padding:20px; display:grid; grid-template-columns:150px 1fr; gap:22px; align-items:center; box-shadow:0 18px 40px -30px rgba(11,61,74,.55); }
+  .founder img { width:150px; height:180px; object-fit:cover; object-position:50% 15%; border-radius:20px; }
+  .founder b { display:block; font-size:20px; color:var(--deep); line-height:1.2; }
+  .founder .role { color:var(--teal); font-weight:600; font-size:14px; margin-top:4px; }
+  .founder .need { margin-top:14px; padding:14px; border-radius:16px; gap:6px; }
+  .founder .need p { font-size:13px; }
+
+  /* ===== Экскурсия ===== */
+  .tour { margin-top:36px; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(300px, 32%); gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:none; }
+  .tour::-webkit-scrollbar { display:none; }
+  .tour figure { margin:0; scroll-snap-align:start; position:relative; border-radius:26px; overflow:hidden; aspect-ratio:4/3; }
+  .tour img { width:100%; height:100%; object-fit:cover; transition:transform .6s; }
+  .tour figure:hover img { transform:scale(1.05); }
+  .tour figcaption { position:absolute; left:14px; bottom:14px; right:14px; background:rgba(255,255,255,.94); border-radius:14px; padding:10px 14px; font-size:14px; color:var(--deep); }
+  .tour figcaption b { display:block; font-size:15px; }
+  .tour figcaption span { color:var(--muted); font-size:13px; }
+
+  /* ===== Истории пациентов (нужно от клиники) ===== */
+  .stories { margin-top:36px; display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:16px; }
+  .stories .need { min-height:280px; justify-content:flex-end; }
+  .mri-ph { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:auto; }
+  .mri-ph div { aspect-ratio:1; border-radius:14px; background:#0E2F38; color:rgba(255,255,255,.6); display:flex; align-items:flex-end; padding:10px; font-family:Unbounded, Onest, sans-serif; font-weight:700; font-size:14px; }
+  .play-ph { margin-bottom:auto; aspect-ratio:16/10; border-radius:16px; background:linear-gradient(135deg,#C9FBFF,#E9FFC2); display:flex; align-items:center; justify-content:center; }
+  .play-ph span { width:58px; height:58px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px -10px rgba(11,61,74,.6); }
+  .scale-ph { margin-bottom:auto; display:flex; align-items:flex-end; gap:6px; height:120px; }
+  .scale-ph i { flex:1; border-radius:8px 8px 0 0; background:linear-gradient(180deg, var(--pain), #FFB38F); opacity:.75; }
+
+  /* ===== Перед визитом + памятка ===== */
+  .prep { margin-top:36px; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:16px; }
+  .checklist { background:#fff; border-radius:28px; padding:28px; box-shadow:0 18px 40px -30px rgba(11,61,74,.55); }
+  .checklist h3 { margin:0 0 6px; font-size:22px; color:var(--deep); }
+  .checklist > p { margin:0 0 14px; font-size:14px; color:var(--muted); }
+  .checklist label { display:flex; gap:14px; align-items:flex-start; padding:12px 0; border-bottom:1px solid #EEF4F5; font-size:16px; cursor:pointer; }
+  .checklist input { width:22px; height:22px; accent-color:var(--teal); flex:none; margin-top:1px; }
+  .checklist label span small { display:block; font-size:13px; color:var(--muted); margin-top:2px; }
+  .magnet { background:var(--lime); border-radius:28px; padding:28px; display:flex; flex-direction:column; gap:14px; position:relative; overflow:hidden; }
+  .magnet h3 { margin:0; font-size:26px; line-height:1.15; color:var(--graphite); letter-spacing:-.02em; }
+  .magnet p { margin:0; font-size:15px; line-height:1.5; color:#3a3f1a; }
+  .magnet ol { margin:0; padding-left:20px; font-size:15px; line-height:1.7; color:var(--graphite); }
+  .magnet form { display:flex; gap:8px; margin-top:auto; }
+  .magnet input { flex:1; min-width:0; height:52px; border:0; border-radius:14px; padding:0 16px; font:inherit; font-size:16px; }
+  .magnet button { height:52px; padding:0 18px; border:0; border-radius:14px; background:var(--graphite); color:var(--lime); font-weight:700; }
+  .magnet .ok { background:#fff; border-radius:14px; padding:14px; font-size:15px; color:var(--deep); }
+  .magnet .err { font-size:13px; color:#8a2b12; }
+
+  @media (max-width: 1080px) {
+    .doors, .prp, .whole { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .quiz, .second, .twin-grid, .wa, .prep { grid-template-columns:1fr; }
+    .stories { grid-template-columns:1fr 1fr; }
+    .founders { grid-template-columns:1fr; }
+    .mm-panel { display:none; }
+  }
+  @media (max-width: 720px) {
+    .doors, .prp, .whole, .stories { grid-template-columns:1fr; }
+    .door { min-height:auto; }
+    .quiz { padding:22px; border-radius:24px; gap:20px; }
+    .quiz h3 { font-size:24px; }
+    .second { margin-top:64px; border-radius:28px; }
+    .second img { min-height:240px; max-height:260px; }
+    .second-in { padding:26px 22px; }
+    .twin { padding:18px; border-radius:24px; }
+    .twin-sw { display:flex; } .twin-sw button { flex:1; padding:0 10px; font-size:14px; }
+    .twin-plan li { grid-template-columns:1fr; gap:4px; }
+    .wa { margin-top:64px; padding:28px 18px; border-radius:28px; gap:28px; }
+    .wa-feats { grid-template-columns:1fr; }
+    .phone-m { width:290px; } .phone-scr { height:540px; }
+    .wa-label { display:none; }
+    .founder { grid-template-columns:96px 1fr; gap:14px; padding:14px; }
+    .founder img { width:96px; height:120px; }
+    .tour { grid-auto-columns:84%; }
+    .hero-video { display:none; }
+    .magnet form { flex-direction:column; }
+  }
+
   .note { text-align:center; font-size:13px; color:var(--muted); padding:28px 24px 40px; }
 
   /* появление при прокрутке */
@@ -342,7 +551,12 @@
     <nav class="nav" aria-label="Основное меню">
       <a class="logo" href="#"><img src="assets/logo-dark.png" alt="Орто-Рекавери"></a>
       <div class="nav-links">
-        <a href="#where">Направления</a><a href="#conditions">Что лечим</a><a href="#how">Как лечим</a><a href="#doctors">Врачи</a><a href="#methods">Цены</a><a href="#contacts">Контакты</a>
+        <div class="mm"><button type="button" aria-haspopup="true">Услуги <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="mm-panel">
+            <div><b>Приём врача</b><a href="#doctors">Травматолог-ортопед<span>3 000 ₽</span></a><a href="#doctors">Невролог, полный приём<span>8 000 ₽</span></a><a href="#doctors">Реабилитолог<span>2 000 ₽</span></a><a href="#perks">Реабилитолог на дому<span>4 000 ₽</span></a><a href="#whole">Эндокринолог-нутрициолог<span>4 000 ₽</span></a><a href="#whole">Психолог<span>3 000 ₽</span></a></div>
+            <div><b>Методы лечения</b><a href="#methods">Ударно-волновая терапия<span>3 000 ₽</span></a><a href="#prp">PRP-терапия<span>10 500 ₽</span></a><a href="#methods">ЛФК, 60 минут<span>2 500 ₽</span></a><a href="#methods">Массаж спины<span>2 500 ₽</span></a><a href="#methods">Кинезиотейпирование<span>1 500 ₽</span></a><a href="#methods">Магнит с лазером<span>2 000 ₽</span></a></div>
+            <div><b>Диагностика</b><a href="#sleep">Гастроскопия во сне<span>6 000 ₽</span></a><a href="#sleep">Колоноскопия во сне<span>10 000 ₽</span></a><a href="#sleep">Оба обследования<span>14 000 ₽</span></a><a href="#whole">Лабораторные анализы<span>от 595 ₽</span></a><a href="#second">Второе мнение перед операцией<span>3 000 ₽</span></a></div>
+          </div></div><a href="#start">С чего начать</a><a href="#conditions">Что лечим</a><a href="#how">Как лечим</a><a href="#doctors">Врачи</a><a href="#methods">Цены</a><a href="#contacts">Контакты</a>
       </div>
       <div class="nav-right">
         <a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
@@ -366,6 +580,7 @@
 
   <span class="hot" style="--x:69.5%; --y:53%" aria-hidden="true"></span>
   <div class="hot-tag" style="--x:69.5%; --y:53%"><b>Плечо</b><span>ортопед · приём 3 000 ₽</span></div>
+  <div class="hero-video"><i aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="#212121"><path d="M7 4v16l13-8z"/></svg></i><span><b>Здесь — видео 15 сек из центра</b><br>нужно снять: процедуры, ЛФК, врачи</span></div>
 </header>
 
 <section class="finder">
@@ -389,6 +604,22 @@
         <button class="chip" type="button">Сколиоз у ребёнка</button>
         <button class="chip" type="button">Реабилитолог на дом</button>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="start" style="padding-top:72px">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">С чего начать</p><h2>Выберите, что про вас</h2></div></div>
+    <div class="doors">
+      <button class="door rv" type="button" data-go="#quiz" style="background:#C9FBFF"><span class="num">01</span><div><b>Болит, и не знаю, к кому идти</b><p>Начните с консультации: врач осмотрит и скажет, что делать дальше.</p></div><span class="go">Подобрать врача<span>→</span></span></button>
+      <button class="door rv" type="button" data-go="#conditions" style="background:var(--lime);--d:.06s"><span class="num">02</span><div><b>Восстанавливаюсь после травмы или операции</b><p>Курс восстановления: ЛФК, физиотерапия и контроль врача.</p></div><span class="go">ЛФК — 2 500 ₽<span>→</span></span></button>
+      <button class="door rv" type="button" data-go="#sport" style="background:#FFE3D9;--d:.12s"><span class="num">03</span><div><b>Я спортсмен</b><p>Спортивная реабилитация: вернуть силу и подвижность к тренировкам.</p></div><span class="go">Вернуться к спорту<span>→</span></span></button>
+    </div>
+    <div class="quiz rv" id="quiz">
+      <div><p class="kicker">3 вопроса — 30 секунд</p><h3>Подберём врача и скажем цену приёма</h3><p style="margin:12px 0 0;color:rgba(255,255,255,.75);font-size:16px;line-height:1.5">Ответьте на три вопроса — покажем, к кому записаться и сколько это стоит.</p></div>
+      <div><div class="quiz-steps" aria-hidden="true"><i class="on"></i><i></i><i></i></div><div id="quizBody" aria-live="polite"></div></div>
     </div>
   </div>
 </section>
@@ -455,6 +686,22 @@
   </div>
 </section>
 
+
+<section id="second">
+  <div class="wrap">
+    <div class="second rv">
+      <img src="assets/g-ortho.jpg" alt="Травматолог-ортопед центра за рабочим столом" style="object-position:40% 40%">
+      <div class="second-in">
+        <p class="kicker">Второе мнение</p>
+        <h2>Вам предложили операцию? Сначала покажитесь нам</h2>
+        <p>Бывает, что от операции можно отказаться — если вовремя начать физиотерапию и ЛФК. Ортопед посмотрит ваши снимки и честно скажет, есть ли смысл пробовать без операции.</p>
+        <ul><li>Возьмите снимки МРТ и заключения</li><li>Врач разберёт их на приёме</li><li>Если операция нужна — так и скажем</li></ul>
+        <button class="btn-coral" type="button">Записаться на консультацию — 3 000 ₽</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="dark" id="how">
   <div class="wrap dark-grid">
     <div class="rv">
@@ -475,6 +722,21 @@
 </section>
 
 
+
+
+<section class="sec" id="twin">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Персональная траектория</p><h2>Один диагноз — две разные программы</h2></div></div>
+    <div class="twin rv">
+      <div class="twin-sw" role="group" aria-label="Пациент"><button type="button" aria-pressed="true" data-p="a">Офисный сотрудник, 45 лет</button><button type="button" aria-pressed="false" data-p="b">Борец, 24 года</button></div>
+      <div class="twin-grid">
+        <div class="twin-who"><span class="dx">Грыжа диска L5–S1</span><b id="twWho"></b><p id="twWhy"></p><div class="load"><small>Нагрузка в программе</small><div class="load-bar"><i id="twLoad" style="width:30%"></i></div></div></div>
+        <ul class="twin-plan" id="twPlan"></ul>
+      </div>
+      <p class="twin-note">Условный пример, чтобы показать принцип. Программу составляет врач после осмотра — для одного она может быть слишком лёгкой, для другого невыполнимой.</p>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="after">
   <div class="wrap">
@@ -528,10 +790,35 @@
         <div><h3>Стельки Formthotics</h3><p>Взрослые и детские</p><span class="pr" style="color:var(--deep)">от 9 500 ₽</span></div>
       </article>
     </div>
-    <div class="all-methods rv"><b>Все 23 методики:</b><span>Ударно-волновая терапия</span><span>Магнитотерапия</span><span>Магнит высокой интенсивности</span><span>Ультразвуковая терапия</span><span>Электромиостимуляция</span><span>Холодный лазер</span><span>Комбинированная терапия</span><span>Электротерапия</span><span>Транскраниальная электростимуляция</span><span>Лечебная физкультура</span><span>Спортивная медицина</span><span>Мануальная терапия</span><span>Массаж</span><span>FDM-терапия</span><span>Вибро-перкуссионная терапия</span><span>Иглорефлексотерапия</span><span>Кинезиотейпирование</span><span>Лечение сколиоза по методике СИАС</span><span>Вакуумный массаж</span><span>Электроакупунктура</span><span>Сухие иглы</span><span>PRP-терапия</span><span>Плазмотерапия</span></div>
+    <div class="all-methods rv"><b>Все 23 методики — нажмите, чтобы узнать, что это:</b><button type="button" aria-pressed="false">Ударно-волновая терапия</button><button type="button" aria-pressed="false">Магнитотерапия</button><button type="button" aria-pressed="false">Магнит высокой интенсивности</button><button type="button" aria-pressed="false">Ультразвуковая терапия</button><button type="button" aria-pressed="false">Электромиостимуляция</button><button type="button" aria-pressed="false">Холодный лазер</button><button type="button" aria-pressed="false">Комбинированная терапия</button><button type="button" aria-pressed="false">Электротерапия</button><button type="button" aria-pressed="false">Транскраниальная электростимуляция</button><button type="button" aria-pressed="false">Лечебная физкультура</button><button type="button" aria-pressed="false">Спортивная медицина</button><button type="button" aria-pressed="false">Мануальная терапия</button><button type="button" aria-pressed="false">Массаж</button><button type="button" aria-pressed="false">FDM-терапия</button><button type="button" aria-pressed="false">Вибро-перкуссионная терапия</button><button type="button" aria-pressed="false">Иглорефлексотерапия</button><button type="button" aria-pressed="false">Кинезиотейпирование</button><button type="button" aria-pressed="false">Лечение сколиоза по методике СИАС</button><button type="button" aria-pressed="false">Вакуумный массаж</button><button type="button" aria-pressed="false">Электроакупунктура</button><button type="button" aria-pressed="false">Сухие иглы</button><button type="button" aria-pressed="false">PRP-терапия</button><button type="button" aria-pressed="false">Плазмотерапия</button></div>
+    <div class="dict rv" aria-live="polite"><span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2FF59" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg></span><div><b id="dictT">Словарь методик</b><p id="dictP">Нажмите на любую методику выше — коротко расскажем, что это такое.</p></div></div>
   </div>
 </section>
 
+
+
+<section class="sec" id="prp">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">PRP-терапия</p><h2>Как проходит процедура — за три шага</h2></div></div>
+    <div class="prp">
+      <article class="rv"><div class="ph"><img src="assets/g-blood.jpg" alt="Подготовка к забору крови в процедурном кабинете" style="object-position:50% 70%"><span class="n">1</span></div><div class="tx"><b>Забор крови</b><p>Берём кровь из вены — так же, как на обычном анализе.</p></div></article>
+      <article class="rv" style="--d:.08s"><div class="ph"><img src="assets/g-lab.jpg" alt="Медсёстры работают с пробирками в процедурном кабинете"><span class="n">2</span></div><div class="tx"><b>Приготовление плазмы</b><p>Кровь центрифугируют и получают плазму, обогащённую тромбоцитами.</p></div></article>
+      <article class="rv" style="--d:.16s"><div class="ph ic3"><svg width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4M17 7l3-3M19 9 8.7 19.3a1 1 0 0 1-1.4 0l-2.6-2.6a1 1 0 0 1 0-1.4L15 5M9 11l4 4M5 19l-3 3M14 4l6 6"/></svg><span class="n">3</span></div><div class="tx"><b>Введение</b><p>Врач-ортопед вводит плазму в зону повреждения под местной анестезией.</p></div></article>
+    </div>
+    <div class="prp-meta rv"><span>Обезболивание: <b>местная анестезия</b></span><span>Делает: <b>врач-ортопед</b></span><span>Курс: <b>3–5 инъекций</b></span><span>Стоимость: <b>10 500 ₽</b></span></div>
+  </div>
+</section>
+
+<section class="sec" id="whole">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Не только сустав</p><h2>Восстановление — это ещё питание и голова</h2></div></div>
+    <div class="whole">
+      <article class="rv" style="background:#E9FFC2"><div><b>Эндокринолог-нутрициолог</b><p>План питания на время восстановления и контроль веса — лишние килограммы нагружают суставы.</p></div><span class="pr">4 000 ₽</span></article>
+      <article class="rv" style="background:#C9FBFF;--d:.06s"><div><b>Психолог</b><p>Страх движения после травмы, хроническая боль и стресс мешают восстановиться не меньше, чем сама травма.</p></div><span class="pr">3 000 ₽</span></article>
+      <article class="rv" style="background:#FFE3D9;--d:.12s"><div><b>Терапевт и анализы</b><p>Терапевт-гастроэнтеролог и лабораторные анализы — всё в одном центре, без поездок по городу.</p></div><span class="pr">от 595 ₽</span></article>
+    </div>
+  </div>
+</section>
 
 <section id="sport">
   <div class="wrap">
@@ -544,6 +831,33 @@
         <ul><li>Полная подвижность в суставе</li><li>Сила травмированного участка</li><li>Психологическая готовность к нагрузкам</li></ul>
         <button class="btn-main" type="button" style="margin-top:28px">Записаться на реабилитацию</button>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="wa">
+  <div class="wrap">
+    <div class="wa rv">
+      <span class="wa-label">пример: так работает ИИ-администратор</span>
+      <div>
+        <p class="kicker">Лечение не заканчивается в кабинете</p>
+        <h2>Ваш план лечения — в WhatsApp</h2>
+        <p>Между визитами центр остаётся на связи: напомнит о процедуре, пришлёт упражнения от врача и передаст ваш вопрос — без звонков и ожидания на линии.</p>
+        <ul class="wa-feats"><li><b>Напоминания</b>о процедурах накануне — с адресом и кабинетом</li><li><b>Упражнения на дом</b>видео от врача после каждого занятия</li><li><b>Вопрос врачу</b>без звонка — ответ в тот же день</li><li><b>Прогресс курса</b>сколько процедур пройдено и что дальше</li></ul>
+      </div>
+      <div class="phone-m"><div class="phone-scr">
+        <div class="wa-top"><img src="assets/logo-dark.png" alt=""><div><b>Орто-Рекавери</b><small>онлайн</small></div></div>
+        <div class="wa-chat" id="waChat">
+          <div class="bub">Здравствуйте, Магомед! Напоминаем: завтра в 10:00 ударно-волновая терапия, кабинет 3. Подтвердите, пожалуйста<small>19:02</small></div>
+          <div class="bub me">Да, буду<small>19:05</small></div>
+          <div class="bub">Записали. Вход за шлагбаумом, рядом санаторий «Тарнаир», есть парковка<small>19:05</small></div>
+          <div class="bub">Упражнения на сегодня от врача:<div class="card-in"><b>ЛФК дома</b> · 3 упражнения · 15 минут<br>▶ Смотреть видео</div><small>12:40</small></div>
+          <div class="bub me">После второго упражнения тянет поясницу, это нормально?<small>18:11</small></div>
+          <div class="bub">Передали ваш вопрос врачу — он ответит сегодня до 20:00<small>18:11</small></div>
+          <div class="bub"><div class="card-in"><b>Ваш курс:</b> 4 из 10 процедур<br>Следующая — четверг, 10:00</div><small>18:12</small></div>
+        </div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -563,6 +877,35 @@
   </div>
 </section>
 
+
+<section class="sec" id="founders">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">О центре</p><h2>Кто за этим стоит</h2></div></div>
+    <div class="founders">
+      <article class="founder rv"><img src="assets/p-founder.jpg" alt="Магомеддов Абдулла-Гаджи Абумуслимович"><div><b>Магомеддов Абдулла-Гаджи Абумуслимович</b><div class="role">Основатель проекта «Орто-Рекавери»</div><div class="need"><span class="need-tag">нужно от клиники</span><p>2–3 фразы: почему открыли центр и чем он отличается.</p></div></div></article>
+      <article class="founder rv" style="--d:.08s"><img src="assets/p-director.jpg" alt="Хумаров Артур Рамазанович"><div><b>Хумаров Артур Рамазанович</b><div class="role">Генеральный директор</div><div class="need"><span class="need-tag">нужно от клиники</span><p>Обращение к пациентам — коротко, от первого лица.</p></div></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="tour" style="padding-top:64px">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Экскурсия</p><h2>Пройдите по центру, пока не пришли</h2></div><div class="arrows"><button type="button" aria-label="Назад" data-tour="-1">←</button><button type="button" aria-label="Вперёд" data-tour="1">→</button></div></div>
+    <div class="tour" id="tourList">
+      <figure><img src="assets/reception.jpg" alt="Ресепшен центра" style="object-position:50% 40%"><figcaption><b>Ресепшен</b><span>здесь вас встретит администратор</span></figcaption></figure>
+      <figure><img src="assets/g-ortho.jpg" alt="Кабинет ортопеда"><figcaption><b>Кабинет ортопеда</b><span>осмотр и разбор снимков</span></figcaption></figure>
+      <figure><img src="assets/c-shoulder.jpg" alt="Ударно-волновая терапия"><figcaption><b>Ударно-волновая терапия</b><span>УВТ — 3 000 ₽</span></figcaption></figure>
+      <figure><img src="assets/g-magnet.jpg" alt="Аппаратная физиотерапия"><figcaption><b>Аппаратная физиотерапия</b><span>магнит, ультразвук, ток</span></figcaption></figure>
+      <figure><img src="assets/g-massage.jpg" alt="Лечебный массаж"><figcaption><b>Массаж</b><span>массаж спины — 2 500 ₽</span></figcaption></figure>
+      <figure><img src="assets/g-lfk.jpg" alt="Зал ЛФК"><figcaption><b>Зал ЛФК</b><span>занятия со взрослыми и детьми</span></figcaption></figure>
+      <figure><img src="assets/g-explain.jpg" alt="Врач объясняет диагноз на доске"><figcaption><b>Объясняем на пальцах</b><span>что с суставом и что будем делать</span></figcaption></figure>
+      <figure><img src="assets/g-mri.jpg" alt="Разбор снимков МРТ"><figcaption><b>Разбор снимков</b><span>МРТ и рентген — на приёме</span></figcaption></figure>
+      <figure><img src="assets/g-lab.jpg" alt="Процедурный кабинет"><figcaption><b>Процедурный кабинет</b><span>анализы и подготовка к PRP</span></figcaption></figure>
+      <figure><img src="assets/g-endo-team.jpg" alt="Команда эндоскопии"><figcaption><b>Эндоскопия</b><span>обследования во сне</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="trust">
   <div class="wrap">
     <div class="sec-head rv"><div><p class="kicker">Нам доверяют</p><h2>Отзывы живут на независимых площадках</h2></div></div>
@@ -577,6 +920,20 @@
       <div class="rv" style="--d:.06s"><b>Лицензия Минздрава</b><p>Зарегистрированное медицинское учреждение с необходимыми лицензиями.</p></div>
       <div class="rv" style="--d:.12s"><b>Без операций</b><p>Осторожный подход: только безоперационные методы восстановления.</p></div>
       <div class="rv" style="--d:.18s"><b>Консилиум врачей</b><p>В сложных случаях вас посмотрят несколько специалистов центра, чтобы поставить точный диагноз.</p></div>
+      <div class="rv"><b>Пандус и парковка</b><p>Первый этаж, вход без ступенек, парковка у входа.</p></div>
+      <div class="rv" style="--d:.06s"><b>Чай и кофе, пока ждёте</b><p>Бесплатно — чтобы визит к врачу был спокойнее.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="stories">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Истории пациентов</p><h2>Результаты, которыми гордимся</h2></div></div>
+    <div class="stories">
+      <div class="need rv"><div class="mri-ph"><div>ДО</div><div>ПОСЛЕ</div></div><span class="need-tag">нужно от клиники</span><b>Снимки МРТ до и после курса</b><p>2–3 случая: жалобы, что сделали, что изменилось. Только с письменного согласия пациента.</p></div>
+      <div class="need rv" style="--d:.06s"><div class="play-ph"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#0B3D4A" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></span></div><span class="need-tag">нужно от клиники</span><b>Видео-истории</b><p>2–3 коротких видео: пациент своими словами, 30–60 секунд.</p></div>
+      <div class="need rv" style="--d:.12s"><div class="scale-ph" aria-hidden="true"><i style="height:95%"></i><i style="height:82%"></i><i style="height:66%"></i><i style="height:50%"></i><i style="height:36%"></i><i style="height:24%"></i></div><span class="need-tag">нужно от клиники</span><b>Боль до и после — в цифрах</b><p>Средняя оценка боли по шкале 0–10 в начале и в конце курса. Без данных клиники не пишем.</p></div>
     </div>
   </div>
 </section>
@@ -598,6 +955,30 @@
         <div><span>Оба обследования за один визит</span><strong>14 000 ₽</strong></div>
         <div><span>Гастроскопия без седации</span><strong>3 600 ₽</strong></div>
       </div></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="prep">
+  <div class="wrap">
+    <div class="sec-head rv"><div><p class="kicker">Перед визитом</p><h2>Как подготовиться к первому приёму</h2></div></div>
+    <div class="prep">
+      <div class="checklist rv">
+        <h3>Чек-лист</h3><p>Отмечайте — пришлём его же в WhatsApp после записи.</p>
+        <label><input type="checkbox"><span>Снимки и заключения<small>МРТ, рентген, выписки — всё, что есть по вашей проблеме</small></span></label>
+        <label><input type="checkbox"><span>Список жалоб<small>когда началось, что усиливает боль, что помогает</small></span></label>
+        <label><input type="checkbox"><span>Спортивная одежда и сменная обувь<small>если записаны на ЛФК</small></span></label>
+        <label><input type="checkbox"><span>Перед PRP — спросите врача о лекарствах<small>препараты, влияющие на свёртываемость, отменяют заранее — только по согласованию</small></span></label>
+        <label><input type="checkbox"><span>Заложите 30 минут<small>приём ортопеда длится 20–30 минут</small></span></label>
+      </div>
+      <div class="magnet rv" style="--d:.08s">
+        <h3>Памятка «5 правил, чтобы спина не болела»</h3>
+        <ol><li>Двигаться каждый день</li><li>Беречься от травм и ушибов</li><li>Следить за весом и меньше нервничать</li><li>Не переохлаждаться</li><li>Отказаться от вредных привычек</li></ol>
+        <p>Пришлём памятку с подробностями в WhatsApp — бесплатно.</p>
+        <form id="magnetForm" novalidate><input id="magnetPhone" type="tel" inputmode="tel" placeholder="+7 (900) 000-00-00" aria-label="Телефон для WhatsApp"><button type="submit">Получить</button></form>
+        <div class="err" id="magnetErr" hidden>Введите номер телефона — 10 цифр после +7</div>
+      </div>
     </div>
   </div>
 </section>
@@ -668,6 +1049,81 @@
     document.querySelectorAll('.tab').forEach((x) => x.setAttribute('aria-selected', String(x === t)))
     document.querySelectorAll('.cond-list').forEach((l) => { l.hidden = l.dataset.panel !== t.dataset.tab })
   }))
+
+  // ===== Новые блоки =====
+  const NEW = {"dict": {"Ударно-волновая терапия": "Акустические ударные волны воздействуют на ткани в зоне боли. Применяют при пяточной шпоре, болях в плече и локте.", "Магнитотерапия": "Воздействие магнитного поля на сустав или участок тела. Безболезненно, проводится лёжа.", "Магнит высокой интенсивности": "Мощное импульсное магнитное поле, которое проникает в глубокие ткани. В центре его совмещают с лазером.", "Ультразвуковая терапия": "Ультразвуковые волны воздействуют на ткани. В реабилитации часто сочетают с магнитотерапией.", "Электромиостимуляция": "Импульсы тока заставляют мышцы сокращаться — так их восстанавливают после травм и долгой неподвижности.", "Холодный лазер": "Низкоинтенсивное лазерное излучение, которое не нагревает ткани.", "Комбинированная терапия": "Несколько физиотерапевтических воздействий за одну процедуру — например, ультразвук и ток.", "Электротерапия": "Лечебное применение электрического тока разной частоты и силы.", "Транскраниальная электростимуляция": "Слабые импульсы тока через электроды на голове. Применяют в неврологии.", "Лечебная физкультура": "Упражнения, подобранные врачом под ваш диагноз, — под контролем инструктора, с постепенным ростом нагрузки.", "Спортивная медицина": "Диагностика и восстановление спортсменов: вернуть подвижность, силу и уверенность в нагрузке.", "Мануальная терапия": "Врач работает руками с суставами, мышцами и позвоночником.", "Массаж": "Лечебный массаж снимает напряжение мышц и улучшает кровообращение.", "FDM-терапия": "Ручная работа с фасциями — соединительной тканью, которая окружает мышцы.", "Вибро-перкуссионная терапия": "Ритмичное ударно-вибрационное воздействие на мышцы специальным аппаратом.", "Иглорефлексотерапия": "Тонкие иглы вводят в определённые точки тела.", "Кинезиотейпирование": "Эластичные ленты на коже поддерживают мышцы и суставы и не ограничивают движения.", "Лечение сколиоза по методике СИАС": "Упражнения при сколиозе, в которых ребёнок учится сам удерживать правильную осанку в обычной жизни.", "Вакуумный массаж": "Массаж банками или аппаратом с отрицательным давлением.", "Электроакупунктура": "Воздействие слабым током на точки акупунктуры.", "Сухие иглы": "Тонкая игла вводится в триггерную точку — болезненное уплотнение в мышце.", "PRP-терапия": "Инъекции плазмы из собственной крови пациента, обогащённой тромбоцитами.", "Плазмотерапия": "Введение плазмы собственной крови пациента в зону повреждения."}}
+  // двери
+  document.querySelectorAll('.door').forEach((d) => d.addEventListener('click', () => document.querySelector(d.dataset.go).scrollIntoView({ behavior: 'smooth', block: 'start' })))
+  // опрос
+  const AREAS = {
+    back: { t: 'Спина и шея', who: 'Куделя Павел Александрович', role: 'невролог, мануальный терапевт', ini: 'КП', price: '8 000 ₽', pl: 'полный приём' },
+    knee: { t: 'Колено и тазобедренный сустав', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед', ini: 'ХА', price: '3 000 ₽', pl: 'приём' },
+    arm: { t: 'Плечо, локоть, кисть', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед, кистевой реабилитолог', ini: 'ХА', price: '3 000 ₽', pl: 'приём' },
+    foot: { t: 'Стопа и пятка', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед', ini: 'ХА', price: '3 000 ₽', pl: 'приём' },
+    kids: { t: 'Ребёнок: осанка, сколиоз', who: 'Мусаева Эльмира Ашурбеговна', role: 'инструктор ЛФК, методика СИАС', ini: 'МЭ', price: '2 500 ₽', pl: 'занятие' },
+    endo: { t: 'Желудок и кишечник', who: 'Нажмудинова Айшат Абдурахмановна', role: 'терапевт-гастроэнтеролог', ini: 'НА', price: '3 000 ₽', pl: 'приём' },
+  }
+  const Q = [
+    { q: 'Где беспокоит?', k: 'area', o: [['back', 'Спина или шея'], ['knee', 'Колено или таз'], ['arm', 'Плечо или кисть'], ['foot', 'Стопа или пятка'], ['kids', 'Осанка у ребёнка'], ['endo', 'Желудок, кишечник']] },
+    { q: 'Как давно?', k: 'when', o: [['new', 'До двух недель'], ['mid', 'От месяца до полугода'], ['long', 'Больше полугода']] },
+    { q: 'Была травма или операция?', k: 'why', o: [['trauma', 'Да, травма'], ['surgery', 'Да, операция'], ['no', 'Нет']] },
+  ]
+  const qb = document.getElementById('quizBody'), qsteps = [...document.querySelectorAll('.quiz-steps i')]
+  let qa = {}, qi = 0
+  const renderQ = () => {
+    qsteps.forEach((el, i) => el.classList.toggle('on', i <= qi))
+    if (qi < Q.length) {
+      const c = Q[qi]
+      qb.innerHTML = `<p class="q-title">${c.q}</p><div class="q-opts">${c.o.map(([v, l]) => `<button type="button" data-v="${v}">${l}</button>`).join('')}</div>`
+      qb.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { qa[c.k] = b.dataset.v; qi++; renderQ() }))
+      return
+    }
+    const a = AREAS[qa.area]
+    const note = qa.why === 'surgery' ? 'После операции врач составит план реабилитации и передаст вас инструктору ЛФК.' : qa.why === 'trauma' ? 'Возьмите снимки после травмы — врач разберёт их на приёме.' : qa.when === 'long' ? 'Боль дольше полугода — врач найдёт причину и составит курс, а не просто снимет симптом.' : 'Чем раньше начать, тем короче обычно восстановление.'
+    qb.innerHTML = `<div class="q-result"><div class="who"><span class="ava" style="width:52px;height:52px;border-radius:16px;font-size:17px;background:var(--lime);color:var(--graphite)">${a.ini}</span><div><b>${a.who}</b><small>${a.role}</small></div></div><p><b style="color:var(--deep)">${a.t}.</b> ${note}</p><div class="row"><strong>${a.price} <small style="font-size:14px;font-weight:500;color:var(--muted)">${a.pl}</small></strong><button class="btn-deep" type="button" style="margin:0">Записаться</button></div></div><button class="q-again" type="button">↺ Пройти заново</button>`
+    qb.querySelector('.q-again').addEventListener('click', () => { qa = {}; qi = 0; renderQ() })
+  }
+  renderQ()
+  // один диагноз — две программы
+  const TW = {
+    a: { who: 'Офисный сотрудник, 45 лет', why: 'Сидячая работа, боль усиливается к вечеру. Цель — работать без боли.', load: 30, plan: [['1–2 неделя', 'Снять острую боль: щадящие процедуры по назначению невролога'], ['3–4 неделя', 'ЛФК с минимальной нагрузкой: упражнения на стабилизацию спины'], ['5–8 неделя', 'Постепенно укрепляем мышцы корпуса'], ['Дальше', 'План домашних занятий и контрольный осмотр']] },
+    b: { who: 'Борец, 24 года', why: 'Тренируется 6 раз в неделю, боль после схватки. Цель — вернуться на ковёр.', load: 75, plan: [['1–2 неделя', 'Работа с болью и мышечным спазмом: физиотерапия, массаж'], ['3–6 неделя', 'Силовая ЛФК: возвращаем нагрузку под контролем врача'], ['7–10 неделя', 'Специальные упражнения под технику борьбы'], ['Дальше', 'Поэтапный возврат к тренировкам на ковре']] },
+  }
+  const renderTw = (k) => {
+    const t = TW[k]
+    document.getElementById('twWho').textContent = t.who; document.getElementById('twWhy').textContent = t.why
+    document.getElementById('twLoad').style.width = t.load + '%'
+    document.getElementById('twPlan').innerHTML = t.plan.map(([w, x]) => `<li><em>${w}</em><span>${x}</span></li>`).join('')
+    document.querySelectorAll('.twin-sw button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.p === k)))
+  }
+  document.querySelectorAll('.twin-sw button').forEach((b) => b.addEventListener('click', () => renderTw(b.dataset.p)))
+  renderTw('a')
+  // словарь методик
+  document.querySelectorAll('.all-methods button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.all-methods button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)))
+    document.getElementById('dictT').textContent = b.textContent; document.getElementById('dictP').textContent = NEW.dict[b.textContent]
+  }))
+  // экскурсия
+  const tour = document.getElementById('tourList')
+  document.querySelectorAll('[data-tour]').forEach((b) => b.addEventListener('click', () => tour.scrollBy({ left: Number(b.dataset.tour) * (tour.firstElementChild.offsetWidth + 16), behavior: 'smooth' })))
+  // чат WhatsApp печатается по одному сообщению
+  const bubs = [...document.querySelectorAll('#waChat .bub')]
+  const showAll = () => bubs.forEach((b) => b.classList.add('show'))
+  if (location.hash === '#all' || matchMedia('(prefers-reduced-motion: reduce)').matches) showAll()
+  else new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { bubs.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 700)); o.disconnect() } }), { threshold: .3 }).observe(document.getElementById('waChat'))
+  // чек-лист запоминается в браузере
+  const boxes = [...document.querySelectorAll('.checklist input')]
+  try { const saved = JSON.parse(localStorage.getItem('orto-prep') || '[]'); boxes.forEach((b, i) => { b.checked = !!saved[i] }) } catch (e) {}
+  boxes.forEach((b) => b.addEventListener('change', () => { try { localStorage.setItem('orto-prep', JSON.stringify(boxes.map((x) => x.checked))) } catch (e) {} }))
+  // памятка: проверяем номер, в концепции ничего не отправляем
+  const mf = document.getElementById('magnetForm'), mp = document.getElementById('magnetPhone'), me = document.getElementById('magnetErr')
+  mp.addEventListener('input', () => { me.hidden = true })
+  mf.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const digits = mp.value.replace(/\D/g, '').replace(/^[78]/, '')
+    if (digits.length !== 10) { me.hidden = false; return }
+    mf.outerHTML = '<div class="ok"><b>Готово!</b> Памятка придёт в WhatsApp в течение минуты. <small style="display:block;color:var(--muted);margin-top:4px">В концепции номер никуда не отправляется.</small></div>'
+  })
   // Шаги «Как лечим» подсвечиваются по очереди
   const steps = [...document.querySelectorAll('.steps li')]
   let s = 0
