@@ -567,7 +567,7 @@
     <div class="hero-body">
       <span class="badge"><b>5,0</b>2ГИС · 121 оценка</span>
       <p class="kicker">Центр восстановительной медицины · Махачкала</p>
-      <h1>Лечим боль в спине и суставах <em>без операции</em></h1>
+      <h1>Лечим боль в <span class="flip" data-words="спине|колене|плече|шее|пятке">спине</span><br><em>без операции</em></h1>
       <p class="lead">Ортопеды, невролог и реабилитологи. Сначала находим причину, потом составляем план лечения — цену вы знаете до начала.</p>
       <div class="ctas">
         <button class="btn-main" type="button">Записаться на приём
@@ -999,14 +999,19 @@
   <div class="wrap">
     <p class="kicker rv" style="color:var(--neon)">Запись</p>
     <h2 class="rv">Жизнь без боли начинается <em>с&nbsp;одного приёма</em></h2>
-    <div class="orbit rv" aria-hidden="true">
-      <span class="ava" style="left:4%;top:18%;background:var(--teal);color:#fff">ХА</span>
-      <span class="ava" style="left:20%;top:66%;background:var(--lime);color:#212121;animation-delay:-1s">КП</span>
-      <img class="ava ava-photo" src="assets/d-kudelya-a.jpg" alt="" style="left:30%;top:0;animation-delay:-2s">
-      <img class="ava ava-photo" src="assets/d-musaeva.jpg" alt="" style="right:30%;top:2%;animation-delay:-3s">
-      <span class="ava" style="right:18%;top:68%;background:#fff;color:var(--deep);animation-delay:-1.5s">КЮ</span>
-      <img class="ava ava-photo" src="assets/d-nazhmudinova.jpg" alt="" style="right:4%;top:22%;animation-delay:-2.5s">
-      <button class="btn-main center" type="button" style="pointer-events:auto">Записаться на приём</button>
+    <div class="orbit">
+      <i class="ring" style="width:300px;height:300px" aria-hidden="true"></i><i class="ring" style="width:480px;height:480px" aria-hidden="true"></i>
+      <div class="spin s1" aria-hidden="true">
+        <div class="orb" style="--a:0deg;--r:150px"><span class="ava" style="background:var(--teal);color:#fff">ХА</span></div>
+        <div class="orb" style="--a:120deg;--r:150px"><img class="ava ava-photo" src="assets/d-kudelya-a.jpg" alt=""></div>
+        <div class="orb" style="--a:240deg;--r:150px"><span class="ava" style="background:#fff;color:var(--deep)">КЮ</span></div>
+      </div>
+      <div class="spin s2" aria-hidden="true">
+        <div class="orb" style="--a:60deg;--r:240px"><span class="ava" style="background:var(--lime);color:#212121">КП</span></div>
+        <div class="orb" style="--a:180deg;--r:240px"><img class="ava ava-photo" src="assets/d-musaeva.jpg" alt=""></div>
+        <div class="orb" style="--a:300deg;--r:240px"><img class="ava ava-photo" src="assets/d-nazhmudinova.jpg" alt=""></div>
+      </div>
+      <button class="btn-main center" type="button">Записаться на приём</button>
     </div>
     <div class="contacts">
       <div class="cbox rv">
