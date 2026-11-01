@@ -134,7 +134,10 @@ if (mf) {
   mp.addEventListener('input', () => { me.hidden = true })
   mf.addEventListener('submit', (e) => {
     e.preventDefault()
-    if (mp.value.replace(/\D/g, '').replace(/^[78]/, '').length !== 10) { me.hidden = false; return }
+    const pd = $('#magnetPd'), pe = $('#magnetPdErr')
+    const bad = mp.value.replace(/\D/g, '').replace(/^[78]/, '').length !== 10
+    me.hidden = !bad; if (pe) pe.hidden = !!(pd && pd.checked)
+    if (bad || (pd && !pd.checked)) return
     mf.outerHTML = '<div class="ok"><b>Готово!</b> Памятка придёт в WhatsApp в течение минуты. <small style="display:block;color:var(--muted);margin-top:4px">В концепции номер никуда не отправляется.</small></div>'
   })
 }
@@ -375,4 +378,26 @@ if (stepsList.length && !reduce) {
   // Мобильная панель записи появляется после первого экрана
   const dock = $('.dock')
   if (dock) { const upd = () => dock.classList.toggle('on', scrollY > 280); addEventListener('scroll', upd, { passive: true }); upd() }
+})()
+
+// ===== Согласие на cookie: сторонние виджеты (Яндекс Карты) — только после согласия или по кнопке =====
+;(() => {
+  const KEY = 'orto-cookie'
+  const get = () => { try { return localStorage.getItem(KEY) } catch (e) { return null } }
+  const loadFrame = (box) => {
+    const f = document.createElement('iframe')
+    f.src = box.dataset.src; f.title = box.dataset.title || ''; f.loading = 'lazy'
+    box.replaceWith(f)
+  }
+  const loadAll = () => document.querySelectorAll('.consent-frame').forEach(loadFrame)
+  document.querySelectorAll('.consent-frame button').forEach((b) => b.addEventListener('click', () => loadFrame(b.closest('.consent-frame'))))
+  if (get() === 'all') loadAll()
+  const banner = document.querySelector('.cookie')
+  if (!banner) return
+  if (!get()) banner.hidden = false
+  banner.querySelectorAll('[data-cookie]').forEach((b) => b.addEventListener('click', () => {
+    try { localStorage.setItem(KEY, b.dataset.cookie) } catch (e) { /* без хранилища спросим снова */ }
+    banner.hidden = true
+    if (b.dataset.cookie === 'all') loadAll()
+  }))
 })()

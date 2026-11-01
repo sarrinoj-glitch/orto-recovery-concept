@@ -575,6 +575,7 @@
         </button>
         <a class="btn-glass" href="#where">Что мы лечим</a>
       </div>
+      <p class="med-warn-hero">Имеются противопоказания. Необходима консультация специалиста</p>
     </div>
   </div>
 
@@ -740,7 +741,7 @@
 
 <section class="sec" id="after">
   <div class="wrap">
-    <div class="sec-head rv"><div><p class="kicker">Ради чего всё это</p><h2>После курса лечения вы сможете</h2></div></div>
+    <div class="sec-head rv"><div><p class="kicker">Ради чего всё это</p><h2>Цели, с которыми к нам приходят</h2><p style="margin-top:14px;color:var(--muted);max-width:40em">Что получится достичь, зависит от диагноза и состояния — врач скажет это после осмотра и составит план под вашу цель.</p></div></div>
     <div class="after">
       <div class="rv"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Жить и работать, не отвлекаясь на боль</div>
       <div class="rv" style="--d:.06s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B3D4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> Вернуться к тренировкам и спорту</div>
@@ -978,6 +979,8 @@
         <p>Пришлём памятку с подробностями в WhatsApp — бесплатно.</p>
         <form id="magnetForm" novalidate><input id="magnetPhone" type="tel" inputmode="tel" placeholder="+7 (900) 000-00-00" aria-label="Телефон для WhatsApp"><button type="submit">Получить</button></form>
         <div class="err" id="magnetErr" hidden>Введите номер телефона — 10 цифр после +7</div>
+        <label class="pd-consent"><input type="checkbox" id="magnetPd"><span>Даю <a href="{P}dokumenty/soglasie/" target="_blank">согласие на обработку персональных данных</a>, ознакомлен(а) с <a href="{P}dokumenty/politika/" target="_blank">Политикой</a></span></label>
+        <div class="err" id="magnetPdErr" hidden>Отметьте согласие, чтобы получить памятку</div>
       </div>
     </div>
   </div>
@@ -1022,9 +1025,9 @@
           <div><dt>Телефон и WhatsApp</dt><dd><a href="tel:+78722522333">+7 (8722) 52-23-33</a> · <a href="https://wa.me/79883011805" target="_blank" rel="noreferrer">+7 (988) 301-18-05</a></dd></div>
         </dl>
       </div>
-      <div class="map rv" style="--d:.08s"><iframe title="Орто-Рекавери на карте" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=47.498081%2C42.965856&z=17&pt=47.498081%2C42.965856%2Cpm2rdm"></iframe></div>
+      <div class="map rv" style="--d:.08s"><div class="consent-frame" data-title="Орто-Рекавери на карте" data-src="https://yandex.ru/map-widget/v1/?ll=47.498081%2C42.965856&z=17&pt=47.498081%2C42.965856%2Cpm2rdm"><p>Карта загружается с серверов Яндекса и использует их cookie.</p><button type="button" class="btn-deep">Показать карту</button></div></div>
     </div>
-    <p class="legal">ООО ЦВМ «ОРТО-РЕКАВЕРИ» · ИНН 0572029293 · ОГРН 1210500012392 · Имеются противопоказания, необходима консультация специалиста.</p>
+    <!--LEGAL-->
   </div>
 </footer>
 

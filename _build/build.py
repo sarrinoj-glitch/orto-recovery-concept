@@ -8,11 +8,15 @@ import json
 import os
 import re
 import shutil
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SITE = os.path.join(os.path.dirname(ROOT), 'orto-recovery-site', 'src', 'lib')
 SRC = open(os.path.join(HERE, 'source.html'), encoding='utf-8').read()
+# юридический пакет — общий источник для всех версий сайта (orto-recovery/legal/docs.py)
+sys.path.insert(0, os.path.join(os.path.dirname(ROOT), 'legal'))
+from docs import DOCS as LEGAL_DOCS, ORG as LEGAL_ORG, GROUPS as LEGAL_GROUPS, UPDATED as LEGAL_UPDATED  # noqa: E402
 
 # ---------- данные из Next.js-версии ----------
 def ts(name):
@@ -133,9 +137,6 @@ def doc_html(P, title, desc, body):
 <meta name="robots" content="noindex, nofollow">
 <title>%s</title>
 <meta name="description" content="%s">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="%sassets/site.css">
 </head>
 <body data-p="%s">
@@ -146,7 +147,7 @@ def doc_html(P, title, desc, body):
 <script src="%sassets/site.js"></script>
 </body>
 </html>
-''' % (title, desc, P, P, fix(body, P), fix(FINAL, P), NOTE, dock(P), P)
+''' % (title, desc, P, P, fix(body, P), fix(FINAL, P) + legal_foot(P), NOTE, dock(P), P)
 
 def write(path, html):
     full = os.path.join(ROOT, path)
@@ -241,11 +242,40 @@ def dock(P):
             '<a href="https://wa.me/79883011805" target="_blank" rel="noreferrer">%s WhatsApp</a><a class="main" href="%s#quiz">Записаться</a></nav>') % (small('phone'), small('chat'), P)
 
 
+
+# ---------- юридический подвал, баннер cookie и раздел «Документы» ----------
+LEGAL_LINKS = [('svedeniya', 'Сведения о центре и лицензия'), ('vrachi', 'Сведения о врачах'), ('platnye-uslugi', 'Условия платных услуг'), ('dogovor', 'Образец договора'), ('politika', 'Политика обработки ПДн'), ('soglasie', 'Согласие на обработку ПДн'), ('cookie', 'Политика cookie'), ('kontroliruyushchie-organy', 'Контролирующие органы'), ('', 'Все документы')]
+
+def legal_foot(P):
+    o = LEGAL_ORG
+    links = ''.join('<a href="%sdokumenty/%s">%s</a>' % (P, (s + '/') if s else '', t) for s, t in LEGAL_LINKS)
+    return ('<div class="med-warn">Имеются противопоказания. Необходима консультация специалиста</div>'
+            '<div class="legal-foot"><div class="wrap"><nav aria-label="Документы">%s</nav>'
+            '<p>%s (ОГРН %s, ИНН %s). Адрес: %s. Лицензия на медицинскую деятельность № %s от %s, выдана: %s. Электронная почта для обращений: <a href="mailto:%s">%s</a>. '
+            'Информация на сайте не является публичной офертой и не заменяет консультацию врача. Демо-версия сайта, подготовлена для обсуждения с центром.</p></div></div>'
+            '<div class="cookie" role="dialog" aria-label="Уведомление о cookie" hidden><p>Сайт использует необходимые cookie, а карта проезда — cookie Яндекса. Нажимая «Принять все», вы соглашаетесь на их использование по <a href="%sdokumenty/cookie/">Политике cookie</a> и <a href="%sdokumenty/politika/">Политике обработки персональных данных</a>.</p>'
+            '<div class="row"><button type="button" class="yes" data-cookie="all">Принять все</button><button type="button" class="no" data-cookie="necessary">Только необходимые</button></div></div>') % (
+        links, o['full'], o['ogrn'], o['inn'], o['address'], o['license_no'], o['license_date'], o['license_body'], o['email'], o['email'], P, P)
+
+def build_docs():
+    P = '../'
+    groups = ''.join('<section><h2>%s</h2><ul>%s</ul></section>' % (g, ''.join('<li><a href="{P}dokumenty/%s/"><span>%s</span><span aria-hidden="true">›</span></a></li>' % (d['slug'], d['title']) for d in LEGAL_DOCS if d['group'] == g)) for g in LEGAL_GROUPS)
+    body = page_head(P, 'dokumenty/', 'Документы', 'Документы и сведения о центре', 'Информация, которую медицинская организация обязана раскрывать пациентам: лицензия и реквизиты, врачи, условия платных услуг, образец договора, работа с персональными данными.', [(None, 'Документы')])
+    body += '<section><div class="wrap"><div class="docs-grid">%s</div></div></section>' % groups
+    write('dokumenty/index.html', doc_html(P, 'Документы — Орто-Рекавери', 'Лицензия, реквизиты, сведения о врачах, образец договора и политика обработки персональных данных.', body))
+    for d in LEGAL_DOCS:
+        P2 = '../../'
+        others = ''.join('<li><a href="{P}dokumenty/%s/">%s</a></li>' % (x['slug'], x['title']) for x in LEGAL_DOCS if x['slug'] != d['slug'])
+        body = page_head(P2, 'dokumenty/', 'Документы', d['title'], d['lead'], [('dokumenty/', 'Документы'), (None, d['title'])])
+        body += '<section><div class="wrap"><div class="doc-layout"><article class="legal-doc">%s</article><aside class="doc-aside"><b>Другие документы</b><ul>%s</ul><p style="margin-top:20px;color:var(--muted)">Редакция от %s</p></aside></div></div></section>' % (d['html'], others, LEGAL_UPDATED)
+        write('dokumenty/%s/index.html' % d['slug'], doc_html(P2, '%s — Орто-Рекавери' % d['title'], d['lead'], body))
+
 # ---------- страницы ----------
 def build():
-    css = re.search(r'<style>(.*?)</style>', SRC, re.S).group(1) + open(os.path.join(HERE, 'motion.css'), encoding='utf-8').read()
+    # шрифты лежат на сервере сайта — никаких запросов к Google (трансграничная передача IP посетителей)
+    css = open(os.path.join(HERE, 'fonts.css'), encoding='utf-8').read() + re.search(r'<style>(.*?)</style>', SRC, re.S).group(1) + open(os.path.join(HERE, 'motion.css'), encoding='utf-8').read() + open(os.path.join(HERE, 'legal.css'), encoding='utf-8').read()
     open(os.path.join(ROOT, 'assets', 'site.css'), 'w', encoding='utf-8').write(css + open(os.path.join(HERE, 'pages.css'), encoding='utf-8').read())
-    open(os.path.join(ROOT, 'assets', 'site.js'), 'w', encoding='utf-8').write(open(os.path.join(HERE, 'site.js'), encoding='utf-8').read() + open(os.path.join(HERE, 'motion.js'), encoding='utf-8').read())
+    open(os.path.join(ROOT, 'assets', 'site.js'), 'w', encoding='utf-8').write(open(os.path.join(HERE, 'site.js'), encoding='utf-8').read() + open(os.path.join(HERE, 'motion.js'), encoding='utf-8').read() + open(os.path.join(HERE, 'legal.js'), encoding='utf-8').read())
 
     # главная
     hero = re.sub(r'<nav class="nav".*?</nav>', lambda m: nav('', ''), HERO, flags=re.S)
@@ -286,7 +316,7 @@ def build():
     P = '../'
     pages = {
         'o-centre/': ('О центре', 'Центр восстановительной медицины «Орто-Рекавери»', 'Лечим и восстанавливаем пациентов с заболеваниями и травмами опорно-двигательной системы — без операций, по принципам доказательной медицины.',
-                      [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour'), section('stories')]),
+                      [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour')]),
         'vrachi/': ('Специалисты', 'Врачи центра', 'Можно записаться к конкретному врачу. Если вам спокойнее со специалистом-женщиной, скажите об этом администратору.',
                     [section('doctors')]),
         'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Прайс центра на ПроДокторов от 19.10.2026. Есть рассрочка без переплат и справка для налогового вычета.',
@@ -296,12 +326,13 @@ def build():
         'pacientam/': ('Пациентам', 'Всё, что нужно знать до визита', 'Как проходит первый приём, что взять с собой, как получить второе мнение и вызвать реабилитолога на дом.',
                        [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks')]),
         'kontakty/': ('Контакты', 'Как нас найти', 'Махачкала, проспект Имама Шамиля, 35А, 1 этаж. Вход за шлагбаумом, рядом санаторий «Тарнаир».',
-                      ['<section><div class="wrap"><div class="cpage">%s</div></div></section>' % re.search(r'<div class="contacts">(.*)</div>\s*<p class="legal">', FINAL, re.S).group(1).replace('rv"', '"')]),
+                      ['<section><div class="wrap"><div class="cpage">%s</div></div></section>' % re.search(r'<div class="contacts">(.*)</div>\s*<!--LEGAL-->', FINAL, re.S).group(1).replace('rv"', '"')]),
     }
     for href, (kicker, title, lead, blocks) in pages.items():
         label = dict(NAV)[href]
         body = page_head(P, href, kicker, title, lead, [(None, label)]) + '\n'.join(blocks)
         write(href + 'index.html', doc_html(P, '%s — Орто-Рекавери, Махачкала' % label, lead, body))
-    print('ok:', 2 + len(SERVICES) + len(pages), 'pages')
+    build_docs()
+    print('ok:', 2 + len(SERVICES) + len(pages) + 1 + len(LEGAL_DOCS), 'pages')
 
 build()
