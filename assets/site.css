@@ -971,6 +971,18 @@
   .doc-aside a:hover { color:var(--teal); }
   @media (max-width:1080px) { .docs-grid, .doc-layout { grid-template-columns:1fr; } .doc-aside { position:static; } }
 
+/* виджет ПроДокторов */
+.pd-box { margin-top:28px; display:grid; gap:20px; padding:28px; border-radius:28px; background:#fff; box-shadow:0 18px 50px -30px rgba(11,61,74,.45); }
+@media (min-width:900px) { .pd-box { grid-template-columns:.8fr 1.2fr; align-items:start; } }
+.pd-copy b { display:block; font-size:20px; color:var(--deep); }
+.pd-copy p { margin-top:10px; font-size:15px; line-height:1.55; color:var(--muted); }
+.pd-slot { min-height:48px; }
+.pd-wait { height:160px; border-radius:18px; background:rgba(33,33,33,.05); animation:pdpulse 1.4s ease-in-out infinite; }
+@keyframes pdpulse { 50% { opacity:.5 } }
+.pd-fail { font-size:15px; color:var(--muted); }
+.pd-fail a { color:var(--teal); text-decoration:underline; }
+.pd-slot .btn-deep { margin:0; }
+
   /* ===== Многостраничная версия ===== */
   .nav-links a.on { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px; }
   .mm > a { display:inline-flex; align-items:center; gap:6px; font-weight:500; font-size:15px; opacity:.9; }
