@@ -334,7 +334,7 @@ def build_blog():
         toc = ''.join('<li><a href="#%s">%s</a></li>' % (t['id'], t['title']) for t in p['toc'])
         cta = ('<div class="bl-cta"><p class="kicker">%s</p><b>%s</b><span>%s — <strong>%s</strong></span><a class="go" href="{P}#quiz">Записаться</a><a href="{P}uslugi/%s/">Подробнее о направлении</a></div>' % (
             s['kicker'], s['menu'], s['prices'][0][0], s['prices'][0][1], s['slug'])) if s else ''
-        meta = '<div class="bl-head-meta">%s<small>%d минуты чтения</small></div>' % (reviewer(p['reviewer'], 'bl-rev dark'), p['minutes'])
+        meta = '<div class="bl-head-meta">%s<small>%d минуты чтения</small></div>' % (reviewer(p['reviewer'], 'bl-rev bl-rev--dark'), p['minutes'])
         top = page_head(P2, 'blog/', p['category'], p['title'], p['lead'], [('blog/', 'Блог'), (None, p['category'])])
         top = top.replace('</p></div>\n  </div></header>', '</p>%s</div>\n  </div></header>' % meta, 1)
         body = top + '''<section class="bl-post"><div class="wrap">
