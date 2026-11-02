@@ -288,9 +288,25 @@ VIDEO_REVIEWS = [
     ('6986', 'Много раз обращался в центр: ортопедия, травматология, обследования', '43 сек'),
 ]
 
+DOCTOR_VIDEOS = [
+    ('2747', 'Главный результат — вернуться к жизни без боли и ограничений', '52 сек'),
+    ('0912', 'Почему упражнения при боли в пояснице могут навредить', '55 сек'),
+    ('0871', 'Травма крестообразной связки: что нужно после операции', '32 сек'),
+    ('4617', 'Индивидуальные стельки Formthotics: кому нужны и как подбирают', '1 мин 8 сек'),
+]
+
+def video_grid(kind, items, label):
+    return ''.join('<figure><video controls playsinline preload="none" poster="{P}assets/video/%s-%s.jpg" src="{P}assets/video/%s-%s.mp4" aria-label="%s: %s"></video><figcaption>%s</figcaption><small>%s</small></figure>' % (kind, i, kind, i, label, t, t, d) for i, t, d in items)
+
+def doctor_videos_html():
+    return '''<section class="sec"><div class="wrap"><h2 class="rv-vh">Врачи объясняют</h2>
+    <p class="rv-vp">Короткие видео от специалистов центра. Видео начинает загружаться, только когда вы нажмёте «воспроизвести».</p>
+    <div class="rv-videos">%s</div>
+    <p class="rv-legal">Имеются противопоказания. Необходима консультация специалиста.</p></div></section>''' % video_grid('doctor', DOCTOR_VIDEOS, 'Видео')
+
 def build_reviews():
     P = '../'
-    video = ''.join('<figure><video controls playsinline preload="none" poster="{P}assets/video/review-%s.jpg" src="{P}assets/video/review-%s.mp4" aria-label="Видеоотзыв: %s"></video><figcaption>%s</figcaption><small>%s</small></figure>' % (i, i, t, t, d) for i, t, d in VIDEO_REVIEWS)
+    video = video_grid('review', VIDEO_REVIEWS, 'Видеоотзыв')
     body = page_head(P, 'otzyvy/', 'Отзывы', 'Отзывы пациентов — на независимых площадках', 'Мы не пишем и не редактируем отзывы. Здесь собраны оценки центра и отзывы с площадок, где оставить отзыв может любой пациент.', [(None, 'Отзывы')])
     body += '''<section><div class="wrap">
     <div class="rv-rates">
@@ -406,7 +422,7 @@ def build():
         'o-centre/': ('О центре', 'Центр восстановительной медицины «Орто-Рекавери»', 'Лечим и восстанавливаем пациентов с заболеваниями и травмами опорно-двигательной системы — без операций, по принципам доказательной медицины.',
                       [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour')]),
         'vrachi/': ('Специалисты', 'Врачи центра', 'Можно записаться к конкретному врачу. Если вам спокойнее со специалистом-женщиной, скажите об этом администратору.',
-                    [section('doctors')]),
+                    [section('doctors'), doctor_videos_html()]),
         'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Прайс центра на ПроДокторов от 19.10.2026. Есть рассрочка без переплат и справка для налогового вычета.',
                   ['<section><div class="wrap"><div class="pgroups">%s</div></div></section>' % ''.join(
                       '<div class="pcard rv"><h2>%s</h2><ul class="plist2">%s</ul></div>' % (t, ''.join('<li><span>%s</span><b>%s</b></li>' % i for i in items)) for t, items in PRICE_GROUPS),
