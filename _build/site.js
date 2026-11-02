@@ -148,3 +148,17 @@ if (stepsList.length && !reduce) {
   let s = 0
   setInterval(() => { stepsList[s].classList.remove('on'); s = (s + 1) % stepsList.length; stepsList[s].classList.add('on') }, 2600)
 }
+
+// ===== Блог: фильтр по темам =====
+;(() => {
+  const chips = $$('.bl-chips button')
+  if (!chips.length) return
+  const cards = $$('.bl-grid .bl-card')
+  chips.forEach((c) => c.addEventListener('click', () => {
+    chips.forEach((x) => x.classList.toggle('on', x === c))
+    cards.forEach((card, i) => {
+      card.hidden = !!c.dataset.cat && card.dataset.cat !== c.dataset.cat
+      card.classList.toggle('big', !c.dataset.cat && i === 0)
+    })
+  }))
+})()

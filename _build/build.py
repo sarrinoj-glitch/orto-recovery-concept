@@ -17,6 +17,9 @@ SRC = open(os.path.join(HERE, 'source.html'), encoding='utf-8').read()
 # юридический пакет — общий источник для всех версий сайта (orto-recovery/legal/docs.py)
 sys.path.insert(0, os.path.join(os.path.dirname(ROOT), 'legal'))
 from docs import DOCS as LEGAL_DOCS, ORG as LEGAL_ORG, GROUPS as LEGAL_GROUPS, UPDATED as LEGAL_UPDATED  # noqa: E402
+# статьи блога — общий источник (orto-recovery/blog/posts.py)
+sys.path.insert(0, os.path.join(os.path.dirname(ROOT), 'blog'))
+from posts import POSTS as BLOG_POSTS, CATEGORIES as BLOG_CATEGORIES  # noqa: E402
 
 # ---------- данные из Next.js-версии ----------
 def ts(name):
@@ -91,13 +94,15 @@ def fix(html, P):
     return html
 
 # ---------- общая шапка ----------
-NAV = [('', 'Главная'), ('o-centre/', 'О центре'), ('uslugi/', 'Услуги'), ('vrachi/', 'Врачи'), ('ceny/', 'Цены'), ('pacientam/', 'Пациентам'), ('kontakty/', 'Контакты')]
+NAV = [('', 'Главная'), ('o-centre/', 'О центре'), ('uslugi/', 'Услуги'), ('vrachi/', 'Врачи'), ('ceny/', 'Цены'), ('pacientam/', 'Пациентам'), ('otzyvy/', 'Отзывы'), ('blog/', 'Блог'), ('kontakty/', 'Контакты')]
 CHEV = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
 BURGER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 
 def nav(P, active):
     links = []
     for href, label in NAV:
+        if href == '':
+            continue  # «Главная» — по логотипу, в мобильном меню остаётся
         on = ' class="on"' if href == active else ''
         if href == 'uslugi/':
             panel = ''.join('<a href="%suslugi/%s/">%s<span>%s</span></a>' % (P, s['slug'], s['menu'], s['prices'][0][1]) for s in SERVICES)
@@ -270,6 +275,77 @@ def build_docs():
         body += '<section><div class="wrap"><div class="doc-layout"><article class="legal-doc">%s</article><aside class="doc-aside"><b>Другие документы</b><ul>%s</ul><p style="margin-top:20px;color:var(--muted)">Редакция от %s</p></aside></div></div></section>' % (d['html'], others, LEGAL_UPDATED)
         write('dokumenty/%s/index.html' % d['slug'], doc_html(P2, '%s — Орто-Рекавери' % d['title'], d['lead'], body))
 
+# ---------- отзывы ----------
+PD_PAGE = 'https://prodoctorov.ru/mahachkala/lpu/90155-orto-rekaveri/#otzivi'
+GIS_URL = 'https://2gis.ru/makhachkala/firm/70000001060465369/tab/reviews'
+YA_URL = 'https://yandex.ru/maps/org/orto_rekaveri/20949908898/reviews/'
+
+def build_reviews():
+    P = '../'
+    body = page_head(P, 'otzyvy/', 'Отзывы', 'Отзывы пациентов — на независимых площадках', 'Мы не пишем и не редактируем отзывы. Здесь собраны оценки центра и отзывы с площадок, где оставить отзыв может любой пациент.', [(None, 'Отзывы')])
+    body += '''<section><div class="wrap">
+    <div class="rv-rates">
+      <a href="%(gis)s" target="_blank" rel="noreferrer"><i style="background:#19AA1E">2Г</i><span><b>2ГИС</b><em>121 оценка</em></span><strong>★ 5,0</strong></a>
+      <a href="%(ya)s" target="_blank" rel="noreferrer"><i style="background:#FC3F1D">Я</i><span><b>Яндекс Карты</b><em>отзывы на карте</em></span><strong>★ 4,9</strong></a>
+      <a href="%(pd)s" target="_blank" rel="noreferrer"><i style="background:#1A5DD0">ПД</i><span><b>ПроДокторов</b><em>39 отзывов</em></span><strong class="go">↗</strong></a>
+    </div>
+    <p class="rv-date">Данные площадок на 1 ноября 2026 года.</p>
+    <div class="rv-widgets">
+      <div class="rv-box"><h2>ПроДокторов</h2><p>Площадка проверяет, что автор действительно был на приёме. Виджет загружается с сервера prodoctorov.ru и использует его cookie.</p>
+        <div class="pd-slot"><button type="button" class="btn-deep" data-pd="90155">Показать отзывы с ПроДокторов</button></div></div>
+      <div class="rv-box"><h2>Яндекс Карты</h2><p>Отзывы и оценки с карточки центра на Яндекс Картах.</p>
+        <div class="consent-frame rv-ya" data-title="Отзывы о центре на Яндекс Картах" data-src="https://yandex.ru/maps-reviews-widget/20949908898?comments"><p>Виджет отзывов загружается с серверов Яндекса и использует их cookie.</p><button type="button" class="btn-deep">Показать отзывы Яндекса</button></div></div>
+    </div>
+  </div></section>
+  <section class="rv-leave"><div class="wrap">
+    <div><h2>Были у нас? Расскажите о визите</h2><p>Отзыв помогает другим пациентам выбрать врача, а нам — понять, что улучшить. Выберите удобную площадку.</p>
+      <div class="rv-btns"><a href="%(gis)s" target="_blank" rel="noreferrer">в 2ГИС</a><a href="%(ya)s" target="_blank" rel="noreferrer">на Яндексе</a><a href="https://prodoctorov.ru/new/rate/lpu/90155/" target="_blank" rel="noreferrer">на ПроДокторов</a></div></div>
+    <div class="rv-box"><h2>Что-то пошло не так?</h2><p>Напишите администратору в WhatsApp — передадим руководителю центра и ответим. Официальное обращение можно отправить письмом на <a href="mailto:%(mail)s">%(mail)s</a>.</p>
+      <a class="rv-wa" href="https://wa.me/79883011805" target="_blank" rel="noreferrer">Написать администратору</a></div>
+  </div></section>
+  <section><div class="wrap"><p class="rv-legal">Центр не публикует отзывы и благодарности пациентов на своих страницах. Отзывы выше показывают виджеты независимых площадок: они загружаются с их серверов по вашему нажатию, клиника не может изменить или удалить отзыв.</p></div></section>''' % {'gis': GIS_URL, 'ya': YA_URL, 'pd': PD_PAGE, 'mail': LEGAL_ORG['email']}
+    write('otzyvy/index.html', doc_html(P, 'Отзывы — Орто-Рекавери, Махачкала', 'Оценки и отзывы о центре на независимых площадках: 2ГИС, Яндекс Карты, ПроДокторов.', body))
+
+# ---------- блог ----------
+DOCTOR_ROLES = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']+)',\s*role: '([^']+)'", clinic)}
+DOCTOR_PHOTOS = {'Куделя Александр Павлович': 'd-kudelya-a.jpg', 'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
+
+def reviewer(name, cls='bl-rev'):
+    f, i, o = name.split(' ')
+    ava = ('<img src="{P}assets/%s" alt="">' % DOCTOR_PHOTOS[name]) if name in DOCTOR_PHOTOS else '<i aria-hidden="true">%s%s</i>' % (f[0], i[0])
+    return '<span class="%s">%s<span><b>%s %s. %s.</b><em>%s · проверка текста</em></span></span>' % (cls, ava, f, i[0], o[0], DOCTOR_ROLES.get(name, 'врач центра').split(',')[0])
+
+def blog_card(p, big=False):
+    return '''<a class="bl-card%s" href="{P}blog/%s/" data-cat="%s"><span class="bl-img"><img src="{P}assets/%s" alt="%s"><em>%s</em></span>
+      <span class="bl-txt"><b>%s</b><span>%s</span><span class="bl-meta">%s<small>%d мин</small></span></span></a>''' % (
+        ' big' if big else '', p['slug'], p['category'], p['cover'], p['coverAlt'], p['category'], p['title'], p['lead'], reviewer(p['reviewer']), p['minutes'])
+
+def build_blog():
+    P = '../'
+    chips = '<button type="button" class="on" data-cat="">Все статьи</button>' + ''.join('<button type="button" data-cat="%s">%s</button>' % (c, c) for c in BLOG_CATEGORIES)
+    cards = ''.join(blog_card(p, i == 0) for i, p in enumerate(BLOG_POSTS))
+    body = page_head(P, 'blog/', 'Блог', 'Разбираемся в боли вместе с врачами', 'Короткие статьи о том, что делать дома, какие признаки нельзя пропускать и как подготовиться к обследованию. Каждый текст проверяет врач центра.', [(None, 'Блог')])
+    body += '<section><div class="wrap"><div class="bl-chips" role="tablist" aria-label="Темы">%s</div><div class="bl-grid">%s</div></div></section>' % (chips, cards)
+    write('blog/index.html', doc_html(P, 'Блог — Орто-Рекавери, Махачкала', 'Статьи врачей центра: боль в спине, суставы и стопы, сколиоз у детей, подготовка к эндоскопии.', body))
+    for p in BLOG_POSTS:
+        P2 = '../../'
+        s = next((x for x in SERVICES if x['slug'] == p['service']), None)
+        more = ([x for x in BLOG_POSTS if x['slug'] != p['slug'] and x['category'] == p['category']] + [x for x in BLOG_POSTS if x['category'] != p['category']])[:2]
+        toc = ''.join('<li><a href="#%s">%s</a></li>' % (t['id'], t['title']) for t in p['toc'])
+        cta = ('<div class="bl-cta"><p class="kicker">%s</p><b>%s</b><span>%s — <strong>%s</strong></span><a class="go" href="{P}#quiz">Записаться</a><a href="{P}uslugi/%s/">Подробнее о направлении</a></div>' % (
+            s['kicker'], s['menu'], s['prices'][0][0], s['prices'][0][1], s['slug'])) if s else ''
+        meta = '<div class="bl-head-meta">%s<small>%d минуты чтения</small></div>' % (reviewer(p['reviewer'], 'bl-rev dark'), p['minutes'])
+        top = page_head(P2, 'blog/', p['category'], p['title'], p['lead'], [('blog/', 'Блог'), (None, p['category'])])
+        top = top.replace('</p></div>\n  </div></header>', '</p>%s</div>\n  </div></header>' % meta, 1)
+        body = top + '''<section class="bl-post"><div class="wrap">
+      <img class="bl-cover" src="{P}assets/%s" alt="%s">
+      <div class="bl-layout"><article class="legal-doc article">%s</article>
+        <aside><nav class="bl-toc" aria-label="Содержание"><b>Содержание</b><ol>%s</ol></nav>%s</aside></div>
+      <div class="bl-warn">Имеются противопоказания. Необходима консультация специалиста</div>
+      <h2 class="bl-more">Читайте также</h2><div class="bl-grid two">%s</div>
+    </div></section>''' % (p['cover'], p['coverAlt'], p['html'], toc, cta, ''.join(blog_card(x) for x in more))
+        write('blog/%s/index.html' % p['slug'], doc_html(P2, '%s — блог Орто-Рекавери' % p['title'], p['lead'], body))
+
 # ---------- страницы ----------
 def build():
     # шрифты лежат на сервере сайта — никаких запросов к Google (трансграничная передача IP посетителей)
@@ -333,6 +409,8 @@ def build():
         body = page_head(P, href, kicker, title, lead, [(None, label)]) + '\n'.join(blocks)
         write(href + 'index.html', doc_html(P, '%s — Орто-Рекавери, Махачкала' % label, lead, body))
     build_docs()
-    print('ok:', 2 + len(SERVICES) + len(pages) + 1 + len(LEGAL_DOCS), 'pages')
+    build_reviews()
+    build_blog()
+    print('ok:', 2 + len(SERVICES) + len(pages) + 1 + len(LEGAL_DOCS) + 2 + len(BLOG_POSTS), 'pages')
 
 build()
