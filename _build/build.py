@@ -280,8 +280,17 @@ PD_PAGE = 'https://prodoctorov.ru/mahachkala/lpu/90155-orto-rekaveri/#otzivi'
 GIS_URL = 'https://2gis.ru/makhachkala/firm/70000001060465369/tab/reviews'
 YA_URL = 'https://yandex.ru/maps/org/orto_rekaveri/20949908898/reviews/'
 
+# Видео из orto-recovery/видеоотзывы, сжатые в 720p (web/review-*.mp4)
+VIDEO_REVIEWS = [
+    ('8301', 'Обошла почти 10 клиник, пришла на костыле — теперь хожу без него', '56 сек'),
+    ('0931', 'Травма колена за три недели до турнира', '52 сек'),
+    ('5233', '16 лет с болезнью, лечился в Москве и Петербурге', '1 мин 2 сек'),
+    ('6986', 'Много раз обращался в центр: ортопедия, травматология, обследования', '43 сек'),
+]
+
 def build_reviews():
     P = '../'
+    video = ''.join('<figure><video controls playsinline preload="none" poster="{P}assets/video/review-%s.jpg" src="{P}assets/video/review-%s.mp4" aria-label="Видеоотзыв: %s"></video><figcaption>%s</figcaption><small>%s</small></figure>' % (i, i, t, t, d) for i, t, d in VIDEO_REVIEWS)
     body = page_head(P, 'otzyvy/', 'Отзывы', 'Отзывы пациентов — на независимых площадках', 'Мы не пишем и не редактируем отзывы. Здесь собраны оценки центра и отзывы с площадок, где оставить отзыв может любой пациент.', [(None, 'Отзывы')])
     body += '''<section><div class="wrap">
     <div class="rv-rates">
@@ -290,6 +299,9 @@ def build_reviews():
       <a href="%(pd)s" target="_blank" rel="noreferrer"><i style="background:#1A5DD0">ПД</i><span><b>ПроДокторов</b><em>39 отзывов</em></span><strong class="go">↗</strong></a>
     </div>
     <p class="rv-date">Данные площадок на 1 ноября 2026 года.</p>
+    <h2 class="rv-vh">Видеоотзывы пациентов</h2>
+    <p class="rv-vp">Пациенты рассказывают о лечении своими словами. Видео начинает загружаться, только когда вы нажмёте «воспроизвести».</p>
+    <div class="rv-videos">%(video)s</div>
     <div class="rv-widgets">
       <div class="rv-box"><h2>ПроДокторов</h2><p>Площадка проверяет, что автор действительно был на приёме. Виджет загружается с сервера prodoctorov.ru и использует его cookie.</p>
         <div class="pd-slot"><button type="button" class="btn-deep" data-pd="90155">Показать отзывы с ПроДокторов</button></div></div>
@@ -303,7 +315,7 @@ def build_reviews():
     <div class="rv-box"><h2>Что-то пошло не так?</h2><p>Напишите администратору в WhatsApp — передадим руководителю центра и ответим. Официальное обращение можно отправить письмом на <a href="mailto:%(mail)s">%(mail)s</a>.</p>
       <a class="rv-wa" href="https://wa.me/79883011805" target="_blank" rel="noreferrer">Написать администратору</a></div>
   </div></section>
-  <section><div class="wrap"><p class="rv-legal">Центр не публикует отзывы и благодарности пациентов на своих страницах. Отзывы выше показывают виджеты независимых площадок: они загружаются с их серверов по вашему нажатию, клиника не может изменить или удалить отзыв.</p></div></section>''' % {'gis': GIS_URL, 'ya': YA_URL, 'pd': PD_PAGE, 'mail': LEGAL_ORG['email']}
+  <section><div class="wrap"><p class="rv-legal">Видеоотзывы — личное мнение пациентов, результат лечения у каждого свой. Имеются противопоказания, необходима консультация специалиста. Отзывы в блоках площадок показывают виджеты 2ГИС, Яндекса и ПроДокторов: они загружаются с их серверов по вашему нажатию, клиника не может изменить или удалить отзыв.</p></div></section>''' % {'gis': GIS_URL, 'ya': YA_URL, 'pd': PD_PAGE, 'mail': LEGAL_ORG['email'], 'video': video}
     write('otzyvy/index.html', doc_html(P, 'Отзывы — Орто-Рекавери, Махачкала', 'Оценки и отзывы о центре на независимых площадках: 2ГИС, Яндекс Карты, ПроДокторов.', body))
 
 # ---------- блог ----------

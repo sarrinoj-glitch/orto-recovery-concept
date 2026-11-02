@@ -104,6 +104,10 @@
   .rv-rates span { display:flex; flex-direction:column; flex:1; } .rv-rates b { color:var(--graphite); } .rv-rates em { font-style:normal; color:var(--muted); font-size:15px; }
   .rv-rates strong { font-size:28px; font-weight:800; letter-spacing:-.03em; color:var(--graphite); } .rv-rates strong.go { color:var(--muted); font-size:22px; }
   .rv-date { margin-top:10px; font-size:13px; color:var(--muted); }
+  .rv-vh { margin:56px 0 0; font-size:clamp(30px, 3.4vw, 44px); } .rv-vp { margin-top:12px; color:var(--muted); line-height:1.55; max-width:560px; }
+  .rv-videos { margin-top:24px; display:grid; gap:16px; grid-template-columns:repeat(4, 1fr); }
+  .rv-videos figure { margin:0; } .rv-videos video { width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:24px; background:var(--graphite); display:block; }
+  .rv-videos figcaption { margin-top:12px; font-weight:700; line-height:1.3; color:var(--graphite); } .rv-videos small { color:var(--muted); font-size:13px; }
   .rv-widgets { margin-top:40px; display:grid; gap:24px; grid-template-columns:1fr 1fr; align-items:start; }
   .rv-box { background:#fff; border-radius:28px; padding:28px; box-shadow:0 20px 50px -34px rgba(11,61,74,.5); display:flex; flex-direction:column; gap:14px; }
   .rv-box h2 { font-size:26px; margin:0; color:var(--deep); } .rv-box p { color:var(--muted); line-height:1.55; margin:0; } .rv-box p a { color:var(--teal); text-decoration:underline; }
@@ -159,10 +163,12 @@
   .article .callout.warn { background:#FFF1EC; border-left:4px solid var(--pain); } .article .callout.warn b { display:block; color:#8a2f1c; }
   .article .callout > p:only-child { margin:0; font-size:15px; color:var(--muted); }
   @media (max-width: 1080px) {
+    .rv-videos { grid-template-columns:repeat(2, 1fr); }
     .bl-grid { grid-template-columns:1fr 1fr; } .bl-layout { grid-template-columns:1fr; } .bl-layout aside { position:static; } .bl-toc { display:none; }
     .rv-widgets, .rv-leave .wrap { grid-template-columns:1fr; }
   }
   @media (max-width: 720px) {
+    .rv-videos { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; margin:24px -16px 0; padding:0 16px 8px; scroll-padding-inline:16px; } .rv-videos figure { flex:0 0 72%; scroll-snap-align:start; }
     .bl-grid, .bl-grid.two { grid-template-columns:1fr; } .bl-card.big { grid-column:auto; display:flex; } .bl-card.big .bl-img { aspect-ratio:16/10; } .bl-card.big .bl-txt { padding:24px; } .bl-card.big .bl-txt > b { font-size:22px; }
     .rv-rates { grid-template-columns:1fr; } .rv-btns { grid-template-columns:1fr; } .bl-cover { aspect-ratio:16/10; border-radius:22px; }
   }
