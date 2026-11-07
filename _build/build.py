@@ -54,7 +54,7 @@ pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экск�
 for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
     PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICE_MENU) == 22 and len(SERVICES) == 6 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 4, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICE_MENU) == 22 and len(SERVICES) == 6 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
@@ -173,7 +173,7 @@ def conds_block(ids, title='С чем к нам приходят'):
     </div></div></section>''' % (title, '<div class="tabs" role="tablist">%s</div>' % tabs if len(items) > 1 else '', lists)
 
 def prices_teaser():
-    top = [('Травматолог-ортопед', '3 000 ₽'), ('Невролог', '3 000 ₽'), ('Ударно-волновая терапия', '3 000 ₽'), ('PRP-терапия', '10 500 ₽'), ('Лечебная физкультура, индивидуально', '2 500 ₽'), ('Массаж всех видов', 'от 1 600 ₽')]
+    top = [('Травматолог-ортопед', 'до 3 000 ₽'), ('Невролог', 'от 8 000 ₽'), ('Ударно-волновая терапия', 'до 3 000 ₽'), ('PRP-терапия', 'до 10 500 ₽'), ('Лечебная физкультура', 'от 2 000 ₽'), ('Массаж всех видов', 'от 1 600 ₽')]
     return '''<section><div class="wrap"><div class="tease rv">
     <div><p class="kicker">Цены</p><h2>Цену вы знаете до начала лечения</h2><p>Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.</p><a class="btn-lime" href="{P}ceny/">Весь прайс →</a></div>
     <ul>%s</ul></div></div></section>''' % ''.join('<li><span>%s</span><b>%s</b></li>' % x for x in top)
