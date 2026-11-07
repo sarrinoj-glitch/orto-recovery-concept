@@ -49,10 +49,10 @@ for block in re.findall(r"\{\s*slug: .*?chat: '[^']*',\s*\}", nav_ts, re.S):
 PRICE_GROUPS = []
 clinic = ts('clinic.ts')
 pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экскурсия')]
-for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],\s*\}", pg, re.S):
-    PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2))))
+for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
+    PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICES) == 8 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 4, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICES) == 7 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 4, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
@@ -171,15 +171,15 @@ def conds_block(ids, title='С чем к нам приходят'):
     </div></div></section>''' % (title, '<div class="tabs" role="tablist">%s</div>' % tabs if len(items) > 1 else '', lists)
 
 def prices_teaser():
-    top = [('Травматолог-ортопед', '3 000 ₽'), ('Невролог, полный приём', '8 000 ₽'), ('Ударно-волновая терапия', '3 000 ₽'), ('PRP-терапия', '10 500 ₽'), ('ЛФК, 60 минут', '2 500 ₽'), ('Гастроскопия во сне', '6 000 ₽')]
+    top = [('Травматолог-ортопед', '3 000 ₽'), ('Невролог', '3 000 ₽'), ('Ударно-волновая терапия', '3 000 ₽'), ('PRP-терапия', '10 500 ₽'), ('Лечебная физкультура, индивидуально', '2 500 ₽'), ('Массаж всех видов', 'от 1 600 ₽')]
     return '''<section><div class="wrap"><div class="tease rv">
-    <div><p class="kicker">Цены</p><h2>Цену вы знаете до начала лечения</h2><p>Прайс центра на ПроДокторов от 19.10.2026. Есть рассрочка без переплат и справка для налогового вычета.</p><a class="btn-lime" href="{P}ceny/">Весь прайс →</a></div>
+    <div><p class="kicker">Цены</p><h2>Цену вы знаете до начала лечения</h2><p>Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.</p><a class="btn-lime" href="{P}ceny/">Весь прайс →</a></div>
     <ul>%s</ul></div></div></section>''' % ''.join('<li><span>%s</span><b>%s</b></li>' % x for x in top)
 
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'endoscopy': lambda: section('sleep'), 'family': lambda: section('perks'), 'whole': lambda: section('whole'),
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'),
 }
 
 
@@ -194,11 +194,12 @@ ICON = {
 }
 
 def stats_html():
-    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (30, 0, ' лет', 'стаж эндоскописта высшей категории'), (23, 0, '', 'методики восстановления'), (8, 0, '', 'направлений в одном центре')]
-    li = ''.join('<li><b data-count="%s" data-dec="%d">0%s</b><span>%s</span></li>' % (v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
+    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (7, 0, '', 'направлений в одном центре')]
+    # стаж — «более 5 лет»: приставка ставится перед счётчиком
+    li = ''.join('<li><b>%s<span data-count="%s" data-dec="%d">0</span>%s</b><span>%s</span></li>' % ('<small>более </small>' if lab == 'стаж каждого врача' else '', v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
     return '<section><div class="wrap"><div class="cstats beam-border rv"><ul>%s</ul></div></div></section>' % li
 
-STEPS2 = [('Расскажите, что беспокоит', 'Врач собирает жалобы и историю: когда началось, что усиливает боль, были ли травмы и операции.', 'g-ortho.jpg'),
+STEPS2 = [('Расскажите, что беспокоит', 'Врач собирает жалобы и историю: когда началось, что усиливает боль, были ли травмы и операции.', 'cabinet.jpg'),
           ('Осмотр и простой тест', 'Врач смотрит, как двигается сустав или спина, и проводит несложный физический тест.', 'g-explain.jpg'),
           ('Разбираем снимки', 'МРТ, рентген, заключения — врач объяснит простыми словами, что на них видно.', 'g-mri.jpg'),
           ('План лечения и цена', 'Вы получаете курс процедур и знаете, сколько он стоит, до начала лечения.', 'c-shoulder.jpg')]
@@ -350,7 +351,7 @@ def build_reviews():
 
 # ---------- блог ----------
 DOCTOR_ROLES = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']+)',\s*role: '([^']+)'", clinic)}
-DOCTOR_PHOTOS = {'Куделя Александр Павлович': 'd-kudelya-a.jpg', 'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
+DOCTOR_PHOTOS = {'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
 
 def reviewer(name, cls='bl-rev'):
     f, i, o = name.split(' ')
@@ -368,7 +369,7 @@ def build_blog():
     cards = ''.join(blog_card(p, i == 0) for i, p in enumerate(BLOG_POSTS))
     body = page_head(P, 'blog/', 'Блог', 'Разбираемся в боли вместе с врачами', 'Короткие статьи о том, что делать дома, какие признаки нельзя пропускать и как подготовиться к обследованию. Каждый текст проверяет врач центра.', [(None, 'Блог')])
     body += '<section><div class="wrap"><div class="bl-chips" role="tablist" aria-label="Темы">%s</div><div class="bl-grid">%s</div></div></section>' % (chips, cards)
-    write('blog/index.html', doc_html(P, 'Блог — Орто-Рекавери, Махачкала', 'Статьи врачей центра: боль в спине, суставы и стопы, сколиоз у детей, подготовка к эндоскопии.', body))
+    write('blog/index.html', doc_html(P, 'Блог — Орто-Рекавери, Махачкала', 'Статьи врачей центра: боль в спине, суставы и стопы, сколиоз у детей.', body))
     for p in BLOG_POSTS:
         P2 = '../../'
         s = next((x for x in SERVICES if x['slug'] == p['service']), None)
@@ -398,13 +399,13 @@ def build():
     # главная
     hero = re.sub(r'<nav class="nav".*?</nav>', lambda m: nav('', ''), HERO, flags=re.S)
     home = '\n'.join([hero, FINDER, section('start'), stats_html(), cards_section(), steps_html(), manifesto_html(), section('second'), section('doctors'), flow_html(), marquee_html(), section('trust'), prices_teaser()])
-    write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: ортопед, невролог, реабилитация и ЛФК, физиотерапия, PRP, эндоскопия во сне.', home))
+    write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: ортопед, невролог, реабилитация и лечебная физкультура, физиотерапия, PRP.', home))
 
     # услуги
     cards = ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['prices'][0][1]) for s in SERVICES)
     body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Восемь направлений в одном центре: от консультации ортопеда до обследования во сне. Выберите своё или подберите врача за три вопроса.', [(None, 'Услуги')])
     body += hover_list_html() + '<section class="mob-only"><div class="wrap"><div class="svc-cards">%s</div></div></section>' % cards + section('start') + marquee_html()
-    write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Ортопедия, лечение спины, реабилитация и ЛФК, физиотерапия, PRP, эндоскопия во сне, детская реабилитация.', body))
+    write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Ортопедия, лечение спины, реабилитация и лечебная физкультура, физиотерапия, PRP, детская реабилитация, питание и психолог.', body))
 
     for s in SERVICES:
         P = '../../'
@@ -417,7 +418,7 @@ def build():
       </div><img src="%s" alt="%s"></div>
     </div></header>''' % (nav(P, 'uslugi/'), P, P, s['menu'], s['kicker'], s['title'], s['lead'], s['prices'][0][0], s['prices'][0][1], s['photo'], s['alt'])
         grid = '''<section><div class="wrap"><div class="svc-grid">
-      <div class="pcard rv"><h2>Цены</h2><ul class="plist2">%s</ul><small>Прайс центра на ПроДокторов от 19.10.2026. <a href="%sceny/">Все цены</a></small></div>
+      <div class="pcard rv"><h2>Цены</h2><ul class="plist2">%s</ul><small>Цены по данным центра на 7 ноября 2026 года. <a href="%sceny/">Все цены</a></small></div>
       <div class="dcard rv"><h2>%s</h2>%s</div>
     </div></div></section>''' % (''.join('<li><span>%s</span><b>%s</b></li>' % p for p in s['prices']), P, 'Ведут приём' if len(s['doctors']) > 1 else 'Ведёт приём', docs)
         seen, extras = set(), []
@@ -438,9 +439,9 @@ def build():
                       [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour'), equipment_html()]),
         'vrachi/': ('Специалисты', 'Врачи центра', 'Можно записаться к конкретному врачу. Если вам спокойнее со специалистом-женщиной, скажите об этом администратору.',
                     [section('doctors'), doctor_videos_html()]),
-        'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Прайс центра на ПроДокторов от 19.10.2026. Есть рассрочка без переплат и справка для налогового вычета.',
+        'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.',
                   ['<section><div class="wrap"><div class="pgroups">%s</div></div></section>' % ''.join(
-                      '<div class="pcard rv"><h2>%s</h2><ul class="plist2">%s</ul></div>' % (t, ''.join('<li><span>%s</span><b>%s</b></li>' % i for i in items)) for t, items in PRICE_GROUPS),
+                      '<div class="pcard rv"><h2>%s</h2><ul class="plist2">%s</ul>%s</div>' % (t, ''.join('<li><span>%s</span><b>%s</b></li>' % i for i in items), '<p class="pnote">%s</p>' % note if note else '') for t, items, note in PRICE_GROUPS),
                    section('perks')]),
         'pacientam/': ('Пациентам', 'Всё, что нужно знать до визита', 'Как проходит первый приём, что взять с собой, как получить второе мнение и вызвать реабилитолога на дом.',
                        [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks')]),

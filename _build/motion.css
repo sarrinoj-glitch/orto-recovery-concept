@@ -56,6 +56,7 @@
   .cstats b { display:block; font-size:clamp(38px, 4vw, 52px); font-weight:800; letter-spacing:-.04em; line-height:1; color:var(--lime); font-variant-numeric:tabular-nums; }
   .cstats b small { font-size:22px; }
   .cstats span { display:block; margin-top:8px; font-size:14px; line-height:1.35; color:rgba(255,255,255,.75); }
+  .cstats b span { display:inline; margin:0; font-size:inherit; line-height:inherit; color:inherit; }
 
   /* ===== шаги приёма с «прилипающим» фото ===== */
   .steps2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:48px; margin-top:24px; }
