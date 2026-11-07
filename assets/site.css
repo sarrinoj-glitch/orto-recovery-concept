@@ -894,7 +894,7 @@
     .st-step { min-height:0; padding:28px 0 28px 64px; }
     .st-step .n { top:28px; }
     .st-step img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:22px; margin-top:16px; }
-    .hlist, .hl-float { display:none; }
+    .hlist, .hl-float, .hl-head { display:none; }
     .mob-only { display:block; }
   }
   @media (max-width: 720px) {

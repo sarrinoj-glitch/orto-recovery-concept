@@ -38,7 +38,7 @@ nav_ts = nav_ts[nav_ts.index('export const SERVICES'):]
 for block in re.findall(r"\{\s*slug: .*?chat: '[^']*',\s*\}", nav_ts, re.S):
     g = lambda k: re.search(k + r": '([^']*)'", block).group(1)
     SERVICES.append({
-        'slug': g('slug'), 'menu': g('menu'), 'kicker': g('kicker'), 'title': g('title'), 'lead': g('lead'),
+        'slug': g('slug'), 'menu': g('menu'), 'kind': g('kind'), 'kicker': g('kicker'), 'title': g('title'), 'lead': g('lead'),
         'photo': g('photo').replace('/photos/', 'assets/'), 'alt': g('photoAlt'),
         'doctors': re.findall(r"'([^']+)'", re.search(r"doctors: \[(.*?)\]", block).group(1)),
         'prices': re.findall(r"\['([^']+)', '([^']+)'\]", re.search(r"prices: \[(.*?)\],\n", block, re.S).group(1)),
@@ -238,10 +238,11 @@ def marquee_html():
     return ('<section class="mq-sec"><div class="wrap"><div class="sec-head rv"><div><p class="kicker">Методы</p><h2>23 методики восстановления в одном центре</h2></div>'
             '<a class="sec-link" href="{P}uslugi/fizioterapiya/">Что это за методики →</a></div></div>%s%s</section>') % (row(names[:half], False, 55), row(names[half:], True, 60))
 
-def hover_list_html():
+def hover_list_html(items, title=''):
     li = ''.join('<li data-img="{P}%s"><a href="{P}uslugi/%s/"><span style="display:flex;align-items:baseline;gap:24px"><span class="num">%02d</span><span class="t">%s</span></span>'
-                 '<span style="display:flex;align-items:center;gap:20px"><span class="k">%s</span><span class="p">%s</span></span></a></li>' % (s['photo'], s['slug'], i + 1, s['menu'], s['kicker'], s['prices'][0][1]) for i, s in enumerate(SERVICES))
-    return '<section><div class="wrap"><div style="position:relative"><ul class="hlist">%s</ul><div class="hl-float" aria-hidden="true"><img alt="" src="{P}%s"></div></div></div></section>' % (li, SERVICES[0]['photo'])
+                 '<span style="display:flex;align-items:center;gap:20px"><span class="k">%s</span><span class="p">%s</span></span></a></li>' % (s['photo'], s['slug'], i + 1, s['menu'], s['kicker'], s['prices'][0][1]) for i, s in enumerate(items))
+    head = '<h2 class="rv-vh hl-head" style="margin:0 0 24px">%s</h2>' % title if title else ''
+    return '<section><div class="wrap">%s<div style="position:relative"><ul class="hlist">%s</ul><div class="hl-float" aria-hidden="true"><img alt="" src="{P}%s"></div></div></div></section>' % (head, li, items[0]['photo'])
 
 def dock(P):
     small = lambda k: ICON[k].replace('width="24" height="24"', 'width="18" height="18"')
@@ -408,10 +409,11 @@ def build():
     write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: ортопед, невролог, реабилитация и лечебная физкультура, физиотерапия, PRP.', home))
 
     # услуги
-    cards = ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['prices'][0][1]) for s in SERVICES)
-    body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Шесть направлений в одном центре: от консультации ортопеда до обследования во сне. Выберите своё или подберите врача за три вопроса.', [(None, 'Услуги')])
-    body += hover_list_html() + '<section class="mob-only"><div class="wrap"><div class="svc-cards">%s</div></div></section>' % cards + section('start') + marquee_html()
-    write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Ортопедия, лечение спины, реабилитация и лечебная физкультура, физиотерапия, PRP, детская реабилитация, питание и психолог.', body))
+    problems = [s for s in SERVICES if s['kind'] == 'problem']; methods = [s for s in SERVICES if s['kind'] == 'method']
+    cards = lambda items, title: '<section class="mob-only"><div class="wrap"><h2 style="font-size:28px;margin:0 0 16px">%s</h2><div class="svc-cards">%s</div></div></section>' % (title, ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['prices'][0][1]) for s in items))
+    body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Выберите, что беспокоит, — или подберите врача за три вопроса. Ниже — методы лечения, которые есть в центре.', [(None, 'Услуги')])
+    body += hover_list_html(problems) + cards(problems, 'Что беспокоит') + hover_list_html(methods, 'Методы лечения') + cards(methods, 'Методы лечения') + section('start') + marquee_html()
+    write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Боль в суставах и спине, восстановление после травм и операций, осанка и стопы у детей; физиотерапия и PRP-терапия.', body))
 
     for s in SERVICES:
         P = '../../'
