@@ -358,7 +358,7 @@ def build_reviews():
 
 # ---------- блог ----------
 DOCTOR_ROLES = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']+)',\s*role: '([^']+)'", clinic)}
-DOCTOR_PHOTOS = {'Хаджалов Абузар Магомедович': 'd-khadzhalov.jpg', 'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
+DOCTOR_PHOTOS = {'Муртузалиева Зарема Гаджимурадовна': 'd-murtuzalieva.jpg', 'Хаджалов Абузар Магомедович': 'd-khadzhalov.jpg', 'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
 
 def reviewer(name, cls='bl-rev'):
     f, i, o = name.split(' ')
