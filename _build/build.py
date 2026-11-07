@@ -372,7 +372,7 @@ def blog_card(p, big=False):
 
 def build_blog():
     P = '../'
-    chips = '<button type="button" class="on" data-cat="">Все статьи</button>' + ''.join('<button type="button" data-cat="%s">%s</button>' % (c, c) for c in BLOG_CATEGORIES)
+    chips = '<button type="button" class="on" data-cat="">Все статьи</button>'
     cards = ''.join(blog_card(p, i == 0) for i, p in enumerate(BLOG_POSTS))
     body = page_head(P, 'blog/', 'Блог', 'Разбираемся в боли вместе с врачами', 'Короткие статьи о том, что делать дома, какие признаки нельзя пропускать и как подготовиться к обследованию. Каждый текст проверяет врач центра.', [(None, 'Блог')])
     body += '<section><div class="wrap"><div class="bl-chips" role="tablist" aria-label="Темы">%s</div><div class="bl-grid">%s</div></div></section>' % (chips, cards)
