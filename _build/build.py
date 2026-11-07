@@ -46,13 +46,15 @@ for block in re.findall(r"\{\s*slug: .*?chat: '[^']*',\s*\}", nav_ts, re.S):
         'extras': re.findall(r"'(\w+)'", re.search(r"extras: \[(.*?)\]", block).group(1)),
     })
 
+# Вкладка «Услуги» в меню — список услуг с ценами (SERVICE_MENU в nav.ts)
+SERVICE_MENU = re.findall(r"\{ name: '([^']+)', price: '([^']+)', href: '([^']+)' \}", ts('nav.ts'))
 PRICE_GROUPS = []
 clinic = ts('clinic.ts')
 pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экскурсия')]
 for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
     PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICES) == 7 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 4, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICE_MENU) == 22 and len(SERVICES) == 6 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 4, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
@@ -105,12 +107,12 @@ def nav(P, active):
             continue  # «Главная» — по логотипу, в мобильном меню остаётся
         on = ' class="on"' if href == active else ''
         if href == 'uslugi/':
-            panel = ''.join('<a href="%suslugi/%s/">%s<span>%s</span></a>' % (P, s['slug'], s['menu'], s['prices'][0][1]) for s in SERVICES)
+            panel = ''.join('<a href="%s%s">%s<span>%s</span></a>' % (P, h.lstrip('/'), n, pr) for n, pr, h in SERVICE_MENU)
             links.append('<div class="mm"><a href="%suslugi/"%s>Услуги %s</a><div class="mm-panel svc">%s</div></div>' % (P, on, CHEV, panel))
         else:
             links.append('<a href="%s%s"%s>%s</a>' % (P, href, on, label))
     mob = ''.join('<a href="%s%s"%s>%s</a>' % (P, h, ' class="on"' if h == active else '', l) for h, l in NAV if h != 'uslugi/')
-    mob_svc = ''.join('<a href="%suslugi/%s/">%s<span>%s</span></a>' % (P, s['slug'], s['menu'], s['prices'][0][1]) for s in SERVICES)
+    mob_svc = ''.join('<a href="%s%s">%s<span>%s</span></a>' % (P, h.lstrip('/'), n, pr) for n, pr, h in SERVICE_MENU)
     return '''<nav class="nav" aria-label="Основное меню">
       <a class="logo" href="%(P)s"><img src="%(P)sassets/logo-dark.png" alt="Орто-Рекавери"></a>
       <div class="nav-links">%(links)s</div>
@@ -194,7 +196,7 @@ ICON = {
 }
 
 def stats_html():
-    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (7, 0, '', 'направлений в одном центре')]
+    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (6, 0, '', 'направлений в одном центре')]
     # стаж — «более 5 лет»: приставка ставится перед счётчиком
     li = ''.join('<li><b>%s<span data-count="%s" data-dec="%d">0</span>%s</b><span>%s</span></li>' % ('<small>более </small>' if lab == 'стаж каждого врача' else '', v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
     return '<section><div class="wrap"><div class="cstats beam-border rv"><ul>%s</ul></div></div></section>' % li
@@ -407,7 +409,7 @@ def build():
 
     # услуги
     cards = ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['prices'][0][1]) for s in SERVICES)
-    body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Восемь направлений в одном центре: от консультации ортопеда до обследования во сне. Выберите своё или подберите врача за три вопроса.', [(None, 'Услуги')])
+    body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Шесть направлений в одном центре: от консультации ортопеда до обследования во сне. Выберите своё или подберите врача за три вопроса.', [(None, 'Услуги')])
     body += hover_list_html() + '<section class="mob-only"><div class="wrap"><div class="svc-cards">%s</div></div></section>' % cards + section('start') + marquee_html()
     write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Ортопедия, лечение спины, реабилитация и лечебная физкультура, физиотерапия, PRP, детская реабилитация, питание и психолог.', body))
 

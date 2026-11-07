@@ -2,7 +2,7 @@
   /* ===== Многостраничная версия ===== */
   .nav-links a.on { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px; }
   .mm > a { display:inline-flex; align-items:center; gap:6px; font-weight:500; font-size:15px; opacity:.9; }
-  .mm-panel.svc { width:560px; grid-template-columns:1fr 1fr; gap:0 24px; }
+  .mm-panel.svc { width:720px; grid-template-columns:1fr 1fr; gap:0 24px; }
   .burger { display:none; width:46px; height:46px; border-radius:50%; border:0; background:#fff; color:var(--deep); align-items:center; justify-content:center; }
   .mnav { position:fixed; left:16px; right:16px; top:84px; z-index:60; background:#fff; color:var(--graphite); border-radius:24px; padding:14px; box-shadow:0 30px 60px -20px rgba(7,40,49,.5); max-height:calc(100svh - 110px); overflow:auto; }
   .mnav a { display:flex; justify-content:space-between; padding:12px 10px; border-radius:12px; font-size:17px; }

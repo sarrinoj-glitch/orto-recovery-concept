@@ -64,7 +64,7 @@ if (qb) {
     arm: { t: 'Плечо, локоть, кисть', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед, кистевой реабилитолог', ini: 'ХА', price: '3 000 ₽', pl: 'приём', slug: 'ortopediya' },
     foot: { t: 'Стопа и пятка', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед', ini: 'ХА', price: '3 000 ₽', pl: 'приём', slug: 'ortopediya' },
     kids: { t: 'Ребёнок: осанка, сколиоз', who: 'Мусаева Эльмира Ашурбеговна', role: 'инструктор лечебной физкультуры, методика СИАС', ini: 'МЭ', price: '2 500 ₽', pl: 'занятие', slug: 'detyam' },
-    endo: { t: 'Желудок и кишечник', who: 'Нажмудинова Айшат Абдурахмановна', role: 'терапевт-гастроэнтеролог', ini: 'НА', price: '3 000 ₽', pl: 'приём', slug: 'pitanie-i-psiholog' },
+    endo: { t: 'Желудок и кишечник', who: 'Нажмудинова Айшат Абдурахмановна', role: 'терапевт-гастроэнтеролог', ini: 'НА', price: '3 000 ₽', pl: 'приём', slug: '' },
   }
   const Q = [
     { q: 'Где беспокоит?', k: 'area', o: [['back', 'Спина или шея'], ['knee', 'Колено или таз'], ['arm', 'Плечо или кисть'], ['foot', 'Стопа или пятка'], ['kids', 'Осанка у ребёнка'], ['endo', 'Желудок, кишечник']] },
@@ -83,7 +83,7 @@ if (qb) {
     }
     const a = AREAS[qa.area]
     const note = qa.why === 'surgery' ? 'После операции врач составит план реабилитации и передаст вас инструктору лечебной физкультуры.' : qa.why === 'trauma' ? 'Возьмите снимки после травмы — врач разберёт их на приёме.' : qa.when === 'long' ? 'Боль дольше полугода — врач найдёт причину и составит курс, а не просто снимет симптом.' : 'Чем раньше начать, тем короче обычно восстановление.'
-    qb.innerHTML = `<div class="q-result"><div class="who"><span class="ava" style="width:52px;height:52px;border-radius:16px;font-size:17px;background:var(--lime);color:var(--graphite)">${a.ini}</span><div><b>${a.who}</b><small>${a.role}</small></div></div><p><b style="color:var(--deep)">${a.t}.</b> ${note}</p><div class="row"><strong>${a.price} <small style="font-size:14px;font-weight:500;color:var(--muted)">${a.pl}</small></strong><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn-ghost-d" href="${P}uslugi/${a.slug}/">Об услуге</a><button class="btn-deep" type="button" style="margin:0">Записаться</button></span></div></div><button class="q-again" type="button">↺ Пройти заново</button>`
+    qb.innerHTML = `<div class="q-result"><div class="who"><span class="ava" style="width:52px;height:52px;border-radius:16px;font-size:17px;background:var(--lime);color:var(--graphite)">${a.ini}</span><div><b>${a.who}</b><small>${a.role}</small></div></div><p><b style="color:var(--deep)">${a.t}.</b> ${note}</p><div class="row"><strong>${a.price} <small style="font-size:14px;font-weight:500;color:var(--muted)">${a.pl}</small></strong><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn-ghost-d" href="${P}${a.slug ? `uslugi/${a.slug}/` : 'vrachi/'}">Об услуге</a><button class="btn-deep" type="button" style="margin:0">Записаться</button></span></div></div><button class="q-again" type="button">↺ Пройти заново</button>`
     qb.querySelector('.q-again').addEventListener('click', () => { qa = {}; qi = 0; render() })
   }
   render()
