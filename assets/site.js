@@ -128,19 +128,71 @@ if (boxes.length) {
   boxes.forEach((b) => b.addEventListener('change', () => { try { localStorage.setItem('orto-prep', JSON.stringify(boxes.map((x) => x.checked))) } catch (e) { /* нет хранилища */ } }))
 }
 
-// Памятка: проверяем номер, в концепции ничего не отправляем
-const mf = $('#magnetForm'), mp = $('#magnetPhone'), me = $('#magnetErr')
-if (mf) {
-  mp.addEventListener('input', () => { me.hidden = true })
-  mf.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const pd = $('#magnetPd'), pe = $('#magnetPdErr')
-    const bad = mp.value.replace(/\D/g, '').replace(/^[78]/, '').length !== 10
-    me.hidden = !bad; if (pe) pe.hidden = !!(pd && pd.checked)
-    if (bad || (pd && !pd.checked)) return
-    mf.outerHTML = '<div class="ok"><b>Готово!</b> Памятка придёт в WhatsApp в течение минуты. <small style="display:block;color:var(--muted);margin-top:4px">В концепции номер никуда не отправляется.</small></div>'
-  })
+// Заявка на приём: любая кнопка «Записаться…» открывает форму. Бэкенда нет —
+// заявка уходит администратору в WhatsApp центра готовым сообщением.
+const WA = 'https://wa.me/79883011805'
+const leadBox = document.createElement('div')
+leadBox.className = 'lead-ov'
+leadBox.hidden = true
+leadBox.innerHTML = `<div class="lead" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+  <button type="button" class="lead-x" aria-label="Закрыть">✕</button>
+  <form class="lead-form" novalidate>
+    <h2 id="leadTitle">Запись на приём</h2>
+    <p class="lead-sub">Администратор перезвонит, подберёт врача и удобное время.</p>
+    <label>Имя<input name="name" autocomplete="name"></label><div class="err" data-err="name" hidden>Как к вам обращаться?</div>
+    <label>Номер телефона<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"></label><div class="err" data-err="phone" hidden>Проверьте номер — нужно 10–11 цифр</div>
+    <label>Что беспокоит?<textarea name="what" rows="3" placeholder="Например: болит колено при ходьбе"></textarea></label>
+    <fieldset><legend>Как давно?</legend><div class="lead-chips" data-name="when"><button type="button">До двух недель</button><button type="button">От месяца до полугода</button><button type="button">Больше полугода</button></div></fieldset>
+    <fieldset><legend>Была травма или операция?</legend><div class="lead-chips" data-name="why"><button type="button">Да, травма</button><button type="button">Да, операция</button><button type="button">Нет</button></div></fieldset>
+    <label class="pd-consent"><input type="checkbox" name="pd"><span>Даю <a href="${P}dokumenty/soglasie/" target="_blank">согласие на обработку персональных данных</a>, ознакомлен(а) с <a href="${P}dokumenty/politika/" target="_blank">Политикой</a></span></label><div class="err" data-err="pd" hidden>Отметьте согласие, чтобы отправить заявку</div>
+    <button type="submit" class="lead-go">Отправить заявку</button>
+    <small>Заявка откроется в WhatsApp центра — останется нажать «Отправить».</small>
+  </form>
+  <div class="lead-done" hidden><h2>Заявка готова</h2><p>Мы открыли WhatsApp центра с вашей заявкой — нажмите «Отправить», и администратор свяжется с вами, чтобы подобрать врача и время.</p><p>WhatsApp не открылся? Позвоните: <a href="tel:+78722522333">+7 (8722) 52-23-33</a></p><button type="button" class="lead-go lead-close">Готово</button></div>
+</div>`
+document.body.appendChild(leadBox)
+const lf = leadBox.querySelector('.lead-form'), ld = leadBox.querySelector('.lead-done')
+const F = (n) => lf.querySelector(`[name=${n}]`)
+const leadClose = () => { leadBox.hidden = true; document.body.style.overflow = '' }
+function openLead(ctx, phone) {
+  lf.hidden = false; ld.hidden = true
+  if (ctx && !F('what').value) F('what').value = ctx
+  if (phone && !F('phone').value) F('phone').value = phone
+  leadBox.querySelectorAll('.err').forEach((e) => { e.hidden = true })
+  leadBox.hidden = false; document.body.style.overflow = 'hidden'
+  setTimeout(() => F('name').focus(), 50)
 }
+leadBox.addEventListener('click', (e) => { if (e.target === leadBox || e.target.closest('.lead-x, .lead-close')) leadClose() })
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !leadBox.hidden) leadClose() })
+leadBox.querySelectorAll('.lead-chips button').forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') === 'true'
+  b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', 'false'))
+  b.setAttribute('aria-pressed', on ? 'false' : 'true')
+}))
+lf.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const name = F('name').value.trim(), phone = F('phone').value.trim(), digits = phone.replace(/\D/g, '')
+  const bad = { name: name.length < 2, phone: digits.length < 10 || digits.length > 12, pd: !F('pd').checked }
+  Object.entries(bad).forEach(([k, v]) => { leadBox.querySelector(`[data-err="${k}"]`).hidden = !v })
+  if (bad.name || bad.phone || bad.pd) return
+  const pick = (n) => { const b = leadBox.querySelector(`[data-name="${n}"] [aria-pressed="true"]`); return b ? b.textContent : '' }
+  const text = ['Заявка на приём с сайта', `Имя: ${name}`, `Телефон: ${phone}`,
+    F('what').value.trim() && `Что беспокоит: ${F('what').value.trim()}`, pick('when') && `Как давно: ${pick('when')}`, pick('why') && `Травма или операция: ${pick('why')}`].filter(Boolean).join('\n')
+  window.open(`${WA}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
+  lf.hidden = true; ld.hidden = false
+})
+// Все CTA: кнопки со словом «запис…» и ссылки с data-lead
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('button, a[data-lead]')
+  if (!el || el.closest('.lead-ov') || !(el.matches('[data-lead]') || /запис/i.test(el.textContent))) return
+  e.preventDefault(); e.stopPropagation()
+  const doc = el.closest('.doc, .dm-card')
+  openLead(el.dataset.lead || (doc ? `Хочу записаться к врачу: ${doc.querySelector('b').textContent}` : ''))
+}, true)
+
+// Памятка: номер переносим в форму заявки
+const mf = $('#magnetForm')
+if (mf) mf.addEventListener('submit', (e) => { e.preventDefault(); openLead('Хочу памятку «5 правил, чтобы спина не болела»', $('#magnetPhone').value.trim()) })
 
 // Шаги «Как лечим» подсвечиваются по очереди
 const stepsList = $$('.steps li')

@@ -223,8 +223,7 @@ def flow_html():
     return ('<section class="sec"><div class="wrap"><div class="flow">'
             '<div class="rv"><p class="kicker">Запись без ожидания на линии</p><h2>Пишете куда удобно — администратор сделает остальное</h2>'
             '<p class="lead" style="color:var(--muted)">Сайт, WhatsApp или звонок: администратор подберёт врача, запишет на свободное время и напомнит о визите накануне.</p>'
-            '<small>Пример того, как работает ИИ-администратор центра.</small>'
-            '<button class="btn-deep" type="button">Попробовать — написать</button></div>'
+            '<button class="btn-deep" type="button">Записаться на приём</button></div>'
             '<div class="flow-box rv"><svg class="beams" aria-hidden="true"></svg>'
             '<div class="flow-col">%s%s%s</div>%s<div class="flow-col">%s%s%s</div></div>'
             '</div></div></section>') % (n('a', ICON['globe'], 'Сайт'), n('b', ICON['chat'], 'WhatsApp'), n('c', ICON['phone'], 'Звонок'),
@@ -245,7 +244,7 @@ def hover_list_html():
 def dock(P):
     small = lambda k: ICON[k].replace('width="24" height="24"', 'width="18" height="18"')
     return ('<nav class="dock" aria-label="Быстрая запись"><a href="tel:+78722522333">%s Позвонить</a>'
-            '<a href="https://wa.me/79883011805" target="_blank" rel="noreferrer">%s WhatsApp</a><a class="main" href="%s#quiz">Записаться</a></nav>') % (small('phone'), small('chat'), P)
+            '<a href="https://wa.me/79883011805" target="_blank" rel="noreferrer">%s WhatsApp</a><a class="main" href="%s#quiz" data-lead="">Записаться</a></nav>') % (small('phone'), small('chat'), P)
 
 
 

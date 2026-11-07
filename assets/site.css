@@ -1163,3 +1163,24 @@
     .bl-grid, .bl-grid.two { grid-template-columns:1fr; } .bl-card.big { grid-column:auto; display:flex; } .bl-card.big .bl-img { aspect-ratio:16/10; } .bl-card.big .bl-txt { padding:24px; } .bl-card.big .bl-txt > b { font-size:22px; }
     .rv-rates { grid-template-columns:1fr; } .rv-btns { grid-template-columns:1fr; } .bl-cover { aspect-ratio:16/10; border-radius:22px; }
   }
+
+  /* ===== Форма заявки ===== */
+  .lead-ov { position:fixed; inset:0; z-index:200; display:flex; align-items:flex-end; justify-content:center; background:rgba(11,61,74,.6); backdrop-filter:blur(4px); }
+  .lead-ov[hidden] { display:none; }
+  .lead { position:relative; width:100%; max-width:520px; max-height:92svh; overflow-y:auto; background:var(--ward); border-radius:28px 28px 0 0; padding:22px; box-shadow:0 30px 60px -20px rgba(11,61,74,.45); }
+  .lead h2 { margin:0; padding-right:44px; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--deep); }
+  .lead-sub { margin:6px 0 4px; color:var(--muted); font-size:15px; }
+  .lead-form { display:flex; flex-direction:column; gap:14px; }
+  .lead-form label:not(.pd-consent) { display:flex; flex-direction:column; gap:6px; font-weight:600; font-size:14px; color:var(--graphite); }
+  .lead-form input:not([type=checkbox]), .lead-form textarea { font:inherit; font-weight:400; font-size:16px; padding:12px 16px; border:1px solid rgba(33,33,33,.15); border-radius:16px; background:#fff; color:var(--graphite); outline:none; resize:none; }
+  .lead-form input:focus, .lead-form textarea:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(23,126,150,.18); }
+  .lead-form fieldset { border:0; margin:0; padding:0; } .lead-form legend { margin-bottom:8px; font-weight:600; font-size:14px; }
+  .lead-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .lead-chips button { font:inherit; font-size:14px; padding:10px 16px; border-radius:999px; border:0; background:#fff; color:var(--graphite); box-shadow:inset 0 0 0 1px rgba(33,33,33,.15); cursor:pointer; }
+  .lead-chips button[aria-pressed=true] { background:var(--deep); color:#fff; font-weight:700; box-shadow:none; }
+  .lead .err { margin-top:-8px; font-size:13px; color:#a3341d; }
+  .lead-go { height:56px; border:0; border-radius:999px; background:var(--deep); color:#fff; font:inherit; font-weight:700; font-size:16px; cursor:pointer; padding:0 24px; }
+  .lead-form small { text-align:center; font-size:12px; color:var(--muted); }
+  .lead-x { position:absolute; right:16px; top:16px; width:40px; height:40px; border-radius:50%; border:0; background:#fff; color:var(--graphite); font-size:16px; cursor:pointer; }
+  .lead-done p { color:var(--muted); line-height:1.55; } .lead-done a { color:var(--teal); font-weight:700; }
+  @media (min-width:640px) { .lead-ov { align-items:center; padding:24px; } .lead { border-radius:28px; padding:28px; } }
