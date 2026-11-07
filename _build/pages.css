@@ -194,5 +194,8 @@
   .lead-go { height:56px; border:0; border-radius:999px; background:var(--deep); color:#fff; font:inherit; font-weight:700; font-size:16px; cursor:pointer; padding:0 24px; }
   .lead-form small { text-align:center; font-size:12px; color:var(--muted); }
   .lead-x { position:absolute; right:16px; top:16px; width:40px; height:40px; border-radius:50%; border:0; background:#fff; color:var(--graphite); font-size:16px; cursor:pointer; }
-  .lead-done p { color:var(--muted); line-height:1.55; } .lead-done a { color:var(--teal); font-weight:700; }
+  .lead-done p, .lead-fb p { color:var(--muted); line-height:1.55; } .lead-done a, .lead-fb p a { color:var(--teal); font-weight:700; }
+  .lead-fb .lead-wa { display:flex; align-items:center; justify-content:center; text-decoration:none; color:#fff; }
+  .lead-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .lead-go:disabled { opacity:.6; }
   @media (min-width:640px) { .lead-ov { align-items:center; padding:24px; } .lead { border-radius:28px; padding:28px; } }

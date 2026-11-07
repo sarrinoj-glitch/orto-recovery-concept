@@ -128,9 +128,11 @@ if (boxes.length) {
   boxes.forEach((b) => b.addEventListener('change', () => { try { localStorage.setItem('orto-prep', JSON.stringify(boxes.map((x) => x.checked))) } catch (e) { /* нет хранилища */ } }))
 }
 
-// Заявка на приём: любая кнопка «Записаться…» открывает форму. Бэкенда нет —
-// заявка уходит администратору в WhatsApp центра готовым сообщением.
+// Заявка на приём: любая кнопка «Записаться…» открывает форму.
+// Заявка уходит на orto-lead-api (Vercel) → WhatsApp администратора через API;
+// если сервер недоступен — кнопка «Отправить через WhatsApp» с готовым текстом.
 const WA = 'https://wa.me/79883011805'
+const LEAD_API = 'https://orto-lead-api.vercel.app/api/lead'
 const leadBox = document.createElement('div')
 leadBox.className = 'lead-ov'
 leadBox.hidden = true
@@ -145,17 +147,18 @@ leadBox.innerHTML = `<div class="lead" role="dialog" aria-modal="true" aria-labe
     <fieldset><legend>Как давно?</legend><div class="lead-chips" data-name="when"><button type="button">До двух недель</button><button type="button">От месяца до полугода</button><button type="button">Больше полугода</button></div></fieldset>
     <fieldset><legend>Была травма или операция?</legend><div class="lead-chips" data-name="why"><button type="button">Да, травма</button><button type="button">Да, операция</button><button type="button">Нет</button></div></fieldset>
     <label class="pd-consent"><input type="checkbox" name="pd"><span>Даю <a href="${P}dokumenty/soglasie/" target="_blank">согласие на обработку персональных данных</a>, ознакомлен(а) с <a href="${P}dokumenty/politika/" target="_blank">Политикой</a></span></label><div class="err" data-err="pd" hidden>Отметьте согласие, чтобы отправить заявку</div>
+    <input name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="lead-trap">
     <button type="submit" class="lead-go">Отправить заявку</button>
-    <small>Заявка откроется в WhatsApp центра — останется нажать «Отправить».</small>
   </form>
-  <div class="lead-done" hidden><h2>Заявка готова</h2><p>Мы открыли WhatsApp центра с вашей заявкой — нажмите «Отправить», и администратор свяжется с вами, чтобы подобрать врача и время.</p><p>WhatsApp не открылся? Позвоните: <a href="tel:+78722522333">+7 (8722) 52-23-33</a></p><button type="button" class="lead-go lead-close">Готово</button></div>
+  <div class="lead-done" hidden><h2>Заявка отправлена</h2><p>Администратор свяжется с вами, чтобы подобрать врача и время. Если срочно — позвоните: <a href="tel:+78722522333">+7 (8722) 52-23-33</a></p><button type="button" class="lead-go lead-close">Готово</button></div>
+  <div class="lead-fb" hidden><h2>Отправьте заявку в WhatsApp</h2><p>Не получилось отправить заявку напрямую. Нажмите кнопку — откроется WhatsApp центра с готовым текстом, останется нажать «Отправить».</p><a class="lead-go lead-wa" target="_blank" rel="noreferrer">Отправить через WhatsApp</a><p>Или позвоните: <a href="tel:+78722522333">+7 (8722) 52-23-33</a></p></div>
 </div>`
 document.body.appendChild(leadBox)
-const lf = leadBox.querySelector('.lead-form'), ld = leadBox.querySelector('.lead-done')
+const lf = leadBox.querySelector('.lead-form'), ld = leadBox.querySelector('.lead-done'), lfb = leadBox.querySelector('.lead-fb')
 const F = (n) => lf.querySelector(`[name=${n}]`)
 const leadClose = () => { leadBox.hidden = true; document.body.style.overflow = '' }
 function openLead(ctx, phone) {
-  lf.hidden = false; ld.hidden = true
+  lf.hidden = false; ld.hidden = true; lfb.hidden = true
   if (ctx && !F('what').value) F('what').value = ctx
   if (phone && !F('phone').value) F('phone').value = phone
   leadBox.querySelectorAll('.err').forEach((e) => { e.hidden = true })
@@ -169,7 +172,7 @@ leadBox.querySelectorAll('.lead-chips button').forEach((b) => b.addEventListener
   b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', 'false'))
   b.setAttribute('aria-pressed', on ? 'false' : 'true')
 }))
-lf.addEventListener('submit', (e) => {
+lf.addEventListener('submit', async (e) => {
   e.preventDefault()
   const name = F('name').value.trim(), phone = F('phone').value.trim(), digits = phone.replace(/\D/g, '')
   const bad = { name: name.length < 2, phone: digits.length < 10 || digits.length > 12, pd: !F('pd').checked }
@@ -178,8 +181,20 @@ lf.addEventListener('submit', (e) => {
   const pick = (n) => { const b = leadBox.querySelector(`[data-name="${n}"] [aria-pressed="true"]`); return b ? b.textContent : '' }
   const text = ['Заявка на приём с сайта', `Имя: ${name}`, `Телефон: ${phone}`,
     F('what').value.trim() && `Что беспокоит: ${F('what').value.trim()}`, pick('when') && `Как давно: ${pick('when')}`, pick('why') && `Травма или операция: ${pick('why')}`].filter(Boolean).join('\n')
-  window.open(`${WA}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
-  lf.hidden = true; ld.hidden = false
+  const go = lf.querySelector('.lead-go')
+  if (go.disabled) return
+  go.disabled = true; go.textContent = 'Отправляем…'
+  let ok = false
+  try {
+    // text/plain — без предварительного CORS-запроса
+    const r = await fetch(LEAD_API, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, signal: AbortSignal.timeout(10000),
+      body: JSON.stringify({ name, phone, what: F('what').value.trim(), when: pick('when'), why: pick('why'), consent: true, company: F('company').value, page: location.pathname }) })
+    ok = r.ok
+  } catch { ok = false }
+  go.disabled = false; go.textContent = 'Отправить заявку'
+  lf.hidden = true
+  if (ok) ld.hidden = false
+  else { lfb.querySelector('.lead-wa').href = `${WA}?text=${encodeURIComponent(text)}`; lfb.hidden = false }
 })
 // Все CTA: кнопки со словом «запис…» и ссылки с data-lead
 document.addEventListener('click', (e) => {
