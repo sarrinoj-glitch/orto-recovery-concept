@@ -38,7 +38,7 @@ nav_ts = nav_ts[nav_ts.index('export const SERVICES'):]
 for block in re.findall(r"\{\s*slug: .*?chat: '[^']*',\s*\}", nav_ts, re.S):
     g = lambda k: re.search(k + r": '([^']*)'", block).group(1)
     SERVICES.append({
-        'slug': g('slug'), 'menu': g('menu'), 'kind': g('kind'), 'kicker': g('kicker'), 'title': g('title'), 'lead': g('lead'),
+        'slug': g('slug'), 'menu': g('menu'), 'kind': g('kind'), 'price': (re.search(r"\n    price: '([^']*)'", block) or [None, None])[1], 'kicker': g('kicker'), 'title': g('title'), 'lead': g('lead'),
         'photo': g('photo').replace('/photos/', 'assets/'), 'alt': g('photoAlt'),
         'doctors': re.findall(r"'([^']+)'", re.search(r"doctors: \[(.*?)\]", block).group(1)),
         'prices': re.findall(r"\['([^']+)', '([^']+)'\]", re.search(r"prices: \[(.*?)\],\n", block, re.S).group(1)),
@@ -54,7 +54,7 @@ pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экск�
 for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
     PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICE_MENU) == 22 and len(SERVICES) == 6 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICE_MENU) == 22 and len(SERVICES) == 7 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
@@ -196,7 +196,7 @@ ICON = {
 }
 
 def stats_html():
-    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (6, 0, '', 'направлений в одном центре')]
+    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (7, 0, '', 'направлений в одном центре')]
     # стаж — «более 5 лет»: приставка ставится перед счётчиком
     li = ''.join('<li><b>%s<span data-count="%s" data-dec="%d">0</span>%s</b><span>%s</span></li>' % ('<small>более </small>' if lab == 'стаж каждого врача' else '', v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
     return '<section><div class="wrap"><div class="cstats beam-border rv"><ul>%s</ul></div></div></section>' % li
@@ -240,7 +240,7 @@ def marquee_html():
 
 def hover_list_html(items, title=''):
     li = ''.join('<li data-img="{P}%s"><a href="{P}uslugi/%s/"><span style="display:flex;align-items:baseline;gap:24px"><span class="num">%02d</span><span class="t">%s</span></span>'
-                 '<span style="display:flex;align-items:center;gap:20px"><span class="k">%s</span><span class="p">%s</span></span></a></li>' % (s['photo'], s['slug'], i + 1, s['menu'], s['kicker'], s['prices'][0][1]) for i, s in enumerate(items))
+                 '<span style="display:flex;align-items:center;gap:20px"><span class="k">%s</span><span class="p">%s</span></span></a></li>' % (s['photo'], s['slug'], i + 1, s['menu'], s['kicker'], s['price'] or s['prices'][0][1]) for i, s in enumerate(items))
     head = '<h2 class="rv-vh hl-head" style="margin:0 0 24px">%s</h2>' % title if title else ''
     return '<section><div class="wrap">%s<div style="position:relative"><ul class="hlist">%s</ul><div class="hl-float" aria-hidden="true"><img alt="" src="{P}%s"></div></div></div></section>' % (head, li, items[0]['photo'])
 
@@ -410,7 +410,7 @@ def build():
 
     # услуги
     problems = [s for s in SERVICES if s['kind'] == 'problem']; methods = [s for s in SERVICES if s['kind'] == 'method']
-    cards = lambda items, title: '<section class="mob-only"><div class="wrap"><h2 style="font-size:28px;margin:0 0 16px">%s</h2><div class="svc-cards">%s</div></div></section>' % (title, ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['prices'][0][1]) for s in items))
+    cards = lambda items, title: '<section class="mob-only"><div class="wrap"><h2 style="font-size:28px;margin:0 0 16px">%s</h2><div class="svc-cards">%s</div></div></section>' % (title, ''.join('<a href="{P}uslugi/%s/"><img src="assets/%s" alt="%s"><span><b>%s</b><em>%s</em><i>%s →</i></span></a>' % (s['slug'], s['photo'][7:], s['alt'], s['menu'], s['lead'], s['price'] or s['prices'][0][1]) for s in items))
     body = page_head('../', 'uslugi/', 'Услуги', 'Что мы лечим', 'Выберите, что беспокоит, — или подберите врача за три вопроса. Ниже — методы лечения, которые есть в центре.', [(None, 'Услуги')])
     body += hover_list_html(problems) + cards(problems, 'Что беспокоит') + hover_list_html(methods, 'Методы лечения') + cards(methods, 'Методы лечения') + section('start') + marquee_html()
     write('uslugi/index.html', doc_html('../', 'Услуги — Орто-Рекавери', 'Боль в суставах и спине, восстановление после травм и операций, осанка и стопы у детей; физиотерапия и PRP-терапия.', body))
