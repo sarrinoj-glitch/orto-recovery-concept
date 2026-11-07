@@ -187,7 +187,7 @@
       <button class="dm-close" type="button" aria-label="Закрыть">×</button>
       <div class="dm-top"><span class="dm-ava"></span><div><b>${name}</b><div class="role">${$('.role', card).textContent}</div>${$('.visit', card) ? `<div class="dm-visit">${$('.visit', card).textContent}</div>` : ''}<p>${$('p', card).textContent}</p></div></div>
       <div class="dm-fade">${BIO[name] ? `<ul class="dm-bio">${BIO[name].map((l) => `<li>${l}</li>`).join('')}</ul>` : ''}
-      <div class="dm-bot"><strong>${$('.doc-bot strong', card).innerHTML}</strong><button class="btn-deep" type="button" style="margin:0">Записаться к врачу</button></div></div></div>`
+      <div class="dm-bot"><strong>${$('.doc-bot strong', card).innerHTML}</strong>${(() => { const g = $('[data-lead]', card); return g ? `<button class="btn-deep" type="button" style="margin:0" data-lead="${g.dataset.lead}">Узнать о приезде</button>` : '<button class="btn-deep" type="button" style="margin:0">Записаться к врачу</button>' })()}</div></div></div>`
     $('.dm-ava', overlay).replaceWith(ava)
     document.body.appendChild(overlay)
     document.body.style.overflow = 'hidden'

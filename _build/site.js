@@ -59,7 +59,7 @@ $$('.door').forEach((d) => d.addEventListener('click', () => {
 const qb = $('#quizBody')
 if (qb) {
   const AREAS = {
-    back: { t: 'Спина и шея', who: 'Куделя Павел Александрович', role: 'невролог, мануальный терапевт', ini: 'КП', price: 'от 8 000 ₽', pl: 'приём', slug: 'spina' },
+    back: { t: 'Спина и шея', who: 'Куделя Павел Александрович', role: 'невролог, мануальный терапевт', ini: 'КП', guest: 'Сообщите, пожалуйста, когда приедет Куделя Павел Александрович — хочу попасть на приём', price: 'от 8 000 ₽', pl: 'приём', slug: 'spina' },
     knee: { t: 'Колено и тазобедренный сустав', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед', ini: 'ХА', price: 'до 3 000 ₽', pl: 'приём', slug: 'ortopediya' },
     arm: { t: 'Плечо, локоть, кисть', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед, кистевой реабилитолог', ini: 'ХА', price: 'до 3 000 ₽', pl: 'приём', slug: 'ortopediya' },
     foot: { t: 'Стопа и пятка', who: 'Хаджалов Абузар Магомедович', role: 'травматолог-ортопед', ini: 'ХА', price: 'до 3 000 ₽', pl: 'приём', slug: 'ortopediya' },
@@ -83,7 +83,7 @@ if (qb) {
     }
     const a = AREAS[qa.area]
     const note = qa.why === 'surgery' ? 'После операции врач составит план реабилитации и передаст вас инструктору лечебной физкультуры.' : qa.why === 'trauma' ? 'Возьмите снимки после травмы — врач разберёт их на приёме.' : qa.when === 'long' ? 'Боль дольше полугода — врач найдёт причину и составит курс, а не просто снимет симптом.' : 'Чем раньше начать, тем короче обычно восстановление.'
-    qb.innerHTML = `<div class="q-result"><div class="who"><span class="ava" style="width:52px;height:52px;border-radius:16px;font-size:17px;background:var(--lime);color:var(--graphite)">${a.ini}</span><div><b>${a.who}</b><small>${a.role}</small></div></div><p><b style="color:var(--deep)">${a.t}.</b> ${note}</p><div class="row"><strong>${a.price} <small style="font-size:14px;font-weight:500;color:var(--muted)">${a.pl}</small></strong><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn-ghost-d" href="${P}${a.slug ? `uslugi/${a.slug}/` : 'vrachi/'}">Об услуге</a><button class="btn-deep" type="button" style="margin:0">Записаться</button></span></div></div><button class="q-again" type="button">↺ Пройти заново</button>`
+    qb.innerHTML = `<div class="q-result"><div class="who"><span class="ava" style="width:52px;height:52px;border-radius:16px;font-size:17px;background:var(--lime);color:var(--graphite)">${a.ini}</span><div><b>${a.who}</b><small>${a.role}</small></div></div><p><b style="color:var(--deep)">${a.t}.</b> ${note}</p><div class="row"><strong>${a.price} <small style="font-size:14px;font-weight:500;color:var(--muted)">${a.pl}</small></strong><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn-ghost-d" href="${P}${a.slug ? `uslugi/${a.slug}/` : 'vrachi/'}">Об услуге</a><button class="btn-deep" type="button" style="margin:0"${a.guest ? ` data-lead="${a.guest}"` : ''}>${a.guest ? 'Узнать о приезде' : 'Записаться'}</button></span></div></div><button class="q-again" type="button">↺ Пройти заново</button>`
     qb.querySelector('.q-again').addEventListener('click', () => { qa = {}; qi = 0; render() })
   }
   render()
