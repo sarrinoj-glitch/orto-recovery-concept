@@ -298,6 +298,20 @@ DOCTOR_VIDEOS = [
 def video_grid(kind, items, label):
     return ''.join('<figure><video controls playsinline preload="none" poster="{P}assets/video/%s-%s.jpg" src="{P}assets/video/%s-%s.mp4" aria-label="%s: %s"></video><figcaption>%s</figcaption><small>%s</small></figure>' % (kind, i, kind, i, label, t, t, d) for i, t, d in items)
 
+# Оборудование центра — из orto-recovery-site/src/lib/clinic.ts (EQUIPMENT)
+_eq_src = open(os.path.join(os.path.dirname(ROOT), 'orto-recovery-site', 'src', 'lib', 'clinic.ts'), encoding='utf-8').read()
+EQUIPMENT = [dict(id=m[0], img=m[1], title=m[2], text=m[3], alt=m[4], services=re.findall(r"'([^']+)'", m[5]))
+             for m in re.findall(r"\{ id: '([^']+)', image: asset\('/photos/([^']+)'\), title: '([^']+)', text: '([^']+)', alt: '([^']+)', services: \[([^\]]*)\] \}", _eq_src.split('export const EQUIPMENT')[1])]
+
+def equipment_html(service=None):
+    items = [e for e in EQUIPMENT if service is None or service in e['services']]
+    if not items:
+        return ''
+    cards = ''.join('<figure><img src="{P}assets/%s" alt="%s" loading="lazy"><figcaption>%s</figcaption><small>%s</small></figure>' % (e['img'], e['alt'], e['title'], e['text']) for e in items)
+    return '''<section class="sec"><div class="wrap"><h2 class="rv-vh">%s</h2>
+    <p class="rv-vp">Фото из кабинетов центра. Аппарат и параметры процедуры подбирает врач по показаниям.</p>
+    <div class="eq-grid">%s</div></div></section>''' % ('На чём проводим процедуры' if service else 'Оборудование центра', cards)
+
 def doctor_videos_html():
     return '''<section class="sec"><div class="wrap"><h2 class="rv-vh">Врачи объясняют</h2>
     <p class="rv-vp">Короткие видео от специалистов центра. Видео начинает загружаться, только когда вы нажмёте «воспроизвести».</p>
@@ -413,6 +427,7 @@ def build():
                 seen.add(html); extras.append(html)
         others = ''.join('<a href="%suslugi/%s/">%s</a>' % (P, o['slug'], o['menu']) for o in SERVICES if o['slug'] != s['slug'])
         body = top + grid + (conds_block(s['conditions']) if s['conditions'] else '') + '\n'.join(extras)
+        body += equipment_html(s['slug'])
         body += '<section class="sec"><div class="wrap"><h2 style="font-size:28px">Другие направления</h2><div class="others">%s</div></div></section>' % others
         write('uslugi/%s/index.html' % s['slug'], doc_html(P, '%s — Орто-Рекавери, Махачкала' % s['menu'], s['lead'], body))
 
@@ -420,7 +435,7 @@ def build():
     P = '../'
     pages = {
         'o-centre/': ('О центре', 'Центр восстановительной медицины «Орто-Рекавери»', 'Лечим и восстанавливаем пациентов с заболеваниями и травмами опорно-двигательной системы — без операций, по принципам доказательной медицины.',
-                      [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour')]),
+                      [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour'), equipment_html()]),
         'vrachi/': ('Специалисты', 'Врачи центра', 'Можно записаться к конкретному врачу. Если вам спокойнее со специалистом-женщиной, скажите об этом администратору.',
                     [section('doctors'), doctor_videos_html()]),
         'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Прайс центра на ПроДокторов от 19.10.2026. Есть рассрочка без переплат и справка для налогового вычета.',
