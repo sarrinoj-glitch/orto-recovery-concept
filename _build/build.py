@@ -54,7 +54,7 @@ pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экск�
 for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
     PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICE_MENU) == 22 and len(SERVICES) == 7 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICE_MENU) == 22 and len(SERVICES) == 9 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
@@ -68,7 +68,7 @@ NOTE = re.search(r'<p class="note".*?</p>', SRC, re.S).group(0)
 DICT = json.loads(re.search(r'const NEW = (\{.*?\})\n', SRC).group(1))['dict']
 DOCS = {m.group(1): m.group(0) for m in re.finditer(r'<article class="doc[^"]*"[^>]*>.*?<b>([^<]+)</b>.*?</article>', section('doctors'), re.S)}
 
-CARD_LINKS = ['spina', 'ortopediya', 'ortopediya', 'ortopediya', 'reabilitaciya']
+CARD_LINKS = ['spina', 'koleno', 'plecho', 'stopa', 'reabilitaciya']
 
 def cards_section():
     s = section('where')
@@ -196,7 +196,7 @@ ICON = {
 }
 
 def stats_html():
-    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (7, 0, '', 'направлений в одном центре')]
+    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (9, 0, '', 'направлений в одном центре')]
     # стаж — «более 5 лет»: приставка ставится перед счётчиком
     li = ''.join('<li><b>%s<span data-count="%s" data-dec="%d">0</span>%s</b><span>%s</span></li>' % ('<small>более </small>' if lab == 'стаж каждого врача' else '', v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
     return '<section><div class="wrap"><div class="cstats beam-border rv"><ul>%s</ul></div></div></section>' % li
