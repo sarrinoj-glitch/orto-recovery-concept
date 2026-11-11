@@ -54,7 +54,7 @@ pg = clinic[clinic.index('export const PRICE_GROUPS'):clinic.index('// Экск�
 for m in re.finditer(r"title: '([^']+)',\s*items: \[(.*?)\],(?:\s*note: '([^']+)',)?\s*\}", pg, re.S):
     PRICE_GROUPS.append((m.group(1), re.findall(r"name: '([^']+)', price: '([^']+)'", m.group(2)), m.group(3)))
 
-assert len(SERVICE_MENU) == 22 and len(SERVICES) == 9 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
+assert len(SERVICE_MENU) == 21 and len(SERVICES) == 9 and len(CONDITIONS) == 5 and len(PRICE_GROUPS) == 5, (len(SERVICES), len(CONDITIONS), len(PRICE_GROUPS))
 
 # ---------- блоки исходной страницы ----------
 def section(sid):
