@@ -156,9 +156,21 @@ def doc_html(P, title, desc, body):
 </html>
 ''' % (title, desc, P, P, fix(body, P), fix(FINAL, P) + legal_foot(P), NOTE, dock(P), P)
 
+def asset_ver():
+    # метка версии для site.css/site.js: после обновления браузер не берёт старую копию из кэша
+    import hashlib
+    h = hashlib.sha1()
+    for f in ('site.css', 'site.js'):
+        p = os.path.join(ROOT, 'assets', f)
+        if os.path.exists(p):
+            h.update(open(p, 'rb').read())
+    return h.hexdigest()[:8]
+
 def write(path, html):
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
+    v = asset_ver()
+    html = html.replace('assets/site.css"', 'assets/site.css?v=%s"' % v).replace('assets/site.js"', 'assets/site.js?v=%s"' % v)
     open(full, 'w', encoding='utf-8').write(html)
 
 # ---------- общие блоки ----------
