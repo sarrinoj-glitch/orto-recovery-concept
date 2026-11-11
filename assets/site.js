@@ -136,7 +136,7 @@ const LEAD_API = 'https://orto-lead-api.vercel.app/api/lead'
 const leadBox = document.createElement('div')
 leadBox.className = 'lead-ov'
 leadBox.hidden = true
-leadBox.innerHTML = `<div class="lead" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+leadBox.innerHTML = `<div class="lead-box" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
   <button type="button" class="lead-x" aria-label="Закрыть">✕</button>
   <form class="lead-form" novalidate>
     <h2 id="leadTitle">Запись на приём</h2>

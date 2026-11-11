@@ -1172,8 +1172,8 @@
   /* ===== Форма заявки ===== */
   .lead-ov { position:fixed; inset:0; z-index:200; display:flex; align-items:flex-end; justify-content:center; background:rgba(11,61,74,.6); backdrop-filter:blur(4px); }
   .lead-ov[hidden] { display:none; }
-  .lead { position:relative; width:100%; max-width:520px; max-height:92svh; overflow-y:auto; background:var(--ward); border-radius:28px 28px 0 0; padding:22px; box-shadow:0 30px 60px -20px rgba(11,61,74,.45); }
-  .lead h2 { margin:0; padding-right:44px; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--deep); }
+  .lead-box { position:relative; width:100%; max-width:520px; max-height:92svh; overflow-y:auto; background:var(--ward); border-radius:28px 28px 0 0; padding:22px; box-shadow:0 30px 60px -20px rgba(11,61,74,.45); }
+  .lead-box h2 { margin:0; padding-right:44px; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--deep); }
   .lead-sub { margin:6px 0 4px; color:var(--muted); font-size:15px; }
   .lead-form { display:flex; flex-direction:column; gap:14px; }
   .lead-form label:not(.pd-consent) { display:flex; flex-direction:column; gap:6px; font-weight:600; font-size:14px; color:var(--graphite); }
@@ -1183,7 +1183,7 @@
   .lead-chips { display:flex; flex-wrap:wrap; gap:8px; }
   .lead-chips button { font:inherit; font-size:14px; padding:10px 16px; border-radius:999px; border:0; background:#fff; color:var(--graphite); box-shadow:inset 0 0 0 1px rgba(33,33,33,.15); cursor:pointer; }
   .lead-chips button[aria-pressed=true] { background:var(--deep); color:#fff; font-weight:700; box-shadow:none; }
-  .lead .err { margin-top:-8px; font-size:13px; color:#a3341d; }
+  .lead-box .err { margin-top:-8px; font-size:13px; color:#a3341d; }
   .lead-go { height:56px; border:0; border-radius:999px; background:var(--deep); color:#fff; font:inherit; font-weight:700; font-size:16px; cursor:pointer; padding:0 24px; }
   .lead-form small { text-align:center; font-size:12px; color:var(--muted); }
   .lead-x { position:absolute; right:16px; top:16px; width:40px; height:40px; border-radius:50%; border:0; background:#fff; color:var(--graphite); font-size:16px; cursor:pointer; }
@@ -1191,4 +1191,4 @@
   .lead-fb .lead-wa { display:flex; align-items:center; justify-content:center; text-decoration:none; color:#fff; }
   .lead-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .lead-go:disabled { opacity:.6; }
-  @media (min-width:640px) { .lead-ov { align-items:center; padding:24px; } .lead { border-radius:28px; padding:28px; } }
+  @media (min-width:640px) { .lead-ov { align-items:center; padding:24px; } .lead-box { border-radius:28px; padding:28px; } }
