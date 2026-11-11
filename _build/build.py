@@ -125,15 +125,16 @@ def nav(P, active):
     <div class="mnav" hidden>%(mob)s<p>Услуги</p><div class="sub">%(mob_svc)s</div><button type="button">Записаться</button></div>''' % {
         'P': P, 'links': ''.join(links), 'burger': BURGER, 'mob': mob, 'mob_svc': mob_svc}
 
-def page_head(P, active, kicker, title, lead, crumbs=None):
+def page_head(P, active, kicker, title, lead, crumbs=None, img=None):
     cr = ''
     if crumbs:
         cr = '<nav class="crumbs" aria-label="Хлебные крошки"><a href="%s">Главная</a>%s</nav>' % (P, ''.join(
             '<span><a href="%s%s">%s</a></span>' % (P, h, l) if h is not None else '<span>%s</span>' % l for h, l in crumbs))
+    fig = ('<figure class="phead-img"><img src="%sassets/%s" alt="%s"><figcaption>%s</figcaption></figure>' % (P, img[0], img[1], img[2])) if img else ''
     return '''<header class="phead"><div class="wrap">
     %s
-    <div class="phead-in">%s<p class="kicker">%s</p><h1>%s</h1>%s</div>
-  </div></header>''' % (nav(P, active), cr, kicker, title, '<p class="lead">%s</p>' % lead if lead else '')
+    <div class="%s"><div class="phead-in">%s<p class="kicker">%s</p><h1>%s</h1>%s</div>%s</div>
+  </div></header>''' % (nav(P, active), 'phead-row' if img else '', cr, kicker, title, '<p class="lead">%s</p>' % lead if lead else '', fig)
 
 def doc_html(P, title, desc, body):
     return '''<!doctype html>
@@ -470,7 +471,8 @@ def build():
     }
     for href, (kicker, title, lead, blocks) in pages.items():
         label = dict(NAV)[href]
-        body = page_head(P, href, kicker, title, lead, [(None, label)]) + '\n'.join(blocks)
+        img = ('admin-desk.jpg', 'Администратор центра за стойкой регистрации', 'Администратор Зарема Муртузалиева встретит вас на ресепшене') if href == 'o-centre/' else None
+        body = page_head(P, href, kicker, title, lead, [(None, label)], img) + '\n'.join(blocks)
         write(href + 'index.html', doc_html(P, '%s — Орто-Рекавери, Махачкала' % label, lead, body))
     build_docs()
     build_reviews()

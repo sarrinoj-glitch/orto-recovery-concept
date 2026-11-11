@@ -1192,3 +1192,10 @@
   .lead-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .lead-go:disabled { opacity:.6; }
   @media (min-width:640px) { .lead-ov { align-items:center; padding:24px; } .lead-box { border-radius:28px; padding:28px; } }
+
+  /* Шапка раздела с фото справа (О центре — администратор на ресепшене) */
+  .phead-row { display:grid; grid-template-columns:1fr 300px; gap:40px; align-items:end; }
+  .phead-img { position:relative; margin:0; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px -20px rgba(11,61,74,.35); }
+  .phead-img img { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; }
+  .phead-img figcaption { position:absolute; left:12px; right:12px; bottom:12px; padding:10px 14px; border-radius:16px; background:rgba(255,255,255,.92); font-size:13px; line-height:1.35; color:var(--graphite); }
+  @media (max-width: 900px) { .phead-row { grid-template-columns:1fr; gap:24px; } .phead-img { max-width:300px; } }
