@@ -230,7 +230,7 @@ if (stepsList.length && !reduce) {
   }))
 })()
 
-// Слайд-шоу первого экрана: смена каждые 6 с, следующее фото грузится заранее, остальные — по очереди
+// Слайд-шоу первого экрана: смена каждые 5 с, следующее фото грузится заранее, остальные — по очереди
 const heroPh = $('.hero-photo')
 if (heroPh && heroPh.querySelectorAll('img').length > 1) {
   const imgs = [...heroPh.querySelectorAll('img')], dots = $$('.hero-dots button')
@@ -241,7 +241,7 @@ if (heroPh && heroPh.querySelectorAll('img').length > 1) {
     cur = k; load(k); load((k + 1) % imgs.length)
     imgs[k].classList.add('on'); if (dots[k]) dots[k].classList.add('on')
   }
-  const start = () => { clearInterval(t); if (!document.hidden && !reduce) t = setInterval(() => show((cur + 1) % imgs.length), 6000) }
+  const start = () => { clearInterval(t); if (!document.hidden && !reduce) t = setInterval(() => show((cur + 1) % imgs.length), 5000) }
   dots.forEach((d, k) => d.addEventListener('click', () => { show(k); start() }))
   document.addEventListener('visibilitychange', start)
   load(1); start()
