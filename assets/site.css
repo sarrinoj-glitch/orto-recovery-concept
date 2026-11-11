@@ -205,7 +205,11 @@
   /* ===== Первый экран ===== */
   .hero { position:relative; min-height:max(720px, 100svh); border-radius:0 0 48px 48px; overflow:hidden; color:#fff; isolation:isolate; }
   .hero-photo { position:absolute; inset:0; z-index:-2; overflow:hidden; }
-  .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 40%; transform:scaleX(-1) scale(1.06); animation:kb 18s ease-out forwards; }
+  .hero-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.06); transition:opacity 1.4s ease, transform 7s linear; }
+  .hero-photo img.on { opacity:1; transform:scale(1); }
+  .hero-dots { position:absolute; right:24px; bottom:96px; z-index:1; display:flex; gap:8px; }
+  .hero-dots button { width:8px; height:8px; padding:0; border:0; border-radius:99px; background:rgba(255,255,255,.45); cursor:pointer; transition:all .3s; }
+  .hero-dots button.on { width:28px; background:#fff; }
   @keyframes kb { to { transform:scaleX(-1) scale(1); } }
   .hero::before { content:""; position:absolute; inset:0; z-index:-1;
     background:
@@ -701,7 +705,8 @@
     .wrap { padding:0 16px; }
     .phone { display:none; }
     .hero { border-radius:0 0 32px 32px; min-height:760px; }
-    .hero-photo img { object-position:40% 0%; height:62%; }
+    .hero-photo img { height:62%; }
+    .hero-dots { display:none; }
     .hero-photo { background:#072831; }
     .hero::before { background:linear-gradient(180deg, rgba(7,40,49,.45) 0%, rgba(7,40,49,0) 18%, rgba(7,40,49,0) 34%, rgba(7,40,49,.9) 54%, #072831 64%); }
     .hero-body { padding-top:290px; padding-bottom:76px; }

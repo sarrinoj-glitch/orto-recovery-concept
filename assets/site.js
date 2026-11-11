@@ -230,6 +230,23 @@ if (stepsList.length && !reduce) {
   }))
 })()
 
+// Слайд-шоу первого экрана: смена каждые 6 с, следующее фото грузится заранее, остальные — по очереди
+const heroPh = $('.hero-photo')
+if (heroPh && heroPh.querySelectorAll('img').length > 1) {
+  const imgs = [...heroPh.querySelectorAll('img')], dots = $$('.hero-dots button')
+  let cur = 0, t
+  const load = (k) => { const im = imgs[k]; if (im && !im.getAttribute('src')) { im.srcset = im.dataset.srcset; im.src = im.dataset.src } }
+  const show = (k) => {
+    imgs[cur].classList.remove('on'); if (dots[cur]) dots[cur].classList.remove('on')
+    cur = k; load(k); load((k + 1) % imgs.length)
+    imgs[k].classList.add('on'); if (dots[k]) dots[k].classList.add('on')
+  }
+  const start = () => { clearInterval(t); if (!document.hidden && !reduce) t = setInterval(() => show((cur + 1) % imgs.length), 6000) }
+  dots.forEach((d, k) => d.addEventListener('click', () => { show(k); start() }))
+  document.addEventListener('visibilitychange', start)
+  load(1); start()
+}
+
 // ===== Анимации второго круга (как в React-версиях), на чистом JS. Подключается после основного скрипта. =====
 ;(() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches

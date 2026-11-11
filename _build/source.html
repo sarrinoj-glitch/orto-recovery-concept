@@ -26,7 +26,11 @@
   /* ===== Первый экран ===== */
   .hero { position:relative; min-height:max(720px, 100svh); border-radius:0 0 48px 48px; overflow:hidden; color:#fff; isolation:isolate; }
   .hero-photo { position:absolute; inset:0; z-index:-2; overflow:hidden; }
-  .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 40%; transform:scaleX(-1) scale(1.06); animation:kb 18s ease-out forwards; }
+  .hero-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.06); transition:opacity 1.4s ease, transform 7s linear; }
+  .hero-photo img.on { opacity:1; transform:scale(1); }
+  .hero-dots { position:absolute; right:24px; bottom:96px; z-index:1; display:flex; gap:8px; }
+  .hero-dots button { width:8px; height:8px; padding:0; border:0; border-radius:99px; background:rgba(255,255,255,.45); cursor:pointer; transition:all .3s; }
+  .hero-dots button.on { width:28px; background:#fff; }
   @keyframes kb { to { transform:scaleX(-1) scale(1); } }
   .hero::before { content:""; position:absolute; inset:0; z-index:-1;
     background:
@@ -522,7 +526,8 @@
     .wrap { padding:0 16px; }
     .phone { display:none; }
     .hero { border-radius:0 0 32px 32px; min-height:760px; }
-    .hero-photo img { object-position:40% 0%; height:62%; }
+    .hero-photo img { height:62%; }
+    .hero-dots { display:none; }
     .hero-photo { background:#072831; }
     .hero::before { background:linear-gradient(180deg, rgba(7,40,49,.45) 0%, rgba(7,40,49,0) 18%, rgba(7,40,49,0) 34%, rgba(7,40,49,.9) 54%, #072831 64%); }
     .hero-body { padding-top:290px; padding-bottom:76px; }
@@ -547,7 +552,8 @@
 <body>
 
 <header class="hero">
-  <div class="hero-photo"><img src="assets/hero.jpg" alt="Дедушка присел в саду и держит внука на руках"></div>
+  <div class="hero-photo"><img class="on" src="assets/hero-1.jpg" srcset="assets/hero-1-m.jpg 960w, assets/hero-1.jpg 1920w" sizes="100vw" alt="Врач проводит ударно-волновую терапию стопы" fetchpriority="high" style="object-position:62% 50%"><img data-src="assets/hero-2.jpg" data-srcset="assets/hero-2-m.jpg 960w, assets/hero-2.jpg 1920w" sizes="100vw" alt="Процедура магнитотерапии спины" decoding="async" style="object-position:70% 50%"><img data-src="assets/hero-3.jpg" data-srcset="assets/hero-3-m.jpg 960w, assets/hero-3.jpg 1920w" sizes="100vw" alt="Врачи центра разбирают рентгеновский снимок" decoding="async" style="object-position:65% 40%"><img data-src="assets/hero-4.jpg" data-srcset="assets/hero-4-m.jpg 960w, assets/hero-4.jpg 1920w" sizes="100vw" alt="Врачи осматривают спину пациента" decoding="async" style="object-position:60% 50%"><img data-src="assets/hero-5.jpg" data-srcset="assets/hero-5-m.jpg 960w, assets/hero-5.jpg 1920w" sizes="100vw" alt="Ударно-волновая терапия плеча" decoding="async" style="object-position:60% 40%"><img data-src="assets/hero-6.jpg" data-srcset="assets/hero-6-m.jpg 960w, assets/hero-6.jpg 1920w" sizes="100vw" alt="Лечебный массаж спины" decoding="async" style="object-position:60% 50%"><img data-src="assets/hero-7.jpg" data-srcset="assets/hero-7-m.jpg 960w, assets/hero-7.jpg 1920w" sizes="100vw" alt="Специалисты центра обсуждают план лечения" decoding="async" style="object-position:60% 40%"></div>
+  <div class="hero-dots" role="group" aria-label="Фото центра"><button type="button" class="on" aria-label="Фото 1 из 7"></button><button type="button" aria-label="Фото 2 из 7"></button><button type="button" aria-label="Фото 3 из 7"></button><button type="button" aria-label="Фото 4 из 7"></button><button type="button" aria-label="Фото 5 из 7"></button><button type="button" aria-label="Фото 6 из 7"></button><button type="button" aria-label="Фото 7 из 7"></button></div>
 
   <div class="wrap">
     <nav class="nav" aria-label="Основное меню">
@@ -581,9 +587,6 @@
     </div>
   </div>
 
-  <span class="hot" style="--x:69.5%; --y:53%" aria-hidden="true"></span>
-  <div class="hot-tag" style="--x:69.5%; --y:53%"><b>Плечо</b><span>ортопед · приём до 3 000 ₽</span></div>
-  <div class="hero-video"><i aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="#212121"><path d="M7 4v16l13-8z"/></svg></i><span><b>Здесь — видео 15 сек из центра</b><br>нужно снять: процедуры, лечебная физкультура, врачи</span></div>
 </header>
 
 <section class="finder">
