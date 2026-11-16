@@ -123,6 +123,7 @@
   .rv-btns { margin-top:22px; display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
   .rv-btns a { height:50px; display:grid; place-items:center; background:#fff; border-radius:999px; font-weight:700; box-shadow:inset 0 0 0 1px rgba(33,33,33,.1); }
   .rv-btns a:hover { box-shadow:inset 0 0 0 2px var(--teal); }
+  .rv-box.rv-wide { grid-column:1/-1; flex-direction:row; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; } .rv-wide > div { display:flex; flex-direction:column; gap:10px; max-width:640px; }
   .rv-wa { align-self:flex-start; height:50px; padding:0 24px; display:inline-grid; place-items:center; border-radius:999px; background:var(--deep); color:#fff; font-weight:700; }
   .rv-legal { font-size:13px; color:var(--muted); line-height:1.6; padding:28px 0 8px; }
   .pd-all { display:inline-block; margin-top:14px; color:var(--teal); font-weight:700; text-decoration:underline; text-underline-offset:4px; }

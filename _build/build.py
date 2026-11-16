@@ -358,6 +358,8 @@ def build_reviews():
         <div class="pd-slot"><button type="button" class="btn-deep" data-pd="90155">Показать отзывы с ПроДокторов</button></div></div>
       <div class="rv-box"><h2>Яндекс Карты</h2><p>Отзывы и оценки с карточки центра на Яндекс Картах.</p>
         <div class="consent-frame rv-ya" data-title="Отзывы о центре на Яндекс Картах" data-src="https://yandex.ru/maps-reviews-widget/20949908898?comments"><p>Виджет отзывов загружается с серверов Яндекса и использует их cookie.</p><button type="button" class="btn-deep">Показать отзывы Яндекса</button></div></div>
+      <div class="rv-box rv-wide"><div><h2>2ГИС</h2><p>Оценка центра — 5,0 по 121 оценке пациентов. Отзывы можно прочитать на карточке центра в 2ГИС.</p></div>
+        <a class="rv-wa" href="%(gis)s" target="_blank" rel="noreferrer">Читать отзывы в 2ГИС ↗</a></div>
     </div>
   </div></section>
   <section class="rv-leave"><div class="wrap">
