@@ -186,7 +186,7 @@ def conds_block(ids, title='С чем к нам приходят'):
     </div></div></section>''' % (title, '<div class="tabs" role="tablist">%s</div>' % tabs if len(items) > 1 else '', lists)
 
 def prices_teaser():
-    top = [('Травматолог-ортопед', 'до 3 000 ₽'), ('Невролог', 'от 8 000 ₽'), ('Ударно-волновая терапия', 'до 3 000 ₽'), ('PRP-терапия', 'до 10 500 ₽'), ('Лечебная физкультура', 'от 2 000 ₽'), ('Массаж всех видов', 'от 1 600 ₽')]
+    top = [('Травматолог-ортопед', 'до 3 000 ₽'), ('Невролог', 'от 8 000 ₽'), ('Ударно-волновая терапия', 'до 3 000 ₽'), ('PRP-терапия', 'до 10 500 ₽'), ('Лечебная физкультура', 'от 2 000 ₽'), ('Кинезиотейпирование', 'от 1 000 ₽')]
     return '''<section><div class="wrap"><div class="tease rv">
     <div><p class="kicker">Цены</p><h2>Цену вы знаете до начала лечения</h2><p>Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.</p><a class="btn-lime" href="{P}ceny/">Весь прайс →</a></div>
     <ul>%s</ul></div></div></section>''' % ''.join('<li><span>%s</span><b>%s</b></li>' % x for x in top)
@@ -209,7 +209,7 @@ ICON = {
 }
 
 def stats_html():
-    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (23, 0, '', 'методики восстановления'), (9, 0, '', 'направлений в одном центре')]
+    items = [(5, 1, '', 'рейтинг в 2ГИС'), (121, 0, '', 'оценка пациентов'), (4.9, 1, '', 'на Яндекс Картах'), (5, 0, ' лет', 'стаж каждого врача'), (21, 0, '', 'методики восстановления'), (9, 0, '', 'направлений в одном центре')]
     # стаж — «более 5 лет»: приставка ставится перед счётчиком
     li = ''.join('<li><b>%s<span data-count="%s" data-dec="%d">0</span>%s</b><span>%s</span></li>' % ('<small>более </small>' if lab == 'стаж каждого врача' else '', v, d, '<small>%s</small>' % suf if suf else '', lab) for v, d, suf, lab in items)
     return '<section><div class="wrap"><div class="cstats beam-border rv"><ul>%s</ul></div></div></section>' % li
@@ -248,7 +248,7 @@ def flow_html():
 def marquee_html():
     names = list(DICT.keys()); half = (len(names) + 1) // 2
     row = lambda ns, rev, dur: '<div class="mq%s" style="--dur:%ds">%s</div>' % (' rev' if rev else '', dur, ''.join('<div class="mq-track"%s>%s</div>' % (' aria-hidden="true"' if k else '', ''.join('<span>%s</span>' % x for x in ns)) for k in range(2)))
-    return ('<section class="mq-sec"><div class="wrap"><div class="sec-head rv"><div><p class="kicker">Методы</p><h2>23 методики восстановления в одном центре</h2></div>'
+    return ('<section class="mq-sec"><div class="wrap"><div class="sec-head rv"><div><p class="kicker">Методы</p><h2>21 методика восстановления в одном центре</h2></div>'
             '<a class="sec-link" href="{P}uslugi/fizioterapiya/">Что это за методики →</a></div></div>%s%s</section>') % (row(names[:half], False, 55), row(names[half:], True, 60))
 
 def hover_list_html(items, title=''):
@@ -310,10 +310,6 @@ DOCTOR_VIDEOS = [
     ('perelom', '«Ушиб», который оказался переломом пяточной кости', '37 сек'),
     ('oshibka', 'Две ошибки при восстановлении после травмы', '43 сек'),
     ('obuv', 'Нестабильная обувь и боль в коленях', '31 сек'),
-    ('2747', 'Главный результат — вернуться к жизни без боли и ограничений', '52 сек'),
-    ('0912', 'Почему упражнения при боли в пояснице могут навредить', '55 сек'),
-    ('0871', 'Травма крестообразной связки: что нужно после операции', '32 сек'),
-    ('4617', 'Индивидуальные стельки Formthotics: кому нужны и как подбирают', '1 мин 8 сек'),
 ]
 
 def video_grid(kind, items, label):
@@ -371,7 +367,7 @@ def build_reviews():
 
 # ---------- блог ----------
 DOCTOR_ROLES = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']+)',\s*role: '([^']+)'", clinic)}
-DOCTOR_PHOTOS = {'Муртузалиева Зарема Гаджимурадовна': 'd-murtuzalieva.jpg', 'Хаджалов Абузар Магомедович': 'd-khadzhalov.jpg', 'Мусаева Эльмира Ашурбеговна': 'd-musaeva.jpg', 'Нажмудинова Айшат Абдурахмановна': 'd-nazhmudinova.jpg'}
+DOCTOR_PHOTOS = {'Хаджалов Абузар Магомедович': 'd-khadzhalov.jpg'}
 
 def reviewer(name, cls='bl-rev'):
     f, i, o = name.split(' ')
@@ -419,7 +415,7 @@ def build():
     # главная
     hero = re.sub(r'<nav class="nav".*?</nav>', lambda m: nav('', ''), HERO, flags=re.S)
     home = '\n'.join([hero, FINDER, section('start'), stats_html(), cards_section(), steps_html(), manifesto_html(), section('second'), section('doctors'), flow_html(), marquee_html(), section('trust'), prices_teaser()])
-    write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: ортопед, невролог, реабилитация и лечебная физкультура, физиотерапия, PRP.', home))
+    write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: травматолог-ортопед, реабилитация и лечебная физкультура, физиотерапия, PRP.', home))
 
     # услуги
     problems = [s for s in SERVICES if s['kind'] == 'problem']; methods = [s for s in SERVICES if s['kind'] == 'method']
@@ -458,7 +454,7 @@ def build():
     pages = {
         'o-centre/': ('О центре', 'Центр восстановительной медицины «Орто-Рекавери»', 'Лечим и восстанавливаем пациентов с заболеваниями и травмами опорно-двигательной системы — без операций, по принципам доказательной медицины.',
                       [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour'), equipment_html()]),
-        'vrachi/': ('Специалисты', 'Врачи центра', 'Можно записаться к конкретному врачу. Если вам спокойнее со специалистом-женщиной, скажите об этом администратору.',
+        'vrachi/': ('Специалисты', 'Врачи центра', 'Травматолог-ортопед, кистевой реабилитолог. Записаться можно онлайн, по телефону или в WhatsApp.',
                     [section('doctors'), doctor_videos_html()]),
         'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.',
                   ['<section><div class="wrap"><div class="pgroups">%s</div></div></section>' % ''.join(
@@ -471,7 +467,7 @@ def build():
     }
     for href, (kicker, title, lead, blocks) in pages.items():
         label = dict(NAV)[href]
-        img = ('admin-desk.jpg', 'Администратор центра за стойкой регистрации', 'Администратор Зарема Муртузалиева встретит вас на ресепшене') if href == 'o-centre/' else None
+        img = None
         body = page_head(P, href, kicker, title, lead, [(None, label)], img) + '\n'.join(blocks)
         write(href + 'index.html', doc_html(P, '%s — Орто-Рекавери, Махачкала' % label, lead, body))
     build_docs()
