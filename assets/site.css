@@ -624,7 +624,8 @@
   .tour { margin-top:36px; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(300px, 32%); gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:none; }
   .tour::-webkit-scrollbar { display:none; }
   .tour figure { margin:0; scroll-snap-align:start; position:relative; border-radius:26px; overflow:hidden; aspect-ratio:4/3; }
-  .tour img { width:100%; height:100%; object-fit:cover; transition:transform .6s; }
+  .tour img, .tour video { width:100%; height:100%; object-fit:cover; transition:transform .6s; display:block; }
+  .tour-vid video { cursor:pointer; object-position:50% 30%; }
   .tour figure:hover img { transform:scale(1.05); }
   .tour figcaption { position:absolute; left:14px; bottom:14px; right:14px; background:rgba(255,255,255,.94); border-radius:14px; padding:10px 14px; font-size:14px; color:var(--deep); }
   .tour figcaption b { display:block; font-size:15px; }
