@@ -207,3 +207,38 @@
   .phead-img img { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:28px; box-shadow:0 30px 60px -20px rgba(11,61,74,.35); }
   .phead-img figcaption { margin-top:12px; font-size:14px; line-height:1.4; color:var(--muted); }
   @media (max-width: 900px) { .phead-row { grid-template-columns:1fr; gap:24px; } .phead-img { max-width:300px; } }
+
+/* Разработка кисти (страница «Плечо, локоть и кисть») */
+#hand .wrap { padding-top:40px; }
+.hand { display:grid; grid-template-columns:5fr 7fr; gap:12px; }
+.hand-txt { border-radius:36px; background:#E3F6F8; padding:44px; display:flex; flex-direction:column; justify-content:center; }
+.hand-txt .kicker { color:var(--teal); }
+.hand-txt h2 { color:var(--deep); }
+.hand-txt > p { margin:16px 0 0; font-size:17px; line-height:1.55; color:rgba(33,33,33,.72); }
+.hand-txt ul { margin:20px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.hand-txt li { padding-left:28px; position:relative; font-size:16px; color:var(--deep); }
+.hand-txt li::before { content:"✓"; position:absolute; left:2px; color:var(--teal); font-weight:800; }
+.hand-cta { margin-top:26px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; }
+.hand-cta .btn-deep { margin:0; }
+.hand-cta span { color:rgba(33,33,33,.7); }
+.hand-cta b { color:var(--deep); }
+.hand figure { margin:0; position:relative; overflow:hidden; }
+.hand figcaption { position:absolute; left:14px; bottom:14px; padding:7px 14px; border-radius:999px; background:rgba(255,255,255,.92); color:var(--deep); font-size:13px; font-weight:700; backdrop-filter:blur(6px); }
+.hand-big { border-radius:36px; }
+.hand-big img { width:100%; height:100%; min-height:460px; object-fit:cover; object-position:60% 50%; display:block; }
+.hand-big figcaption { left:18px; bottom:18px; font-size:14px; padding:9px 16px; }
+.hand-row { grid-column:1 / -1; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; }
+.hand-row figure { border-radius:28px; }
+.hand-row img { width:100%; aspect-ratio:16/10; object-fit:cover; display:block; transition:transform .5s; }
+.hand-row figure:hover img { transform:scale(1.03); }
+@media (max-width: 1080px) {
+  .hand { grid-template-columns:1fr; }
+  .hand-big img { min-height:0; aspect-ratio:16/10; }
+}
+@media (max-width: 720px) {
+  .hand-txt { padding:26px 22px; border-radius:28px; }
+  .hand-big { border-radius:28px; }
+  .hand-big figcaption { font-size:12px; left:12px; bottom:12px; }
+  .hand-row { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -16px; padding:0 16px 4px; }
+  .hand-row figure { flex:0 0 82%; scroll-snap-align:start; }
+}

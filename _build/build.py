@@ -191,10 +191,25 @@ def prices_teaser():
     <div><p class="kicker">Цены</p><h2>Цену вы знаете до начала лечения</h2><p>Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.</p><a class="btn-lime" href="{P}ceny/">Весь прайс →</a></div>
     <ul>%s</ul></div></div></section>''' % ''.join('<li><span>%s</span><b>%s</b></li>' % x for x in top)
 
+def hand_html():
+    shots = [('hand-2.jpg', 'Хаджалов показывает пациенту упражнение для кисти на перфорированной доске', 'Врач показывает упражнение'),
+             ('hand-3.jpg', 'Пациент разгибает пальцы, преодолевая сопротивление резинки', 'Разгибание пальцев с резинкой'),
+             ('hand-4.jpg', 'Упражнение для кисти: пальцы между стойками доски, резинка натянута', 'Упражнения на доске со стойками')]
+    li = ''.join('<li>%s</li>' % t for t in ['Захват цилиндров разной толщины', 'Разгибание пальцев с сопротивлением резинки', 'Занятие ведёт врач, а не инструктор'])
+    small = ''.join('<figure><img src="assets/%s" alt="%s" loading="lazy"><figcaption>%s</figcaption></figure>' % x for x in shots)
+    return '''<section id="hand"><div class="wrap"><div class="hand">
+    <div class="hand-txt rv"><p class="kicker">Кистевая реабилитация</p><h2>Разработка кисти после перелома и операции</h2>
+      <p>После травмы пальцы долго остаются слабыми и плохо слушаются. Занятие ведёт сам ортопед — кистевой реабилитолог: показывает упражнения, следит за техникой и меняет задания по ходу восстановления.</p>
+      <ul>%s</ul>
+      <div class="hand-cta"><button class="btn-deep" type="button">Записаться на занятие</button><span>Занятие — <b>3 000 ₽</b></span></div></div>
+    <figure class="hand-big rv"><img src="assets/hand-1.jpg" alt="Травматолог-ортопед Хаджалов проводит занятие по разработке кисти"><figcaption>Хаджалов Абузар Магомедович, кистевой реабилитолог</figcaption></figure>
+    <div class="hand-row rv">%s</div>
+  </div></div></section>''' % (li, small)
+
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'),
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html,
 }
 
 
@@ -328,7 +343,7 @@ def equipment_html(service=None):
     items = [e for e in EQUIPMENT if service is None or service in e['services']]
     if not items:
         return ''
-    cards = ''.join('<figure><img src="{P}assets/%s" alt="%s" loading="lazy"><figcaption>%s</figcaption><small>%s</small></figure>' % (e['img'], e['alt'], e['title'], e['text']) for e in items)
+    cards = ''.join('<figure><img src="assets/%s" alt="%s" loading="lazy"><figcaption>%s</figcaption><small>%s</small></figure>' % (e['img'], e['alt'], e['title'], e['text']) for e in items)
     return '''<section class="sec"><div class="wrap"><h2 class="rv-vh">%s</h2>
     <p class="rv-vp">Фото из кабинетов центра. Аппарат и параметры процедуры подбирает врач по показаниям.</p>
     <div class="eq-grid">%s</div></div></section>''' % ('На чём проводим процедуры' if service else 'Оборудование центра', cards)
@@ -377,11 +392,11 @@ DOCTOR_PHOTOS = {'Хаджалов Абузар Магомедович': 'd-khad
 
 def reviewer(name, cls='bl-rev'):
     f, i, o = name.split(' ')
-    ava = ('<img src="{P}assets/%s" alt="">' % DOCTOR_PHOTOS[name]) if name in DOCTOR_PHOTOS else '<i aria-hidden="true">%s%s</i>' % (f[0], i[0])
+    ava = ('<img src="assets/%s" alt="">' % DOCTOR_PHOTOS[name]) if name in DOCTOR_PHOTOS else '<i aria-hidden="true">%s%s</i>' % (f[0], i[0])
     return '<span class="%s">%s<span><b>%s %s. %s.</b><em>%s · проверка текста</em></span></span>' % (cls, ava, f, i[0], o[0], DOCTOR_ROLES.get(name, 'врач центра').split(',')[0])
 
 def blog_card(p, big=False):
-    return '''<a class="bl-card%s" href="{P}blog/%s/" data-cat="%s"><span class="bl-img"><img src="{P}assets/%s" alt="%s"><em>%s</em></span>
+    return '''<a class="bl-card%s" href="{P}blog/%s/" data-cat="%s"><span class="bl-img"><img src="assets/%s" alt="%s"><em>%s</em></span>
       <span class="bl-txt"><b>%s</b><span>%s</span><span class="bl-meta">%s<small>%d мин</small></span></span></a>''' % (
         ' big' if big else '', p['slug'], p['category'], p['cover'], p['coverAlt'], p['category'], p['title'], p['lead'], reviewer(p['reviewer']), p['minutes'])
 
@@ -403,7 +418,7 @@ def build_blog():
         top = page_head(P2, 'blog/', p['category'], p['title'], p['lead'], [('blog/', 'Блог'), (None, p['category'])])
         top = top.replace('</p></div>\n  </div></header>', '</p>%s</div>\n  </div></header>' % meta, 1)
         body = top + '''<section class="bl-post"><div class="wrap">
-      <img class="bl-cover" src="{P}assets/%s" alt="%s">
+      <img class="bl-cover" src="assets/%s" alt="%s">
       <div class="bl-layout"><article class="legal-doc article">%s</article>
         <aside><nav class="bl-toc" aria-label="Содержание"><b>Содержание</b><ol>%s</ol></nav>%s</aside></div>
       <div class="bl-warn">Имеются противопоказания. Необходима консультация специалиста</div>
