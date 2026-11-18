@@ -202,7 +202,7 @@ def hand_html():
       <p>После травмы пальцы долго остаются слабыми и плохо слушаются. Занятие ведёт сам ортопед — кистевой реабилитолог: показывает упражнения, следит за техникой и меняет задания по ходу восстановления.</p>
       <ul>%s</ul>
       <div class="hand-cta"><button class="btn-deep" type="button">Записаться на занятие</button><span>Занятие — <b>3 000 ₽</b></span></div></div>
-    <figure class="hand-big rv"><img src="assets/hand-1.jpg" alt="Травматолог-ортопед Хаджалов проводит занятие по разработке кисти"><figcaption>Хаджалов Абузар Магомедович, кистевой реабилитолог</figcaption></figure>
+    <figure class="hand-big rv"><img src="assets/hand-1.jpg" alt="Травматолог-ортопед Хаджалов проводит занятие по разработке кисти"><figcaption><span class="hand-full">Хаджалов Абузар Магомедович, кистевой реабилитолог</span><span class="hand-short">Хаджалов А. М., кистевой реабилитолог</span></figcaption></figure>
     <div class="hand-row rv">%s</div>
   </div></div></section>''' % (li, small)
 
