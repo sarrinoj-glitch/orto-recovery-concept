@@ -210,19 +210,22 @@ def results_html():
     cases = [('scoliosis', 'Сколиоз, спина', 'Спина при сколиозе: пунктир — линия позвоночника'),
              ('back', 'Осанка, спина', 'Осанка ребёнка, вид со спины'),
              ('side', 'Осанка, сбоку', 'Осанка ребёнка, вид сбоку')]
-    sw = "var b=this.closest('.ba'),f=b.querySelector('.ba-pair'),a=f.querySelector('.ba-after'),z=f.querySelector('.ba-before');b.querySelectorAll('.ba-tab').forEach(function(x){x.setAttribute('aria-selected',String(x===this))},this);a.src=this.dataset.a;a.alt=this.dataset.w+' — после курса';z.src=this.dataset.b;z.alt=this.dataset.w+' — до начала занятий'"
+    sw = "var b=this.closest('.ba'),f=b.querySelector('.ba-frame'),a=f.querySelector('.ba-after'),z=f.querySelector('.ba-before');b.querySelectorAll('.ba-tab').forEach(function(x){x.setAttribute('aria-selected',String(x===this))},this);a.src=this.dataset.a;a.alt=this.dataset.w+' — после курса';z.src=this.dataset.b;z.alt=this.dataset.w+' — до начала занятий';f.style.setProperty('--p','50%');f.querySelector('input').value=50;f.classList.add('auto')"
     tabs = ''.join('<button class="ba-tab" type="button" role="tab" aria-selected="%s" data-a="{P}assets/ba-%s-after.jpg" data-b="{P}assets/ba-%s-before.jpg" data-w="%s" onclick="%s">%s</button>' % ('true' if i == 0 else 'false', c[0], c[0], c[2], sw, c[1]) for i, c in enumerate(cases))
     c = cases[0]
     return '''<section id="results" class="sec"><div class="wrap"><div class="ba">
     <div class="ba-txt rv"><p class="kicker">Примеры пациентов</p><h2>Осанка до и после курса</h2>
-      <p class="ba-lead">Слева — до начала занятий, справа — после курса. Снимки сделаны в центре.</p>
+      <p class="ba-lead">Потяните ползунок, чтобы сравнить. Снимки сделаны в центре у одной и той же стены с сеткой — так проще увидеть разницу.</p>
       <div class="ba-tabs" role="tablist">%s</div>
       <p class="ba-note">Пример одного пациента. Результат зависит от диагноза, возраста и регулярности занятий — врач скажет, чего ждать, после осмотра. Фото опубликованы с согласия родителей.</p></div>
-    <div class="ba-pair rv">
-      <figure><img class="ba-before" src="assets/ba-%s-before.jpg" alt="%s — до начала занятий"><figcaption class="ba-l">До</figcaption></figure>
-      <figure><img class="ba-after" src="assets/ba-%s-after.jpg" alt="%s — после курса"><figcaption class="ba-r">После</figcaption></figure>
+    <div class="ba-frame rv" style="--p:50%%">
+      <img class="ba-after" src="assets/ba-%s-after.jpg" alt="%s — после курса" draggable="false">
+      <img class="ba-before" src="assets/ba-%s-before.jpg" alt="%s — до начала занятий" draggable="false">
+      <span class="ba-l">До</span><span class="ba-r">После</span><i class="ba-line"><b>↔</b></i>
+      <input type="range" min="0" max="100" value="50" aria-label="Сравнить фото до и после" oninput="this.parentNode.classList.remove('auto');this.parentNode.style.setProperty('--p',this.value+'%%')">
     </div>
-  </div></div></section>''' % (tabs, c[0], c[2], c[0], c[2])
+  </div></div></section>
+  <script>document.querySelectorAll('.ba-frame').forEach(function(f){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;f.classList.add('auto');setInterval(function(){if(!f.classList.contains('auto'))return;var p=parseFloat(getComputedStyle(f).getPropertyValue('--p'))>50?0:100;f.style.setProperty('--p',p+'%%');f.querySelector('input').value=p},2500)})</script>''' % (tabs, c[0], c[2], c[0], c[2])
 
 def insoles_html():
     li = ''.join('<li>%s</li>' % t for t in ['Подбирают при плоскостопии и быстрой усталости ног', 'Подбор и формовка — за один визит', 'Есть детские размеры'])
