@@ -247,20 +247,29 @@ def sias_html():
       <div class="kins-cta"><button class="btn-deep" type="button" style="margin:0">Записаться на занятие</button><span>Занятие — <b>от 2 000 ₽</b></span></div></div>
   </div></div></section>''' % li
 
-def rphotos_html():
-    shots = [('sias.jpg', 'Упражнения с лентой', 'Пациент выполняет упражнение на скамье с лентой, специалист контролирует положение спины'),
-             ('rehab-ems.jpg', 'Электромиостимуляция', 'Электроды миостимулятора на мышцах бедра пациента'),
-             ('rehab-biomag.jpg', 'Магнитотерапия Biomag', 'Аппликатор Biomag на колене пациента во время процедуры лёжа'),
-             ('rehab-head.jpg', 'Физиотерапия', 'Пациент на физиотерапевтической процедуре с электродами')]
+def photos_html(title, shots):
     figs = ''.join('<figure><img src="assets/%s" alt="%s" loading="lazy"><figcaption>%s</figcaption></figure>' % (f, a, c) for f, c, a in shots)
     return '''<section id="photos" class="sec"><div class="wrap">
-    <p class="kicker" style="color:var(--teal)">Фото из центра</p><h2 style="margin:12px 0 0">Как проходит восстановление</h2>
-    <div class="rph rv">%s</div></div></section>''' % figs
+    <p class="kicker" style="color:var(--teal)">Фото из центра</p><h2 style="margin:12px 0 0">%s</h2>
+    <div class="rph%s rv">%s</div></div></section>''' % (title, ' rph3' if len(shots) == 3 else '', figs)
+
+def rphotos_html():
+    return photos_html('Как проходит восстановление', [
+        ('sias.jpg', 'Упражнения с лентой', 'Пациент выполняет упражнение на скамье с лентой, специалист контролирует положение спины'),
+        ('rehab-ems.jpg', 'Электромиостимуляция', 'Электроды миостимулятора на мышцах бедра пациента'),
+        ('rehab-biomag.jpg', 'Магнитотерапия Biomag', 'Аппликатор Biomag на колене пациента во время процедуры лёжа'),
+        ('rehab-head.jpg', 'Физиотерапия', 'Пациент на физиотерапевтической процедуре с электродами')])
+
+def fphotos_html():
+    return photos_html('Как мы работаем со стопой', [
+        ('foot-scan.jpg', 'Осмотр стоп на подоскопе', 'Пациент стоит на подоскопе, специалист осматривает отпечаток стопы в подсветке'),
+        ('uvt-heel.jpg', 'Ударно-волновая терапия', 'Ортопед проводит ударно-волновую терапию на пятке пациента'),
+        ('insoles-table.jpg', 'Стельки Formthotics', 'Стельки Formthotics разных размеров разложены на кушетке')])
 
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html,
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html, 'fphotos': fphotos_html,
 }
 
 
