@@ -283,3 +283,11 @@
 @media (max-width:1080px) { .kins-rev img { order:0; } }
 .ba-frame.auto .ba-before { transition:clip-path .9s ease-in-out; }
 .ba-frame.auto .ba-line { transition:left .9s ease-in-out; }
+/* Фото процедур на странице «Восстановление» */
+.rph { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:32px; }
+.rph figure { position:relative; margin:0; overflow:hidden; border-radius:28px; }
+.rph img { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; transition:transform .5s; }
+.rph img:hover { transform:scale(1.03); }
+.rph figcaption { position:absolute; left:12px; bottom:12px; padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.9); color:var(--deep); font-size:13px; font-weight:600; }
+@media (max-width:1080px) { .rph { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:720px) { .rph { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; margin:32px -16px 0; padding:0 16px 4px; scroll-padding:0 16px; } .rph figure { flex:0 0 72%; scroll-snap-align:start; } }
