@@ -254,7 +254,7 @@
 .ba-tab { height:44px; padding:0 18px; border-radius:999px; border:0; background:#E3F6F8; color:var(--deep); font-weight:600; font-size:15px; cursor:pointer; transition:background .2s, color .2s; }
 .ba-tab[aria-selected="true"] { background:var(--deep); color:#fff; }
 .ba-note { margin:24px 0 0; font-size:13px; line-height:1.55; color:rgba(23,32,38,.5); }
-.ba-frame { position:relative; width:100%; max-width:520px; margin:0 auto; aspect-ratio:4/5; border-radius:32px; overflow:hidden; background:#E3F6F8; user-select:none; }
+.ba-frame { position:relative; width:100%; max-width:440px; margin:0 auto; aspect-ratio:2/3; border-radius:32px; overflow:hidden; background:#E3F6F8; user-select:none; }
 .ba-frame img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .ba-before { clip-path:inset(0 calc(100% - var(--p)) 0 0); }
 .ba-l, .ba-r { position:absolute; top:12px; padding:4px 12px; border-radius:999px; font-size:13px; font-weight:600; pointer-events:none; }
@@ -264,3 +264,17 @@
 .ba-line b { position:absolute; left:50%; top:50%; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50%; background:#fff; color:var(--deep); display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
 .ba-frame input { position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:ew-resize; touch-action:pan-y; }
 @media (max-width:1080px) { .ba { grid-template-columns:1fr; gap:28px; } }
+
+/* Детские стельки на странице «Детям» */
+.kins { display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border-radius:36px; background:#E3F6F8; }
+.kins img { width:100%; height:100%; min-height:400px; object-fit:cover; display:block; }
+.kins-txt { padding:48px; display:flex; flex-direction:column; justify-content:center; }
+.kins-txt .kicker { color:var(--teal); }
+.kins-txt h2 { margin:12px 0 0; color:var(--deep); }
+.kins-txt > p { margin:16px 0 0; font-size:18px; line-height:1.55; color:rgba(23,32,38,.7); }
+.kins-txt ul { margin:20px 0 0; padding:0; list-style:none; color:var(--deep); }
+.kins-txt li { padding-left:30px; position:relative; margin:8px 0; }
+.kins-txt li::before { content:"✓"; position:absolute; left:2px; color:var(--teal); font-weight:700; }
+.kins-cta { margin-top:28px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; color:rgba(23,32,38,.7); }
+.kins-cta b { color:var(--deep); }
+@media (max-width:1080px) { .kins { grid-template-columns:1fr; } .kins img { min-height:0; height:300px; } .kins-txt { padding:28px; } }

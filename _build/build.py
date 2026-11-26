@@ -226,10 +226,20 @@ def results_html():
     </div>
   </div></div></section>''' % (tabs, c[0], c[2], c[0], c[2])
 
+def insoles_html():
+    li = ''.join('<li>%s</li>' % t for t in ['Подбирают при плоскостопии и быстрой усталости ног', 'Подбор и формовка — за один визит', 'Есть детские размеры'])
+    return '''<section id="insoles"><div class="wrap"><div class="kins rv">
+    <img src="assets/insoles.jpg" alt="Детские и взрослые стельки Formthotics разных размеров на кушетке" loading="lazy">
+    <div class="kins-txt"><p class="kicker">Индивидуальные стельки</p><h2>Детские стельки Formthotics</h2>
+      <p>Стельки из термоформуемого материала. Их подгоняют под стопу ребёнка прямо на приёме.</p>
+      <ul>%s</ul>
+      <div class="kins-cta"><button class="btn-deep" type="button" style="margin:0">Подобрать стельки</button><span>Детские — <b>до 9 500 ₽</b></span></div></div>
+  </div></div></section>''' % li
+
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html,
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html,
 }
 
 
