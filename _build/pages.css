@@ -281,3 +281,6 @@
 .kins-rev { background:#fff; box-shadow:0 10px 40px -20px rgba(11,61,74,.25); }
 .kins-rev img { order:2; }
 @media (max-width:1080px) { .kins-rev img { order:0; } }
+.ba-pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.ba-pair figure { position:relative; margin:0; overflow:hidden; border-radius:28px; background:#E3F6F8; }
+.ba-pair img { display:block; width:100%; aspect-ratio:2/3; object-fit:cover; }
