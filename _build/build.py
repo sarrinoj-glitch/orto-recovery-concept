@@ -236,10 +236,20 @@ def insoles_html():
       <div class="kins-cta"><button class="btn-deep" type="button" style="margin:0">Подобрать стельки</button><span>Детские — <b>до 9 500 ₽</b></span></div></div>
   </div></div></section>''' % li
 
+def sias_html():
+    li = ''.join('<li>%s</li>' % t for t in ['Подходит детям при сколиозе и нарушениях осанки', 'Занятие — с инструктором', 'Упражнения потом можно делать дома'])
+    return '''<section id="sias"><div class="wrap"><div class="kins kins-rev rv">
+    <img src="assets/sias.jpg" alt="Подросток выполняет упражнение на скамье с лентой, специалист контролирует положение спины" loading="lazy">
+    <div class="kins-txt"><p class="kicker">Лечебная гимнастика</p><h2>Занятия по методу СИАС</h2>
+      <p>Индивидуальные упражнения по итальянской методике, которые учат держать позвоночник правильно в обычной жизни.</p>
+      <ul>%s</ul>
+      <div class="kins-cta"><button class="btn-deep" type="button" style="margin:0">Записаться на занятие</button><span>Занятие — <b>от 2 000 ₽</b></span></div></div>
+  </div></div></section>''' % li
+
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html,
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html,
 }
 
 

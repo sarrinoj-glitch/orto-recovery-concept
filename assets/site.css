@@ -1272,3 +1272,6 @@
 .kins-cta { margin-top:28px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; color:rgba(23,32,38,.7); }
 .kins-cta b { color:var(--deep); }
 @media (max-width:1080px) { .kins { grid-template-columns:1fr; } .kins img { min-height:0; height:300px; } .kins-txt { padding:28px; } }
+.kins-rev { background:#fff; box-shadow:0 10px 40px -20px rgba(11,61,74,.25); }
+.kins-rev img { order:2; }
+@media (max-width:1080px) { .kins-rev img { order:0; } }
