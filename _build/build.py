@@ -276,17 +276,20 @@ def hipcheck_html():
     return note_html('hip', 'rehab-knee.jpg', 'Специалист сгибает ногу пациента в колене и тазобедренном суставе на кушетке, таз зафиксирован ремнём', 'Осмотр', 'Проверяем подвижность тазобедренного сустава',
         'Специалист сгибает ногу в колене и в тазобедренном суставе и мягко поворачивает бедро. Ремень удерживает таз, чтобы двигался только сустав. Так видно, насколько свободно сустав движется и в какой момент появляется боль.')
 
+def iastm_html():
+    return note_html('iastm', 'back-scraping.jpg', 'Специалист прорабатывает мышцы спины металлическим инструментом IASTM', 'Процедуры', 'Инструментальная мобилизация мягких тканей (IASTM)',
+        'Инструментальная мобилизация мягких тканей (IASTM) — современный метод физиотерапевтического воздействия с использованием специальных металлических инструментов. Метод направлен на проработку мышц, фасций и соединительных тканей, уменьшение мышечного напряжения, улучшение подвижности тканей и восстановление их функционального состояния.')
+
 def cupping_html():
     shots = [('cupping.jpg', 'Специалист ставит на спину пациента силиконовые вакуумные банки'),
-             ('back-massage.jpg', 'Специалист центра делает массаж спины пациенту'),
-             ('back-scraping.jpg', 'Специалист обрабатывает мышцы спины металлическим скребком')]
+             ('back-massage.jpg', 'Специалист центра делает массаж спины пациенту')]
     figs = ''.join('<figure><img src="assets/%s" alt="%s" loading="lazy"></figure>' % x for x in shots)
-    return '<section id="back-photos"><div class="wrap"><div class="rph rph3 rv" style="margin-top:0">%s</div></div></section>' % figs
+    return '<section id="back-photos"><div class="wrap"><div class="rph rph2 rv" style="margin-top:0">%s</div></div></section>' % figs
 
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html, 'fphotos': fphotos_html, 'hipcheck': hipcheck_html, 'cupping': cupping_html,
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html, 'fphotos': fphotos_html, 'hipcheck': hipcheck_html, 'cupping': cupping_html, 'iastm': iastm_html,
 }
 
 
