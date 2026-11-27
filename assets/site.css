@@ -1003,8 +1003,8 @@
 /* Версия для слабовидящих */
 .a11y-btn { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border:0; border-radius:50%; background:rgba(255,255,255,.85); color:var(--deep); cursor:pointer; margin-right:8px; }
 .a11y-link { background:none; border:0; color:inherit; font:inherit; text-decoration:underline; cursor:pointer; padding:0; }
-html.a11y body { zoom:1.2; }
-html.a11y main, html.a11y section, html.a11y footer, html.a11y .legal-foot { filter:grayscale(1) contrast(1.15); }
+html.a11y body > :not(header):not(nav):not(script):not(.cookie) { zoom:1.2; filter:grayscale(1) contrast(1.15); }
+html.a11y header.hero .hero-photo { filter:grayscale(1); }
 html.a11y *, html.a11y *::before, html.a11y *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
 html.a11y a { text-decoration:underline !important; text-underline-offset:3px; }
 html.a11y p, html.a11y li, html.a11y td { line-height:1.7 !important; }
