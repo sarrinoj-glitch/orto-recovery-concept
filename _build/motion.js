@@ -117,9 +117,17 @@
   $$('.steps2').forEach((box) => {
     const steps = $$('.st-step', box), imgs = $$('.st-media img', box), dots = $$('.st-dots i', box)
     const cap = $('.st-cap b', box), line = $('.st-line', box)
+    const groups = steps.map((_, k) => imgs.filter((m) => Number(m.dataset.step) === k))
+    let timer
     const set = (i) => {
       steps.forEach((s, k) => s.classList.toggle('on', k === i))
-      imgs.forEach((s, k) => s.classList.toggle('on', k === i))
+      const g = groups[i] || []
+      imgs.forEach((m) => m.classList.toggle('on', m === g[0]))
+      clearInterval(timer)
+      if (g.length > 1 && !reduce) {
+        let j = 0
+        timer = setInterval(() => { g[j].classList.remove('on'); j = (j + 1) % g.length; g[j].classList.add('on') }, 1500)
+      }
       dots.forEach((s, k) => s.classList.toggle('on', k === i))
       if (cap) cap.textContent = `Шаг ${i + 1} из ${steps.length}`
       if (line) line.style.transform = `scaleY(${(i + 1) / steps.length})`

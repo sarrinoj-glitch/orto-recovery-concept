@@ -315,7 +315,9 @@ STEPS2 = [('Расскажите, что беспокоит', 'Врач соби
 
 def steps_html():
     li = ''.join('<li class="st-step"><span class="n">%d</span><h3>%s</h3><p>%s</p><img src="assets/%s" alt="" loading="lazy"></li>' % (i + 1, t, d, img) for i, (t, d, img) in enumerate(STEPS2))
-    imgs = ''.join('<img src="assets/%s" alt="%s"%s>' % (img, t, ' class="on"' if i == 0 else '') for i, (t, d, img) in enumerate(STEPS2))
+    # у шага может быть несколько фото: пока шаг активен, они сменяют друг друга (motion.js)
+    MORE = {1: ['back-thrust.jpg', 'rehab-knee.jpg'], 3: ['rehab-biomag.jpg', 'rehab-ems.jpg']}
+    imgs = ''.join(''.join('<img src="assets/%s" alt="%s" data-step="%d"%s%s>' % (f, t, i, ' class="on"' if i == 0 and k == 0 else '', ' loading="lazy"' if k else '') for k, f in enumerate([img] + MORE.get(i, []))) for i, (t, d, img) in enumerate(STEPS2))
     dots = ''.join('<i%s></i>' % (' class="on"' if i == 0 else '') for i in range(len(STEPS2)))
     return ('<section class="sec"><div class="wrap">'
             '<div class="sec-head rv"><div><p class="kicker">Как проходит приём</p><h2>Четыре шага до плана лечения</h2></div></div>'
