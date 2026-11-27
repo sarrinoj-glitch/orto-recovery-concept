@@ -313,6 +313,16 @@ STEPS2 = [('Расскажите, что беспокоит', 'Врач соби
           ('Разбираем снимки', 'МРТ, рентген, заключения — врач объяснит простыми словами, что на них видно.', 'cabinet.jpg'),
           ('План лечения и цена', 'Вы получаете курс процедур и знаете, сколько он стоит, до начала лечения.', 'c-shoulder.jpg')]
 
+PATIENT_DOCS = [('polozhenie', 'polozhenie.pdf', 'Положение о порядке предоставления платных медицинских услуг'),
+                ('prava-pacienta', 'prava-grazhdan.pdf', 'Права и обязанности граждан в сфере охраны здоровья'),
+                ('pravila', 'pravila.pdf', 'Правила внутреннего распорядка для пациентов и посетителей'),
+                ('dogovor', 'dogovor.pdf', 'Договор на оказание платных медицинских услуг (образец)')]
+
+def patient_docs_html():
+    # PDF из Word-файлов юристов; после подписания приказов заменяем на сканы с теми же именами
+    li = ''.join('<li class="pdoc rv"><b>%s</b><span><a class="pdoc-read" href="{P}dokumenty/%s/">Читать на сайте</a><a class="pdoc-dl" href="{P}docs/%s" target="_blank" rel="noreferrer">Скачать PDF</a></span></li>' % (t, s, f) for s, f, t in PATIENT_DOCS)
+    return '<section id="info" class="sec"><div class="wrap"><div class="sec-head rv"><div><p class="kicker">Документы</p><h2>Информация для пациентов</h2></div></div><ul class="pdocs">%s</ul></div></section>' % li
+
 def steps_html():
     li = ''.join('<li class="st-step"><span class="n">%d</span><h3>%s</h3><p>%s</p><img src="assets/%s" alt="" loading="lazy"></li>' % (i + 1, t, d, img) for i, (t, d, img) in enumerate(STEPS2))
     # у шага может быть несколько фото: пока шаг активен, они сменяют друг друга (motion.js)
@@ -564,7 +574,7 @@ def build():
                       '<div class="pcard rv"><h2>%s</h2><ul class="plist2">%s</ul>%s</div>' % (t, ''.join('<li><span>%s</span><b>%s</b></li>' % i for i in items), '<p class="pnote">%s</p>' % note if note else '') for t, items, note in PRICE_GROUPS),
                    section('perks')]),
         'pacientam/': ('Пациентам', 'Всё, что нужно знать до визита', 'Как проходит первый приём, что взять с собой, как получить второе мнение и вызвать реабилитолога на дом.',
-                       [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks')]),
+                       [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks'), patient_docs_html()]),
         'kontakty/': ('Контакты', 'Как нас найти', 'Махачкала, проспект Имама Шамиля, 35А, 1 этаж. Вход за шлагбаумом, рядом санаторий «Тарнаир».',
                       ['<section><div class="wrap"><div class="cpage">%s</div></div></section>' % re.search(r'<div class="contacts">(.*)</div>\s*<!--LEGAL-->', FINAL, re.S).group(1).replace('rv"', '"')]),
     }
