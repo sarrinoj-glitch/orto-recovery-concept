@@ -1265,7 +1265,7 @@
 .kins-txt { padding:48px; display:flex; flex-direction:column; justify-content:center; }
 .kins-txt .kicker { color:var(--teal); }
 .kins-txt h2 { margin:12px 0 0; color:var(--deep); }
-.kins-txt > p { margin:16px 0 0; font-size:18px; line-height:1.55; color:rgba(23,32,38,.7); }
+.kins-txt > p:not(.kicker) { margin:16px 0 0; font-size:18px; line-height:1.55; color:rgba(23,32,38,.7); }
 .kins-txt ul { margin:20px 0 0; padding:0; list-style:none; color:var(--deep); }
 .kins-txt li { padding-left:30px; position:relative; margin:8px 0; }
 .kins-txt li::before { content:"✓"; position:absolute; left:2px; color:var(--teal); font-weight:700; }

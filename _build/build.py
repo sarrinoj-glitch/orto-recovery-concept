@@ -266,10 +266,24 @@ def fphotos_html():
         ('uvt-heel.jpg', 'Ударно-волновая терапия', 'Ортопед проводит ударно-волновую терапию на пятке пациента'),
         ('insoles-table.jpg', 'Стельки Formthotics', 'Стельки Formthotics разных размеров разложены на кушетке')])
 
+def note_html(sid, img, alt, kicker, title, text):
+    return '''<section id="%s"><div class="wrap"><div class="kins rv" style="background:#fff;box-shadow:0 10px 40px -20px rgba(11,61,74,.25)">
+    <img src="assets/%s" alt="%s" loading="lazy">
+    <div class="kins-txt"><p class="kicker">%s</p><h2>%s</h2><p>%s</p></div>
+  </div></div></section>''' % (sid, img, alt, kicker, title, text)
+
+def hipcheck_html():
+    return note_html('hip', 'rehab-knee.jpg', 'Специалист сгибает ногу пациента в колене и тазобедренном суставе на кушетке, таз зафиксирован ремнём', 'Осмотр', 'Проверяем подвижность тазобедренного сустава',
+        'Специалист сгибает ногу в колене и в тазобедренном суставе и мягко поворачивает бедро. Ремень удерживает таз, чтобы двигался только сустав. Так видно, насколько свободно сустав движется и в какой момент появляется боль.')
+
+def cupping_html():
+    return note_html('cupping', 'cupping.jpg', 'Специалист проводит массаж спины силиконовыми вакуумными банками', 'Процедуры', 'Вакуумный массаж банками',
+        'Специалист ставит на спину силиконовые банки: они присасываются к коже и приподнимают ткани. Процедура проходит лёжа на кушетке.')
+
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
     'prp': lambda: section('prp'), 'sport': lambda: section('sport'), 'after': lambda: section('after'), 'home': lambda: section('perks'),
-    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html, 'fphotos': fphotos_html,
+    'family': lambda: section('perks'), 'whole': lambda: section('whole'), 'hand': hand_html, 'results': results_html, 'insoles': insoles_html, 'sias': sias_html, 'rphotos': rphotos_html, 'fphotos': fphotos_html, 'hipcheck': hipcheck_html, 'cupping': cupping_html,
 }
 
 
