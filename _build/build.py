@@ -323,6 +323,10 @@ def legal_block(slug, title):
     head = '<h2 style="margin:0 0 24px">%s</h2>' % title if title else ''
     return '<section class="sec" id="%s"><div class="wrap">%s<article class="legal-doc">%s</article></div></section>' % (slug, head, d['html'])
 
+def home_legal_html():
+    det = ''.join('<details class="hl-item"><summary>%s</summary><div class="hl-body legal-doc">%s</div></details>' % (d['title'], d['html']) for d in LEGAL_DOCS if d['slug'] in ('politika', 'soglasie'))
+    return '<section class="sec" id="personal-data"><div class="wrap"><h2>Персональные данные</h2><div class="hl">%s</div></div></section>' % det
+
 def patient_docs_html():
     # PDF из Word-файлов юристов; после подписания приказов заменяем на сканы с теми же именами
     li = ''.join('<li class="pdoc rv"><b>%s</b><span><a class="pdoc-read" href="{P}dokumenty/%s/">Читать на сайте</a><a class="pdoc-dl" href="{P}docs/%s" target="_blank" rel="noreferrer">Скачать PDF</a></span></li>' % (t, s, f) for s, f, t in PATIENT_DOCS)
@@ -532,7 +536,7 @@ def build():
 
     # главная
     hero = re.sub(r'<nav class="nav".*?</nav>', lambda m: nav('', ''), HERO, flags=re.S)
-    home = '\n'.join([hero, FINDER, section('start'), stats_html(), cards_section(), steps_html(), manifesto_html(), section('second'), section('doctors'), flow_html(), marquee_html(), section('trust'), prices_teaser()])
+    home = '\n'.join([hero, FINDER, section('start'), stats_html(), cards_section(), steps_html(), manifesto_html(), section('second'), section('doctors'), flow_html(), marquee_html(), section('trust'), prices_teaser(), home_legal_html()])
     write('index.html', doc_html('', 'Орто-Рекавери — центр восстановительной медицины в Махачкале', 'Лечим боль в спине и суставах без операции: травматолог-ортопед, реабилитация и лечебная физкультура, физиотерапия, PRP.', home))
 
     # услуги

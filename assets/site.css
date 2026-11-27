@@ -1317,3 +1317,8 @@ html.a11y .rv { opacity:1 !important; transform:none !important; }
 .pdoc-read { background:#E3F6F8; color:var(--deep); }
 .pdoc-dl { background:var(--deep); color:#fff; }
 @media (max-width:720px) { .pdocs { grid-template-columns:1fr; } }
+/* Главная: политика и согласие */
+.hl { margin-top:24px; display:grid; gap:12px; }
+.hl-item { border-radius:24px; background:#fff; padding:20px 24px; box-shadow:0 10px 40px -20px rgba(11,61,74,.25); }
+.hl-item summary { cursor:pointer; font-size:18px; font-weight:600; color:var(--deep); }
+.hl-body { margin-top:16px; max-height:70vh; overflow-y:auto; padding-right:8px; }
