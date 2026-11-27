@@ -96,7 +96,7 @@ def fix(html, P):
     return html
 
 # ---------- общая шапка ----------
-NAV = [('', 'Главная'), ('o-centre/', 'О центре'), ('uslugi/', 'Услуги'), ('vrachi/', 'Врачи'), ('ceny/', 'Цены'), ('pacientam/', 'Пациентам'), ('otzyvy/', 'Отзывы'), ('blog/', 'Блог'), ('kontakty/', 'Контакты')]
+NAV = [('', 'Главная'), ('o-centre/', 'О центре'), ('uslugi/', 'Услуги'), ('vrachi/', 'Врачи'), ('ceny/', 'Цены'), ('pacientam/', 'Пациентам'), ('otzyvy/', 'Отзывы'), ('blog/', 'Блог'), ('vakansii/', 'Вакансии'), ('kontakty/', 'Контакты')]
 CHEV = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
 BURGER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 
@@ -317,6 +317,11 @@ PATIENT_DOCS = [('polozhenie', 'polozhenie.pdf', 'Положение о поря
                 ('prava-pacienta', 'prava-grazhdan.pdf', 'Права и обязанности граждан в сфере охраны здоровья'),
                 ('pravila', 'pravila.pdf', 'Правила внутреннего распорядка для пациентов и посетителей'),
                 ('dogovor', 'dogovor.pdf', 'Договор на оказание платных медицинских услуг (образец)')]
+
+def legal_block(slug, title):
+    d = next(x for x in LEGAL_DOCS if x['slug'] == slug)
+    head = '<h2 style="margin:0 0 24px">%s</h2>' % title if title else ''
+    return '<section class="sec" id="%s"><div class="wrap">%s<article class="legal-doc">%s</article></div></section>' % (slug, head, d['html'])
 
 def patient_docs_html():
     # PDF из Word-файлов юристов; после подписания приказов заменяем на сканы с теми же именами
@@ -568,13 +573,15 @@ def build():
         'o-centre/': ('О центре', 'Центр восстановительной медицины «Орто-Рекавери»', 'Лечим и восстанавливаем пациентов с заболеваниями и травмами опорно-двигательной системы — без операций, по принципам доказательной медицины.',
                       [stats_html(), manifesto_html(), section('founders'), section('how'), section('trust'), section('tour'), equipment_html()]),
         'vrachi/': ('Специалисты', 'Врачи центра', 'Травматолог-ортопед, кистевой реабилитолог. Записаться можно онлайн, по телефону или в WhatsApp.',
-                    [section('doctors'), doctor_videos_html()]),
+                    [section('doctors'), '<section><div class="wrap"><p style="font-size:18px;font-weight:600;color:var(--deep);margin:0 0 6px">Приём всех специалистов ведётся по предварительной записи.</p><p style="color:var(--muted)">Образование, год окончания, специальность, сведения об аккредитации или сертификате и график работы врачей — в разделе <a href="{P}dokumenty/vrachi/">«Сведения о медицинских работниках»</a>.</p></div></section>', doctor_videos_html()]),
         'ceny/': ('Цены', 'Цену вы знаете до начала лечения', 'Цены по данным центра на 7 ноября 2026 года. Есть рассрочка без переплат и справка для налогового вычета.',
                   ['<section><div class="wrap"><div class="pgroups">%s</div></div></section>' % ''.join(
                       '<div class="pcard rv"><h2>%s</h2><ul class="plist2">%s</ul>%s</div>' % (t, ''.join('<li><span>%s</span><b>%s</b></li>' % i for i in items), '<p class="pnote">%s</p>' % note if note else '') for t, items, note in PRICE_GROUPS),
                    section('perks')]),
         'pacientam/': ('Пациентам', 'Всё, что нужно знать до визита', 'Как проходит первый приём, что взять с собой, как получить второе мнение и вызвать реабилитолога на дом.',
-                       [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks'), patient_docs_html()]),
+                       [steps_html(), section('prep'), flow_html(), section('wa'), section('second'), section('perks'), patient_docs_html(), legal_block('normativnye-dokumenty', 'Нормативные документы')]),
+        'vakansii/': ('Работа в центре', 'Вакантные должности', next(d['lead'] for d in LEGAL_DOCS if d['slug'] == 'vakansii'),
+                      [legal_block('vakansii', None)]),
         'kontakty/': ('Контакты', 'Как нас найти', 'Махачкала, проспект Имама Шамиля, 35А, 1 этаж. Вход за шлагбаумом, рядом санаторий «Тарнаир».',
                       ['<section><div class="wrap"><div class="cpage">%s</div></div></section>' % re.search(r'<div class="contacts">(.*)</div>\s*<!--LEGAL-->', FINAL, re.S).group(1).replace('rv"', '"')]),
     }
