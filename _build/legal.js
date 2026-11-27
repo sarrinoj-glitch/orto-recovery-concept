@@ -40,3 +40,25 @@
     document.body.appendChild(s)
   }))
 })()
+
+// Версия для слабовидящих: переключатель в шапке и подвале, выбор запоминается
+;(() => {
+  const root = document.documentElement
+  let on = false
+  try { on = localStorage.getItem('a11y') === '1' } catch (e) {}
+  const apply = () => {
+    root.classList.toggle('a11y', on)
+    document.querySelectorAll('[data-a11y]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(on))
+      if (b.classList.contains('a11y-link')) b.textContent = on ? 'Обычная версия сайта' : 'Версия для слабовидящих'
+    })
+  }
+  apply()
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('[data-a11y]')
+    if (!b) return
+    on = !on
+    try { localStorage.setItem('a11y', on ? '1' : '0') } catch (e2) {}
+    apply()
+  })
+})()

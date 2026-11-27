@@ -117,7 +117,7 @@ def nav(P, active):
       <a class="logo" href="%(P)s"><img src="%(P)sassets/logo-dark.png" alt="Орто-Рекавери"></a>
       <div class="nav-links">%(links)s</div>
       <div class="nav-right">
-        <a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
+        <button class="a11y-btn" type="button" data-a11y aria-pressed="false" aria-label="Версия для слабовидящих" title="Версия для слабовидящих"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><a class="phone" href="tel:+78722522333">+7 (8722) 52-23-33<small>пн–пт 9–18, сб 9–16</small></a>
         <button class="btn-white" type="button">Записаться</button>
         <button class="burger" type="button" aria-expanded="false" aria-label="Открыть меню">%(burger)s</button>
       </div>
@@ -361,13 +361,13 @@ def dock(P):
 
 
 # ---------- юридический подвал, баннер cookie и раздел «Документы» ----------
-LEGAL_LINKS = [('svedeniya', 'Сведения о центре и лицензия'), ('vrachi', 'Сведения о врачах'), ('platnye-uslugi', 'Условия платных услуг'), ('dogovor', 'Образец договора'), ('politika', 'Политика обработки ПДн'), ('soglasie', 'Согласие на обработку ПДн'), ('cookie', 'Политика cookie'), ('kontroliruyushchie-organy', 'Контролирующие органы'), ('', 'Все документы')]
+LEGAL_LINKS = [('svedeniya', 'Сведения о центре и лицензия'), ('vrachi', 'Сведения о врачах'), ('platnye-uslugi', 'Условия платных услуг'), ('dogovor', 'Образец договора'), ('politika', 'Политика обработки ПДн'), ('soglasie', 'Согласие на обработку ПДн'), ('cookie', 'Политика cookie'), ('kontroliruyushchie-organy', 'Контролирующие органы'), ('', 'Все документы'), ('normativnye-dokumenty', 'Нормативные документы'), ('vakansii', 'Вакансии')]
 
 def legal_foot(P):
     o = LEGAL_ORG
     links = ''.join('<a href="%sdokumenty/%s">%s</a>' % (P, (s + '/') if s else '', t) for s, t in LEGAL_LINKS)
     return ('<div class="med-warn">Имеются противопоказания. Необходима консультация специалиста</div>'
-            '<div class="legal-foot"><div class="wrap"><nav aria-label="Документы">%s</nav>'
+            '<div class="legal-foot"><div class="wrap"><nav aria-label="Документы">%s<button class="a11y-link" type="button" data-a11y>Версия для слабовидящих</button></nav>'
             '<p>%s (ОГРН %s, ИНН %s). Адрес: %s. Лицензия на медицинскую деятельность № %s от %s, выдана: %s. Электронная почта для обращений: <a href="mailto:%s">%s</a>. '
             'Информация на сайте не является публичной офертой и не заменяет консультацию врача. Демо-версия сайта, подготовлена для обсуждения с центром.</p></div></div>'
             '<div class="cookie" role="dialog" aria-label="Уведомление о cookie" hidden><p>Сайт использует необходимые cookie, а карта проезда — cookie Яндекса. Нажимая «Принять все», вы соглашаетесь на их использование по <a href="%sdokumenty/cookie/">Политике cookie</a> и <a href="%sdokumenty/politika/">Политике обработки персональных данных</a>.</p>'
