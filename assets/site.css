@@ -1287,3 +1287,6 @@
 @media (max-width:720px) { .rph { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; margin:32px -16px 0; padding:0 16px 4px; scroll-padding:0 16px; } .rph figure { flex:0 0 72%; scroll-snap-align:start; } }
 @media (min-width:1081px) { .rph3 { grid-template-columns:repeat(3,1fr); } }
 @media (min-width:721px) { .rph2 { grid-template-columns:repeat(2,1fr); } }
+.rph-note figcaption { left:0; right:0; bottom:0; border-radius:0; padding:72px 24px 24px; background:linear-gradient(to top, rgba(11,61,74,.95), rgba(11,61,74,.75) 60%, transparent); color:#fff; font-size:15px; font-weight:400; line-height:1.5; }
+.rph-note figcaption b { display:block; font-size:22px; line-height:1.2; margin-bottom:8px; }
+.rph-note figcaption span { color:rgba(255,255,255,.85); }
