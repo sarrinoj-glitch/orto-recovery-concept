@@ -277,8 +277,11 @@ def hipcheck_html():
         'Специалист сгибает ногу в колене и в тазобедренном суставе и мягко поворачивает бедро. Ремень удерживает таз, чтобы двигался только сустав. Так видно, насколько свободно сустав движется и в какой момент появляется боль.')
 
 def cupping_html():
-    return note_html('cupping', 'cupping.jpg', 'Специалист проводит массаж спины силиконовыми вакуумными банками', 'Процедуры', 'Вакуумный массаж банками',
-        'Специалист ставит на спину силиконовые банки: они присасываются к коже и приподнимают ткани. Процедура проходит лёжа на кушетке.')
+    shots = [('cupping.jpg', 'Специалист ставит на спину пациента силиконовые вакуумные банки'),
+             ('back-massage.jpg', 'Специалист центра делает массаж спины пациенту'),
+             ('back-scraping.jpg', 'Специалист обрабатывает мышцы спины металлическим скребком')]
+    figs = ''.join('<figure><img src="assets/%s" alt="%s" loading="lazy"></figure>' % x for x in shots)
+    return '<section id="back-photos"><div class="wrap"><div class="rph rph3 rv" style="margin-top:0">%s</div></div></section>' % figs
 
 EXTRA = {
     'second': lambda: section('second'), 'twin': lambda: section('twin'), 'glossary': methods_section, 'procedures': methods_section,
